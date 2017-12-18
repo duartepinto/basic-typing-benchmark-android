@@ -1,7 +1,8 @@
-package com.tuwien.buildinginteractioninterfaces.prototype
+package com.tuwien.buildinginteractioninterfaces.prototype.presentation
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.tuwien.buildinginteractioninterfaces.prototype.R
 
 class PlayGame : AppCompatActivity() {
 
