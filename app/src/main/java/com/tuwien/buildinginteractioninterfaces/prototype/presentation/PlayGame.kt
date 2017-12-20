@@ -36,6 +36,7 @@ class PlayGame : AppCompatActivity() {
         start_button.visibility = View.GONE
         pause_menu.visibility = View.GONE
         pause_button.visibility =  View.VISIBLE
+        keyboard_input.visibility = View.VISIBLE
 
 
         dictionaryRepository = TwelveDictsDictionaryRepository(this);
@@ -70,12 +71,14 @@ class PlayGame : AppCompatActivity() {
         chronometer.stop()
         pause_button.visibility =  View.GONE
         pause_menu.visibility = View.VISIBLE
+        keyboard_input.visibility = View.INVISIBLE
     }
 
     fun continueGame(){
         chronometer.start()
         pause_menu.visibility = View.GONE
         pause_button.visibility =  View.VISIBLE
+        keyboard_input.visibility = View.VISIBLE
     }
 
     fun updateWordsTextViews(currentWord: String, nextWord: String){
