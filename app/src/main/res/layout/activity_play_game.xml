@@ -19,12 +19,14 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/label_next_word"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Next word:"
                 android:textStyle="bold"
                 android:textColor="@android:color/black" />
             <TextView
+                android:id="@+id/next_word"
                 android:gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,13 +123,16 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/current_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Place holder text" />
 
         <EditText
+            android:id="@+id/keyboard_input"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:imeOptions="actionSend"
             android:inputType="text" />
 
         <Button
