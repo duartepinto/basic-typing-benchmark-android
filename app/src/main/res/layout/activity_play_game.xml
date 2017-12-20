@@ -90,7 +90,7 @@
                     android:id="@+id/velocity_stat"
                     android:layout_width="wrap_content"
                     android:layout_height="20sp"
-                    android:text="99999999"
+                    android:text="0"
                     android:textColor="@android:color/holo_green_dark"
                     />
                 <TextView
