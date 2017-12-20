@@ -1,16 +1,14 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.data.local;
 
 import android.content.Context;
-import android.os.health.SystemHealthManager;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.R;
-import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.AbstractDictionaryRepository;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.DictionaryRepository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import kotlin.NotImplementedError;
 
@@ -19,7 +17,7 @@ import kotlin.NotImplementedError;
  * Read more in http://wordlist.aspell.net/12dicts/
  */
 
-public class TwelveDictsDictionaryRepository extends AbstractDictionaryRepository {
+public class TwelveDictsDictionaryRepository extends DictionaryRepository {
     private final Context context;
     private final int dictionaryRawFile = R.raw.two_of_twelve; // The name of the file had to be changed to two_of_twelve.txt because of compiler restrictions
     private final String[] dictionary;

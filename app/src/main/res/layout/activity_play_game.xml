@@ -68,10 +68,10 @@
                     />
 
                 <TextView
-                    android:id="@+id/label_failed_chars"
+                    android:id="@+id/label_failed_words"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Failed chars"
+                    android:text="Failed words"
                     />
             </LinearLayout>
 
@@ -87,7 +87,7 @@
                     android:format="%s"
                     android:textColor="@android:color/black" />
                 <TextView
-                    android:id="@+id/velocity"
+                    android:id="@+id/velocity_stat"
                     android:layout_width="wrap_content"
                     android:layout_height="20sp"
                     android:text="99999999"
@@ -101,7 +101,7 @@
                     android:textColor="@android:color/holo_green_dark"
                     />
                 <TextView
-                    android:id="@+id/failed_chars"
+                    android:id="@+id/failed_words"
                     android:layout_width="wrap_content"
                     android:layout_height="20sp"
                     android:text="0"
