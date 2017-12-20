@@ -76,17 +76,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="50sp"
+                android:layout_width="100sp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/time"
+                <com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer
+                    android:id="@+id/chronometer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00:00"
-                    android:textColor="@android:color/black"
-                    />
+                    android:format="%s"
+                    android:textColor="@android:color/black" />
                 <TextView
                     android:id="@+id/velocity"
                     android:layout_width="wrap_content"
@@ -140,6 +139,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Game" />
+        <Button
+            android:id="@+id/pause_button"
+            android:visibility="gone"
+            android:text="Pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/pause_menu"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/continue_button"
+                android:text="Continue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/restart_button"
+                android:text="Restart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

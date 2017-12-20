@@ -4674,8 +4674,8 @@ butterscotch
 buttery
 buttock
 buttocks
-button
-button-down
+startButton
+startButton-down
 buttonhole
 buttonwood
 buttress
@@ -16991,7 +16991,7 @@ hot
 hotbed
 hotblooded
 hotbox
-hot-button
+hot-startButton
 hotcake
 hotdog
 hotel
@@ -28601,7 +28601,7 @@ purveyor
 purview
 pus
 push
-push-button
+push-startButton
 pushcart
 pusher
 pushily
