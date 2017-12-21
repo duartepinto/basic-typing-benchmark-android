@@ -7,6 +7,7 @@ import android.view.View
 import com.tuwien.buildinginteractioninterfaces.prototype.R
 import com.tuwien.buildinginteractioninterfaces.prototype.data.local.TwelveDictsDictionaryRepository
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.impl.ThreadExecutor
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.Benchmarker
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.GameInteractor
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.GameInteractor.Callback
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.DictionaryRepository
@@ -41,10 +42,6 @@ class PlayGame : AppCompatActivity() {
 
         dictionaryRepository = TwelveDictsDictionaryRepository(this);
         var gameCallback = object: Callback {
-            override fun updateStats(velocity: Float, correctWords: Int, failedWords: Int) {
-                updateStatsTextViews(velocity, correctWords, failedWords)
-            }
-
             override fun updateWords(currentWord: String?, nextWord: String?) {
                 if (currentWord != null) {
                     if (nextWord != null) {
@@ -52,15 +49,17 @@ class PlayGame : AppCompatActivity() {
                     }
                 };
             }
+        }
 
-            override fun updateInput(input: String?) {
-
+        var benchmarkerCallback = object: Benchmarker.Callback{
+            override fun updateStats(velocity: Float, correctWords: Int, failedWords: Int) {
+                updateStatsTextViews(velocity, correctWords, failedWords)
             }
-
         }
 
         game = GameInteractor(ThreadExecutor.getInstance(),MainThreadImpl.getInstance(),
                 gameCallback,
+                benchmarkerCallback,
                 dictionaryRepository,
                 chronometer,
                 keyboard_input);

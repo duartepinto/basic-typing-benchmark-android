@@ -1,6 +1,7 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors;
 
 import android.os.SystemClock;
+import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -8,7 +9,9 @@ import android.widget.EditText;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.Executor;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.MainThread;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.impl.ThreadExecutor;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.DictionaryRepository;
+import com.tuwien.buildinginteractioninterfaces.prototype.threading.MainThreadImpl;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 
 import java.util.regex.Matcher;
@@ -18,38 +21,35 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
 
     private int strSize = 0;
     private int previousCompleteWords = 0;
+    private Benchmarker benchmarker;
+    private Callback callback;
 
     public interface Callback{
-        void updateStats(float velocity, int correctWords, int failedWords);
         void updateWords(String currentWord, String nextWord);
-        void updateInput(String input);
     }
 
-    Callback callback;
     Chronometer chronometer;
     EditText input;
     DictionaryRepository dictionaryRepository;
 
     private String currentWord;
     private String nextWord;
-    private long correctChars = 0;
-    private int correctWords = 0;
-    private int failedWords = 0;
 
     public GameInteractor(Executor threadExecutor,
                           MainThread mainThread,
                           Callback callback,
+                          Benchmarker.Callback benchmarkerCallback,
                           DictionaryRepository dictionaryRepository,
                           Chronometer chronometer,
                           EditText input) {
         super(threadExecutor, mainThread);
 
         this.dictionaryRepository = dictionaryRepository;
-        this.callback = callback;
         this.chronometer = chronometer;
         this.input = input;
+        this.callback = callback;
 
-
+        benchmarker = new Benchmarker(chronometer, benchmarkerCallback);
     }
 
     void startWords(){
@@ -64,24 +64,13 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
         callback.updateWords(currentWord,nextWord);
     }
 
-    void updateStats(){
-        float velocity = chronometer.getTimeElapsed() == 0 ? 0 : (float) correctChars / (chronometer.getTimeElapsed() / 1000 );
-        Log.d("timeElapsed", chronometer.getTimeElapsed() + "");
-        Log.d("correctChars", correctChars + "");
-        callback.updateStats(velocity, correctWords, failedWords);
-    }
+
 
     @Override
     public void run() {
         input.addTextChangedListener(this);
         startWords();
         input.setText("");
-        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                updateStats();
-            }
-        });
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }
@@ -105,13 +94,12 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
         Matcher matcher = pattern.matcher(str);
         boolean found = matcher.find();
         int completedWords = str.length() - str.replace(" ", "").length(); // A word is completed if it has at least a blank space on it's right
-        Log.d("spaces", completedWords + "");
         if(found){
             String[] splited = str.split("\\s+");
             if(completedWords > 0){
                 if(splited[0].equals(currentWord.trim())){ // For some reason currentWord comes with and extra space so it needs to be trimmed
-                    correctWords++;
-                    correctChars += currentWord.length();
+                    benchmarker.getBenchmark().incrementCorrectWords();
+                    benchmarker.getBenchmark().incrementCorrectChars(currentWord.length());
 
                     s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the correct word, the right space next to it, and the left spaces from the EditText
                     generateNextWord();
@@ -119,15 +107,23 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
                 }else{
                     // Only counts as a failed word if the user
                     if(strSize < s.length() && previousCompleteWords < completedWords){
-                        failedWords++;
+                        benchmarker.getBenchmark().incrementFailedWords();
                     }
                 }
-                updateStats();
+                benchmarker.updateStats();
 
             }
         }
 
         previousCompleteWords = completedWords;
         strSize = s.length();
+    }
+
+    public Benchmarker getBenchmarker() {
+        return benchmarker;
+    }
+
+    public void setBenchmarker(Benchmarker benchmarker) {
+        this.benchmarker = benchmarker;
     }
 }
