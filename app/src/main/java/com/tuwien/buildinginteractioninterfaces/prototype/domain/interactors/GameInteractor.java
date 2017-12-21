@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class GameInteractor extends AbstractInteractor implements TextWatcher {
 
     private int strSize = 0;
-    private int previousNumSpaces = 0;
+    private int previousCompleteWords = 0;
 
     public interface Callback{
         void updateStats(float velocity, int correctWords, int failedWords);
@@ -98,24 +98,27 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         String str = s.toString();
-        str = str.replaceAll("^\\s+", "");
+        str = str.replaceAll("^\\s+", ""); // Trim the left side of the string.
+        int trimmedLeftSpaces = s.toString().length() - str.length();
+
         Pattern pattern = Pattern.compile("\\s");
         Matcher matcher = pattern.matcher(str);
         boolean found = matcher.find();
-        int spaces = str.length() - str.replace(" ", "").length();
-        Log.d("spaces", spaces + "");
+        int completedWords = str.length() - str.replace(" ", "").length(); // A word is completed if it has at least a blank space on it's right
+        Log.d("spaces", completedWords + "");
         if(found){
             String[] splited = str.split("\\s+");
-            if(spaces > 0){
-                if(splited[0].equals(currentWord.trim())){
+            if(completedWords > 0){
+                if(splited[0].equals(currentWord.trim())){ // For some reason currentWord comes with and extra space so it needs to be trimmed
                     correctWords++;
                     correctChars += currentWord.length();
-                    str = str.replaceFirst(currentWord.concat(" "),"");
-                    s.replace(0, currentWord.length(), "", 0,0);
+
+                    s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the correct word, the right space next to it, and the left spaces from the EditText
                     generateNextWord();
 
                 }else{
-                    if(strSize < s.length() && previousNumSpaces < spaces){
+                    // Only counts as a failed word if the user
+                    if(strSize < s.length() && previousCompleteWords < completedWords){
                         failedWords++;
                     }
                 }
@@ -124,7 +127,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
             }
         }
 
-        previousNumSpaces = spaces;
+        previousCompleteWords = completedWords;
         strSize = s.length();
     }
 }
