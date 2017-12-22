@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Basic Keyboard Game</string>
+    <string name="app_name">Basic Keyboard Benchmarking Game</string>
     <string name="place_holder_text">Place holder text</string>
     <string name="failed_words">Failed words</string>
     <string name="correct_words">Correct words</string>
