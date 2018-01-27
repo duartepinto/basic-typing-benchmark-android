@@ -10,7 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".presentation.PlayGame"/>
+        <activity
+            android:name=".presentation.PlayGame"
+            android:parentActivityName=".presentation.MainMenu"/>
+
+        <activity android:name=".presentation.MainMenu"/>
 
         <activity
             android:name=".presentation.SplashActivity"
