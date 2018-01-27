@@ -15,10 +15,6 @@ import android.widget.Toast;
 import com.tuwien.buildinginteractioninterfaces.prototype.R;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
 
-/**
- * Created by duarte on 27-01-2018.
- */
-
 public class MainMenu extends AppCompatActivity {
 
     private static final String TAG_ACTIVITY =
@@ -37,13 +33,13 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
-        Button button = (Button) findViewById(R.id.button_create_game);
+        Button button = findViewById(R.id.button_create_game);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean autoCorrect = ((CheckBox) findViewById(R.id.main_menu_autocorrect)).isChecked();
 
-                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.game_mode_group);
+                RadioGroup radioGroup = findViewById(R.id.game_mode_group);
 
                 int gameModeId = radioGroup.getCheckedRadioButtonId();
                 OptionsModel.TypeGame typeGame;
@@ -121,7 +117,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private void displayNumberSelection(String text){
-        TextView textView = (TextView) findViewById(R.id.label_main_menu_num);
+        TextView textView = findViewById(R.id.label_main_menu_number_input);
         textView.setText(text);
         findViewById(R.id.number_input_layout).setVisibility(View.VISIBLE);
     }
