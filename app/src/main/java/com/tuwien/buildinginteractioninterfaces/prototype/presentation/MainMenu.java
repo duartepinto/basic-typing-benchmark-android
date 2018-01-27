@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.R;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
@@ -42,7 +43,9 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 boolean autoCorrect = ((CheckBox) findViewById(R.id.main_menu_autocorrect)).isChecked();
 
-                int gameModeId = ((RadioGroup) findViewById(R.id.game_mode_group)).getCheckedRadioButtonId();
+                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.game_mode_group);
+
+                int gameModeId = radioGroup.getCheckedRadioButtonId();
                 OptionsModel.TypeGame typeGame;
 
                 switch (gameModeId){
@@ -65,17 +68,13 @@ public class MainMenu extends AppCompatActivity {
                         typeGame = OptionsModel.TypeGame.NO_END;
                         break;
                     default:
-                        typeGame = OptionsModel.TypeGame.TIME;
-                        break;
+                        Toast.makeText(MainMenu.this, R.string.no_game_type_error_message, Toast.LENGTH_SHORT).show();
+                        return;
                 }
-
 
                 OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect);
 
-
                 startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
-
-
             }
         });
 
@@ -91,19 +90,19 @@ public class MainMenu extends AppCompatActivity {
         switch(view.getId()) {
         case R.id.main_menu_time:
              if (checked)
-                 displayNumberSelection("Time (seconds)");
+                 displayNumberSelection(getString(R.string.label_type_time));
              break;
         case R.id.main_menu_num_words:
             if (checked)
-                displayNumberSelection("Number of words");
+                displayNumberSelection(getString(R.string.label_type_num_words));
             break;
         case R.id.main_menu_errors:
             if (checked)
-                displayNumberSelection("Number of errors");
+                displayNumberSelection(getString(R.string.label_type_num_errors));
                 break;
         case R.id.main_menu_correct_words:
             if (checked)
-                displayNumberSelection("Number of correct words");
+                displayNumberSelection(getString(R.string.label_type_num_correct_words));
                 break;
         case R.id.main_menu_text:
             if (checked)

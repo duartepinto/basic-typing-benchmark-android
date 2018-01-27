@@ -22,27 +22,31 @@
 
         <RadioButton
             android:id="@+id/main_menu_time"
-            android:text="Time"
+            android:text="@string/label_main_menu_time"
+            android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <RadioButton android:id="@+id/main_menu_num_words"
-            android:text="Number of words"
+            android:text="@string/label_main_menu_num_words"
+            android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton
             android:id="@+id/main_menu_errors"
-            android:text="Number of errors"
+            android:text="@string/label_main_menu_num_errors"
+            android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton
             android:id="@+id/main_menu_correct_words"
-            android:text="Number of correct words"
+            android:text="@string/label_main_menu_num_correct_words"
+            android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton
             android:id="@+id/main_menu_text"
-            android:text="Text Sample"
+            android:text="@string/label_main_menu_no_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"/>
@@ -57,7 +61,7 @@
         android:id="@+id/main_menu_autocorrect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Auto-correct"
+        android:text="@string/auto_correct"
         android:checked="true"/>
 
     <LinearLayout
@@ -70,7 +74,7 @@
             android:id="@+id/label_main_menu_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time (seconds)"/>
+            android:text="@string/label_type_time"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,6 +92,6 @@
             android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"/>
+            android:text="@string/next"/>
     </GridLayout>
 </LinearLayout>
