@@ -63,12 +63,17 @@ class PlayGame : AppCompatActivity() {
                 Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
                 finish();
             }
-            OptionsModel.TypeGame.TEXT -> {
-                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish();
-            }
             OptionsModel.TypeGame.NO_END -> {}
         }
+
+        dictionaryRepository = when(options.source){
+            OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(this);
+            else -> {
+                TwelveDictsDictionaryRepository(this)
+            }
+        }
+
+
     }
 
 
@@ -78,8 +83,6 @@ class PlayGame : AppCompatActivity() {
         pause_button.visibility =  View.VISIBLE
         keyboard_input.visibility = View.VISIBLE
 
-
-        dictionaryRepository = TwelveDictsDictionaryRepository(this);
         var gameCallback = object: Callback {
             override fun updateWords(currentWord: String?, nextWord: String?) {
                 if (currentWord != null) {

@@ -23,4 +23,7 @@
     <string name="next">Next</string>
     <string name="choose_a_game_mode">Choose a game mode:</string>
     <string name="label_main_menu_no_end">No end</string>
+    <string name="skip_on_fail">Skip on fail</string>
+    <string name="twelvedicts_word_list">12dicts English words list</string>
+    <string name="no_source_error">No source for text</string>
 </resources>

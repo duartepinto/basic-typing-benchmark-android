@@ -111,6 +111,11 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
                     if(strSize < s.length() && previousCompleteWords < completedWords){
                         benchmarker.incrementWordCount(splited[0]);
                         benchmarker.incrementErrorCount(splited[0],currentWord);
+
+                        if(benchmarker.getBenchmark().getOptions().getSkipOnFail()){
+                            s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the wrong word, the right space next to it, and the left spaces from the EditText
+                            generateNextWord();
+                        }
                     }else{
                         benchmarker.incrementBackspace();
                     }

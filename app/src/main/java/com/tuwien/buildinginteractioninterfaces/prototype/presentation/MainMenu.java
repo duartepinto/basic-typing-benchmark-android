@@ -38,10 +38,11 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean autoCorrect = ((CheckBox) findViewById(R.id.main_menu_autocorrect)).isChecked();
+                boolean skipOnFail = ((CheckBox) findViewById(R.id.main_menu_skip_on_fail)).isChecked();
 
-                RadioGroup radioGroup = findViewById(R.id.game_mode_group);
+                RadioGroup gameTypeRadioGroup = findViewById(R.id.game_mode_group);
 
-                int gameModeId = radioGroup.getCheckedRadioButtonId();
+                int gameModeId = gameTypeRadioGroup.getCheckedRadioButtonId();
                 OptionsModel.TypeGame typeGame;
 
                 switch (gameModeId){
@@ -57,9 +58,6 @@ public class MainMenu extends AppCompatActivity {
                     case R.id.main_menu_correct_words:
                         typeGame = OptionsModel.TypeGame.NUM_CORRECT_WORDS;
                         break;
-                    case R.id.main_menu_text:
-                        typeGame = OptionsModel.TypeGame.TEXT;
-                        break;
                     case R.id.main_menu_no_end:
                         typeGame = OptionsModel.TypeGame.NO_END;
                         break;
@@ -68,7 +66,24 @@ public class MainMenu extends AppCompatActivity {
                         return;
                 }
 
-                OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect);
+                RadioGroup sourceRadioGroup = findViewById(R.id.text_source_group);
+
+                int sourceId = sourceRadioGroup.getCheckedRadioButtonId();
+                OptionsModel.Source source;
+
+                switch (sourceId){
+                    case R.id.main_menu_12dicts:
+                        source = OptionsModel.Source.TWELVE_DICTS;
+                        break;
+                    case R.id.main_menu_text:
+                        source = OptionsModel.Source.TEXT;
+                        break;
+                    default:
+                        Toast.makeText(MainMenu.this, R.string.no_source_error, Toast.LENGTH_SHORT).show();
+                        return;
+                }
+
+                OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source);
 
                 startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
             }
