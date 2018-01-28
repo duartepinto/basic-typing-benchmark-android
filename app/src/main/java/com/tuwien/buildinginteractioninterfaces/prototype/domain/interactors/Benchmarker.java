@@ -34,6 +34,7 @@ public class Benchmarker {
         float wordsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getTotalWords() / (chronometer.getTimeElapsed() / 1000 );
         benchmark.setCharsPerSec(charsPerSec);
         benchmark.setWordsPerSec(wordsPerSec);
+        benchmark.setTime(chronometer.getTimeElapsed());
         callback.updateStats(benchmark.getCharsPerSec(), benchmark.getCorrectWords(), benchmark.getErrors());
     }
 
