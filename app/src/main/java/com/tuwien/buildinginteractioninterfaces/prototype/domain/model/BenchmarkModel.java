@@ -1,6 +1,8 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 public class BenchmarkModel implements Serializable{
     private int correctChars;
@@ -15,9 +17,11 @@ public class BenchmarkModel implements Serializable{
     private int characters;
     private double minimumStringDistanceErrorRate;
     private OptionsModel options;
+    private Date timestamp;
 
     public BenchmarkModel(OptionsModel options) {
         this.options = options;
+        this.timestamp = Calendar.getInstance().getTime();
     }
 
     public int getCorrectChars() {
@@ -131,5 +135,13 @@ public class BenchmarkModel implements Serializable{
 
     public void setWordsPerSec(float wordsPerSec) {
         this.wordsPerSec = wordsPerSec;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }
