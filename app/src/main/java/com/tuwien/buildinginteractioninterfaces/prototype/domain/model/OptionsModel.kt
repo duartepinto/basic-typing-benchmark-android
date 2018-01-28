@@ -13,4 +13,8 @@ class OptionsModel(var typeGame: TypeGame, var autoCorrect: Boolean, var skipOnF
         TEXT, TWELVE_DICTS
     }
 
+    override fun toString(): String {
+        return "OptionsModel(typeGame=$typeGame, autoCorrect=$autoCorrect, skipOnFail=$skipOnFail, source=$source)"
+    }
+
 }

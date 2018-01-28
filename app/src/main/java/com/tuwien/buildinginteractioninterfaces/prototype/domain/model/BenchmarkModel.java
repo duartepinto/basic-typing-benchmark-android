@@ -17,11 +17,10 @@ public class BenchmarkModel implements Serializable{
     private int characters;
     private double minimumStringDistanceErrorRate;
     private OptionsModel options;
-    private Date timestamp;
+    private Date timestamp = Calendar.getInstance().getTime();
 
     public BenchmarkModel(OptionsModel options) {
         this.options = options;
-        this.timestamp = Calendar.getInstance().getTime();
     }
 
     public int getCorrectChars() {
@@ -143,5 +142,24 @@ public class BenchmarkModel implements Serializable{
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "BenchmarkModel{" + "\n" +
+                "correctChars=" + correctChars + "\n" +
+                ", correctWords=" + correctWords + "\n" +
+                ", errors=" + errors + "\n" +
+                ", charsPerSec=" + charsPerSec + "\n" +
+                ", wordsPerSec=" + wordsPerSec + "\n" +
+                ", totalWords=" + totalWords + "\n" +
+                ", time=" + time + "\n" +
+                ", backspace=" + backspace + "\n" +
+                ", keystrokes=" + keystrokes + "\n" +
+                ", characters=" + characters + "\n" +
+                ", minimumStringDistanceErrorRate=" + minimumStringDistanceErrorRate + "\n" +
+                ", options=" + options + "\n" +
+                ", timestamp=" + timestamp + "\n" +
+                '}';
     }
 }
