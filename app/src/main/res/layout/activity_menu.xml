@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="24dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:targetApi="o">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop = "24dp"
+        android:layout_marginBottom="6dp"
+        android:textSize="18sp"
+        android:text="@string/choose_a_game_mode"/>
+
+    <RadioGroup
+        android:id="@+id/game_mode_group"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/main_menu_time"
+            android:text="@string/label_main_menu_time"
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <RadioButton android:id="@+id/main_menu_num_words"
+            android:text="@string/label_main_menu_num_words"
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/main_menu_errors"
+            android:text="@string/label_main_menu_num_errors"
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/main_menu_correct_words"
+            android:text="@string/label_main_menu_num_correct_words"
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/main_menu_text"
+            android:text="@string/label_main_menu_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"/>
+        <RadioButton
+            android:id="@+id/main_menu_no_end"
+            android:text="@string/label_main_menu_no_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/main_menu_autocorrect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auto_correct"
+        android:checked="true"/>
+
+    <LinearLayout
+        android:id="@+id/number_input_layout"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/label_main_menu_number_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/number_input"
+            android:text="@string/label_type_time"/>
+        <EditText
+            android:id="@+id/number_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:text="60"
+            android:inputType="numberDecimal"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button_create_game"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            tools:ignore="RtlHardcoded" />
+    </GridLayout>
+</LinearLayout>

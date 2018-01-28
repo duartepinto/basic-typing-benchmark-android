@@ -3,13 +3,17 @@ package com.tuwien.buildinginteractioninterfaces.prototype.presentation
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.text.InputType
 import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import com.tuwien.buildinginteractioninterfaces.prototype.R
 import com.tuwien.buildinginteractioninterfaces.prototype.data.local.TwelveDictsDictionaryRepository
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.impl.ThreadExecutor
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.Benchmarker
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.GameInteractor
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.GameInteractor.Callback
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.DictionaryRepository
 import com.tuwien.buildinginteractioninterfaces.prototype.threading.MainThreadImpl
 import kotlinx.android.synthetic.main.activity_play_game.*
@@ -18,11 +22,15 @@ class PlayGame : AppCompatActivity() {
 
     lateinit var dictionaryRepository: DictionaryRepository
     lateinit var game: GameInteractor
+    lateinit var options: OptionsModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_game)
 
+        options = intent.extras["OPTIONS"] as OptionsModel
+
+        setOptions();
 
         start_button.setOnClickListener { restartGame() }
         pause_button.setOnClickListener { pauseGame() }
@@ -30,6 +38,37 @@ class PlayGame : AppCompatActivity() {
         restart_button.setOnClickListener { restartGame() }
 
 
+    }
+
+    fun setOptions(){
+        // By default it already comes with auto-correct
+        if(!options.autoCorrect){
+            findViewById<EditText>(R.id.keyboard_input).inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+        }
+
+        when(options.typeGame){
+            OptionsModel.TypeGame.TIME -> {
+                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            OptionsModel.TypeGame.NUM_WORDS -> {
+                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            OptionsModel.TypeGame.NUM_ERRORS -> {
+                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
+                finish();
+            }
+            OptionsModel.TypeGame.NUM_CORRECT_WORDS -> {
+                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
+                finish();
+            }
+            OptionsModel.TypeGame.TEXT -> {
+                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
+                finish();
+            }
+            OptionsModel.TypeGame.NO_END -> {}
+        }
     }
 
 
