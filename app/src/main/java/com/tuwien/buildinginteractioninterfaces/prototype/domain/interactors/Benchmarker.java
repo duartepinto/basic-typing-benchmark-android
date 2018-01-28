@@ -30,8 +30,10 @@ public class Benchmarker {
     }
 
     void updateStats(){
-        float velocity = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getCorrectChars() / (chronometer.getTimeElapsed() / 1000 );
-        benchmark.setCharsPerSec(velocity);
+        float charsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getCharacters() / (chronometer.getTimeElapsed() / 1000 );
+        float wordsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getTotalWords() / (chronometer.getTimeElapsed() / 1000 );
+        benchmark.setCharsPerSec(charsPerSec);
+        benchmark.setWordsPerSec(wordsPerSec);
         callback.updateStats(benchmark.getCharsPerSec(), benchmark.getCorrectWords(), benchmark.getErrors());
     }
 
