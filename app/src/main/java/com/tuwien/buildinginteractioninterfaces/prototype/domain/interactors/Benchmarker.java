@@ -52,6 +52,7 @@ public class Benchmarker {
         benchmark.setCharacters(benchmark.getCharacters()+word.length());
     }
 
+    @SuppressWarnings("unused")
     public void incrementErrorCount(String word, String correctWord){
         benchmark.incrementErrors();
         //TODO Update minimumStringDistanceError
@@ -62,7 +63,7 @@ public class Benchmarker {
     }
 
     public void incrementKeyStrokes() {
-        benchmark.setKeystrokes(benchmark.getKeystrokes());
+        benchmark.setKeystrokes(benchmark.getKeystrokes()+1);
     }
 
 }
