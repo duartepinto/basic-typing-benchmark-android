@@ -101,7 +101,8 @@ class PlayGame : AppCompatActivity() {
                 benchmarkerCallback,
                 dictionaryRepository,
                 chronometer,
-                keyboard_input);
+                keyboard_input,
+                options);
         game.run();
     }
 

@@ -2,20 +2,23 @@ package com.tuwien.buildinginteractioninterfaces.prototype.domain.model;
 
 import java.io.Serializable;
 
-import kotlin.NotImplementedError;
-
 public class BenchmarkModel implements Serializable{
     private int correctChars;
     private int correctWords;
-    private int failedWords;
-    private float velocity;
+    private int errors;
+    private float charsPerSec;
+    private float wordsPerSec;
     private int totalWords;
     private float time;
     private int backspace;
     private int keystrokes;
     private int characters;
-    private double minimumStringDistanceError;
-    private OptionsModel optionsModel;
+    private double minimumStringDistanceErrorRate;
+    private OptionsModel options;
+
+    public BenchmarkModel(OptionsModel options) {
+        this.options = options;
+    }
 
     public int getCorrectChars() {
         return correctChars;
@@ -33,20 +36,20 @@ public class BenchmarkModel implements Serializable{
         this.correctWords = correctWords;
     }
 
-    public int getFailedWords() {
-        return failedWords;
+    public int getErrors() {
+        return errors;
     }
 
-    public void setFailedWords(int failedWords) {
-        this.failedWords = failedWords;
+    public void setErrors(int errors) {
+        this.errors = errors;
     }
 
-    public float getVelocity() {
-        return velocity;
+    public float getCharsPerSec() {
+        return charsPerSec;
     }
 
-    public void setVelocity(float velocity) {
-        this.velocity = velocity;
+    public void setCharsPerSec(float charsPerSec) {
+        this.charsPerSec = charsPerSec;
     }
 
     public void incrementCorrectChars(){
@@ -58,8 +61,8 @@ public class BenchmarkModel implements Serializable{
     public void incrementCorrectWords(){
         correctWords++;
     }
-    public void incrementFailedWords(){
-        failedWords++;
+    public void incrementErrors(){
+        errors++;
     }
 
     public int getTotalWords() {
@@ -106,19 +109,27 @@ public class BenchmarkModel implements Serializable{
         return (double) keystrokes / (double) characters;
     }
 
-    public double getMinimumStringDistanceError(){
-        return this.minimumStringDistanceError;
+    public double getMinimumStringDistanceErrorRate(){
+        return this.minimumStringDistanceErrorRate;
     }
 
-    public void setMinimumStringDistanceError(double minimumStringDistanceError){
-        this.minimumStringDistanceError = minimumStringDistanceError;
+    public void setMinimumStringDistanceErrorRate(double minimumStringDistanceErrorRate){
+        this.minimumStringDistanceErrorRate = minimumStringDistanceErrorRate;
     }
 
-    public OptionsModel getOptionsModel() {
-        return optionsModel;
+    public OptionsModel getOptions() {
+        return options;
     }
 
-    public void setOptionsModel(OptionsModel optionsModel) {
-        this.optionsModel = optionsModel;
+    public void setOptions(OptionsModel options) {
+        this.options = options;
+    }
+
+    public float getWordsPerSec() {
+        return wordsPerSec;
+    }
+
+    public void setWordsPerSec(float wordsPerSec) {
+        this.wordsPerSec = wordsPerSec;
     }
 }
