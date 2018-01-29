@@ -73,6 +73,8 @@ class PlayGame : AppCompatActivity() {
         keyboard_input.visibility = View.VISIBLE
         continue_button.isEnabled = true;
 
+        updateStatsTextViews(0f,0,0);
+
         //To prevent from bugging with game type TIME
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();

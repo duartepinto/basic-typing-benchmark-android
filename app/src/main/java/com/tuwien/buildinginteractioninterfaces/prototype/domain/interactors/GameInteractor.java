@@ -154,16 +154,16 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
         if(finishedGame)
             return;
 
-        //See if time has run out;
-        if(options.getTypeGame()== OptionsModel.TypeGame.TIME && chronometer.getTimeElapsed() >= options.getFinishMark()*1000){
-            finishedGame = true;
-            callback.finishGame();
-        }
+        finishedGame = true;
+        callback.finishGame();
     }
 
     @Override
     public void onChronometerTick(Chronometer chronometer) {
-        finishGame();
+        //See if time has run out;
+        if(options.getTypeGame()== OptionsModel.TypeGame.TIME && chronometer.getTimeElapsed() >= options.getFinishMark()*1000){
+            finishGame();
+        }
     }
 
 }
