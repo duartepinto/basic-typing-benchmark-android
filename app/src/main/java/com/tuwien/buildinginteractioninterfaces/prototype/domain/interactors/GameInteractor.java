@@ -14,15 +14,18 @@ import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GameInteractor extends AbstractInteractor implements TextWatcher {
+public class GameInteractor extends AbstractInteractor implements TextWatcher, Chronometer.OnChronometerTickListener{
 
+    private boolean finishedGame = false;
     private int strSize = 0;
     private int previousCompleteWords = 0;
     private Benchmarker benchmarker;
     private Callback callback;
+    private OptionsModel options;
 
     public interface Callback{
         void updateWords(String currentWord, String nextWord);
+        void finishGame();
     }
 
     Chronometer chronometer;
@@ -46,8 +49,10 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
         this.chronometer = chronometer;
         this.input = input;
         this.callback = callback;
+        this.options = options;
 
         benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options);
+        chronometer.setOnChronometerTickListener(this);
     }
 
     void startWords(){
@@ -126,6 +131,15 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
 
         previousCompleteWords = completedWords;
         strSize = s.length();
+
+        if(shouldGameFinish())
+            finishGame();
+    }
+
+    private boolean shouldGameFinish() {
+        return (options.getTypeGame()== OptionsModel.TypeGame.NUM_WORDS && benchmarker.getBenchmark().getTotalWords() >= options.getFinishMark())
+                || (options.getTypeGame()== OptionsModel.TypeGame.NUM_CORRECT_WORDS && benchmarker.getBenchmark().getCorrectWords() >= options.getFinishMark())
+                || (options.getTypeGame()== OptionsModel.TypeGame.NUM_ERRORS && benchmarker.getBenchmark().getErrors() >= options.getFinishMark());
     }
 
     public Benchmarker getBenchmarker() {
@@ -135,4 +149,21 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
     public void setBenchmarker(Benchmarker benchmarker) {
         this.benchmarker = benchmarker;
     }
+
+    synchronized void finishGame(){
+        if(finishedGame)
+            return;
+
+        //See if time has run out;
+        if(options.getTypeGame()== OptionsModel.TypeGame.TIME && chronometer.getTimeElapsed() >= options.getFinishMark()*1000){
+            finishedGame = true;
+            callback.finishGame();
+        }
+    }
+
+    @Override
+    public void onChronometerTick(Chronometer chronometer) {
+        finishGame();
+    }
+
 }

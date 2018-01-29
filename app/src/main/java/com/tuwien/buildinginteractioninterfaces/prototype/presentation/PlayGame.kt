@@ -47,25 +47,13 @@ class PlayGame : AppCompatActivity() {
             findViewById<EditText>(R.id.keyboard_input).inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         }
 
-        when(options.typeGame){
-            OptionsModel.TypeGame.TIME -> {
-                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            OptionsModel.TypeGame.NUM_WORDS -> {
-                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            OptionsModel.TypeGame.NUM_ERRORS -> {
-                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            OptionsModel.TypeGame.NUM_CORRECT_WORDS -> {
-                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish()
-            }
+        /*when(options.typeGame){
+            OptionsModel.TypeGame.TIME -> {}
+            OptionsModel.TypeGame.NUM_WORDS -> {}
+            OptionsModel.TypeGame.NUM_ERRORS -> {}
+            OptionsModel.TypeGame.NUM_CORRECT_WORDS -> {}
             OptionsModel.TypeGame.NO_END -> {}
-        }
+        }*/
 
         dictionaryRepository = when(options.source){
             OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(this)
@@ -83,8 +71,17 @@ class PlayGame : AppCompatActivity() {
         pause_menu.visibility = View.GONE
         pause_button.visibility =  View.VISIBLE
         keyboard_input.visibility = View.VISIBLE
+        continue_button.isEnabled = true;
+
+        //To prevent from bugging with game type TIME
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
 
         val gameCallback = object: Callback {
+            override fun finishGame() {
+                this@PlayGame.finishGame();
+            }
+
             override fun updateWords(currentWord: String?, nextWord: String?) {
                 if (currentWord != null) {
                     if (nextWord != null) {
@@ -108,6 +105,12 @@ class PlayGame : AppCompatActivity() {
                 keyboard_input,
                 options)
         game.run()
+    }
+
+    fun finishGame(){
+        pauseGame();
+        continue_button.isEnabled = false;
+        Toast.makeText(this, getString(R.string.game_over), Toast.LENGTH_SHORT).show()
     }
 
     fun pauseGame(){
