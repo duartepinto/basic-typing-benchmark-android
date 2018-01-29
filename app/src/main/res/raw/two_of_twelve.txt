@@ -39432,7 +39432,7 @@ veld
 veldt
 vellum
 velocipede
-velocity
+charsPerSec
 velour
 velours
 velum

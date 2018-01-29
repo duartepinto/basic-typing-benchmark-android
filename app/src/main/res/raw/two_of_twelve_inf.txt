@@ -78418,7 +78418,7 @@ vellums%
 velocipede
 velocipedes
 velocities
-velocity
+charsPerSec
 velour
 velours
 velum

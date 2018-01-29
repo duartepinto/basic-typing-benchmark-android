@@ -1,17 +1,14 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors;
 
 import android.os.SystemClock;
-import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.Executor;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.MainThread;
-import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.impl.ThreadExecutor;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.DictionaryRepository;
-import com.tuwien.buildinginteractioninterfaces.prototype.threading.MainThreadImpl;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 
 import java.util.regex.Matcher;
@@ -41,7 +38,8 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
                           Benchmarker.Callback benchmarkerCallback,
                           DictionaryRepository dictionaryRepository,
                           Chronometer chronometer,
-                          EditText input) {
+                          EditText input,
+                          OptionsModel options) {
         super(threadExecutor, mainThread);
 
         this.dictionaryRepository = dictionaryRepository;
@@ -49,7 +47,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
         this.input = input;
         this.callback = callback;
 
-        benchmarker = new Benchmarker(chronometer, benchmarkerCallback);
+        benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options);
     }
 
     void startWords(){
@@ -86,6 +84,8 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
+        benchmarker.incrementKeyStrokes();
+
         String str = s.toString();
         str = str.replaceAll("^\\s+", ""); // Trim the left side of the string.
         int trimmedLeftSpaces = s.toString().length() - str.length();
@@ -93,25 +93,34 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher {
         Pattern pattern = Pattern.compile("\\s");
         Matcher matcher = pattern.matcher(str);
         boolean found = matcher.find();
+
+
         int completedWords = str.length() - str.replace(" ", "").length(); // A word is completed if it has at least a blank space on it's right
         if(found){
             String[] splited = str.split("\\s+");
             if(completedWords > 0){
                 if(splited[0].equals(currentWord.trim())){ // For some reason currentWord comes with and extra space so it needs to be trimmed
-                    benchmarker.getBenchmark().incrementCorrectWords();
-                    benchmarker.getBenchmark().incrementCorrectChars(currentWord.length());
+                    benchmarker.incrementWordCount(splited[0]);
+                    benchmarker.incrementCorrectWordsCount(currentWord);
 
                     s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the correct word, the right space next to it, and the left spaces from the EditText
                     generateNextWord();
 
                 }else{
-                    // Only counts as a failed word if the user
+                    // Only counts as a failed word if the user is not correcting a mistake (pressing backspace for example)
                     if(strSize < s.length() && previousCompleteWords < completedWords){
-                        benchmarker.getBenchmark().incrementFailedWords();
+                        benchmarker.incrementWordCount(splited[0]);
+                        benchmarker.incrementErrorCount(splited[0],currentWord);
+
+                        if(benchmarker.getBenchmark().getOptions().getSkipOnFail()){
+                            s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the wrong word, the right space next to it, and the left spaces from the EditText
+                            generateNextWord();
+                        }
+                    }else{
+                        benchmarker.incrementBackspace();
                     }
                 }
                 benchmarker.updateStats();
-
             }
         }
 

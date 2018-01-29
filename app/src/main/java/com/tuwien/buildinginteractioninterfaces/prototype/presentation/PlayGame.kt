@@ -1,5 +1,6 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.presentation
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -30,13 +31,13 @@ class PlayGame : AppCompatActivity() {
 
         options = intent.extras["OPTIONS"] as OptionsModel
 
-        setOptions();
+        setOptions()
 
         start_button.setOnClickListener { restartGame() }
         pause_button.setOnClickListener { pauseGame() }
         continue_button.setOnClickListener { continueGame() }
         restart_button.setOnClickListener { restartGame() }
-
+        benchmark_button.setOnClickListener { viewBenchmark() }
 
     }
 
@@ -57,18 +58,23 @@ class PlayGame : AppCompatActivity() {
             }
             OptionsModel.TypeGame.NUM_ERRORS -> {
                 Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish();
+                finish()
             }
             OptionsModel.TypeGame.NUM_CORRECT_WORDS -> {
                 Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish();
-            }
-            OptionsModel.TypeGame.TEXT -> {
-                Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show()
-                finish();
+                finish()
             }
             OptionsModel.TypeGame.NO_END -> {}
         }
+
+        dictionaryRepository = when(options.source){
+            OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(this)
+            else -> {
+                TwelveDictsDictionaryRepository(this)
+            }
+        }
+
+
     }
 
 
@@ -78,19 +84,17 @@ class PlayGame : AppCompatActivity() {
         pause_button.visibility =  View.VISIBLE
         keyboard_input.visibility = View.VISIBLE
 
-
-        dictionaryRepository = TwelveDictsDictionaryRepository(this);
-        var gameCallback = object: Callback {
+        val gameCallback = object: Callback {
             override fun updateWords(currentWord: String?, nextWord: String?) {
                 if (currentWord != null) {
                     if (nextWord != null) {
                         updateWordsTextViews(currentWord,nextWord)
                     }
-                };
+                }
             }
         }
 
-        var benchmarkerCallback = object: Benchmarker.Callback{
+        val benchmarkerCallback = object: Benchmarker.Callback{
             override fun updateStats(velocity: Float, correctWords: Int, failedWords: Int) {
                 updateStatsTextViews(velocity, correctWords, failedWords)
             }
@@ -101,8 +105,9 @@ class PlayGame : AppCompatActivity() {
                 benchmarkerCallback,
                 dictionaryRepository,
                 chronometer,
-                keyboard_input);
-        game.run();
+                keyboard_input,
+                options)
+        game.run()
     }
 
     fun pauseGame(){
@@ -120,7 +125,7 @@ class PlayGame : AppCompatActivity() {
     }
 
     fun updateWordsTextViews(currentWord: String, nextWord: String){
-        current_word.text = currentWord;
+        current_word.text = currentWord
         next_word.text = nextWord
     }
 
@@ -128,5 +133,11 @@ class PlayGame : AppCompatActivity() {
         velocity_stat.text = velocity.toString()
         correct_words.text = correctWords.toString()
         failed_words.text = failedWords.toString()
+    }
+
+    fun viewBenchmark(){
+        val intent = Intent(this, BenchmarkActivity::class.java)
+        intent.putExtra("BENCHMARK", game.benchmarker.benchmark)
+        startActivity(intent)
     }
 }

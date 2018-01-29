@@ -7,12 +7,14 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:targetApi="o">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop = "24dp"
         android:layout_marginBottom="6dp"
         android:textSize="18sp"
+        android:labelFor="@+id/game_mode_group"
         android:text="@string/choose_a_game_mode"/>
 
     <RadioGroup
@@ -21,14 +23,12 @@
         android:layout_marginBottom="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
         <RadioButton
             android:id="@+id/main_menu_time"
             android:text="@string/label_main_menu_time"
             android:enabled="false"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
         <RadioButton android:id="@+id/main_menu_num_words"
             android:text="@string/label_main_menu_num_words"
             android:enabled="false"
@@ -47,16 +47,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton
+            android:id="@+id/main_menu_no_end"
+            android:text="@string/label_main_menu_no_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop = "24dp"
+        android:layout_marginBottom="6dp"
+        android:textSize="18sp"
+        android:labelFor="@+id/text_source_group"
+        android:text="Choose source:"/>
+
+    <RadioGroup
+        android:id="@+id/text_source_group"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/main_menu_12dicts"
+            android:text="@string/twelvedicts_word_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"/>
+        <RadioButton
             android:id="@+id/main_menu_text"
             android:text="@string/label_main_menu_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"/>
-        <RadioButton
-            android:id="@+id/main_menu_no_end"
-            android:text="@string/label_main_menu_no_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
     </RadioGroup>
 
     <CheckBox
@@ -65,6 +88,12 @@
         android:layout_height="wrap_content"
         android:text="@string/auto_correct"
         android:checked="true"/>
+
+    <CheckBox
+        android:id="@+id/main_menu_skip_on_fail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/skip_on_fail"/>
 
     <LinearLayout
         android:id="@+id/number_input_layout"
