@@ -9,4 +9,26 @@
     <string name="pause">Pause</string>
     <string name="continue_button">Continue</string>
     <string name="restart">Restart</string>
+    <string name="no_game_type_error_message">Please select a game mode</string>
+    <string name="label_type_time">Time (seconds)</string>
+    <string name="label_type_num_words">Number of words</string>
+    <string name="label_type_num_errors">Number of errors</string>
+    <string name="label_type_num_correct_words">Number of correct words</string>
+    <string name="label_main_menu_time">Time</string>
+    <string name="label_main_menu_num_words">Number of words</string>
+    <string name="label_main_menu_num_errors">Number of errors</string>
+    <string name="label_main_menu_num_correct_words">Number of correct words</string>
+    <string name="label_main_menu_text">Text Sample</string>
+    <string name="auto_correct">Auto-correct</string>
+    <string name="next">Next</string>
+    <string name="choose_a_game_mode">Choose a game mode:</string>
+    <string name="label_main_menu_no_end">No end</string>
+    <string name="skip_on_fail">Skip on fail</string>
+    <string name="twelvedicts_word_list">12dicts English words list</string>
+    <string name="no_source_error">No source for text</string>
+    <string name="view_benchmark">View Benchmark</string>
+    <string name="next_word">Next word:</string>
+    <string name="error_invalid_finish_mark_2">\'.Insert number bigger than 0</string>
+    <string name="error_invalid_finish_mark_1">Invalid number inserted in field \'</string>
+    <string name="game_over">Game reach the end</string>
 </resources>
