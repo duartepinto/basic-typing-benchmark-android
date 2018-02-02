@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class MainMenu extends AppCompatActivity {
 
                 int gameModeId = gameTypeRadioGroup.getCheckedRadioButtonId();
                 OptionsModel.TypeGame typeGame;
+                int finishMark = 0;
 
                 switch (gameModeId){
                     case R.id.main_menu_time:
@@ -66,6 +68,23 @@ public class MainMenu extends AppCompatActivity {
                         return;
                 }
 
+                switch (gameModeId){
+                    case R.id.main_menu_no_end:
+
+                        break;
+                    default:
+                        finishMark = new Integer(String.valueOf(((EditText) findViewById(R.id.number_input)).getText()));
+
+                        if(finishMark <= 0){
+                            Toast.makeText(MainMenu.this
+                                    ,getString(R.string.error_invalid_finish_mark_1)
+                                            + ((TextView)findViewById(R.id.label_main_menu_number_input)).getText()
+                                            + getString(R.string.error_invalid_finish_mark_2)
+                                    , Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                }
+
                 RadioGroup sourceRadioGroup = findViewById(R.id.text_source_group);
 
                 int sourceId = sourceRadioGroup.getCheckedRadioButtonId();
@@ -84,6 +103,7 @@ public class MainMenu extends AppCompatActivity {
                 }
 
                 OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source);
+                optionsModel.setFinishMark(finishMark);
 
                 startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
             }
