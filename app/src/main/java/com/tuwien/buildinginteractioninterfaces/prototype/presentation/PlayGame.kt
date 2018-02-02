@@ -1,11 +1,13 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.presentation
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.InputType
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.tuwien.buildinginteractioninterfaces.prototype.R
@@ -65,23 +67,29 @@ class PlayGame : AppCompatActivity() {
 
     }
 
+    fun focusOnInputAndShowKeyboard(){
+        keyboard_input.requestFocus()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(keyboard_input, InputMethodManager.SHOW_IMPLICIT)
+    }
 
     fun restartGame(){
         start_button.visibility = View.GONE
         pause_menu.visibility = View.GONE
         pause_button.visibility =  View.VISIBLE
         keyboard_input.visibility = View.VISIBLE
-        continue_button.isEnabled = true;
+        continue_button.isEnabled = true
 
-        updateStatsTextViews(0f,0,0);
+        updateStatsTextViews(0f,0,0)
+        focusOnInputAndShowKeyboard()
 
         //To prevent from bugging with game type TIME
-        chronometer.setBase(SystemClock.elapsedRealtime());
-        chronometer.start();
+        chronometer.setBase(SystemClock.elapsedRealtime())
+        chronometer.start()
 
         val gameCallback = object: Callback {
             override fun finishGame() {
-                this@PlayGame.finishGame();
+                this@PlayGame.finishGame()
             }
 
             override fun updateWords(currentWord: String?, nextWord: String?) {
@@ -110,8 +118,8 @@ class PlayGame : AppCompatActivity() {
     }
 
     fun finishGame(){
-        pauseGame();
-        continue_button.isEnabled = false;
+        pauseGame()
+        continue_button.isEnabled = false
         Toast.makeText(this, getString(R.string.game_over), Toast.LENGTH_SHORT).show()
     }
 
