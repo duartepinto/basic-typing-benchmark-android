@@ -15,7 +15,7 @@ class OptionsModel(var typeGame: TypeGame, var autoCorrect: Boolean, var skipOnF
     }
 
     override fun toString(): String {
-        return "OptionsModel(typeGame=$typeGame, autoCorrect=$autoCorrect, skipOnFail=$skipOnFail, source=$source)"
+        return "OptionsModel(typeGame=$typeGame, autoCorrect=$autoCorrect, skipOnFail=$skipOnFail, source=$source, finishMark=$finishMark)"
     }
 
 }

@@ -15,6 +15,7 @@ public class BenchmarkModel implements Serializable{
     private int backspace;
     private int keystrokes;
     private int characters;
+    private double keystrokesPerChar;
     private double minimumStringDistanceErrorRate;
     private OptionsModel options;
     private Date timestamp = Calendar.getInstance().getTime();
@@ -98,6 +99,7 @@ public class BenchmarkModel implements Serializable{
 
     public void setKeystrokes(int keystrokes) {
         this.keystrokes = keystrokes;
+        updateKeystrokesPerChar();
     }
 
     public int getCharacters() {
@@ -106,10 +108,19 @@ public class BenchmarkModel implements Serializable{
 
     public void setCharacters(int characters) {
         this.characters = characters;
+        updateKeystrokesPerChar();
     }
 
-    public double getKeystrokesPerChar(){
-        return (double) keystrokes / (double) characters;
+    public double getKeystrokesPerChar() {
+        return keystrokesPerChar;
+    }
+
+    public void setKeystrokesPerChar(double keystrokesPerChar) {
+        this.keystrokesPerChar = keystrokesPerChar;
+    }
+
+    public void updateKeystrokesPerChar(){
+        keystrokesPerChar = (double) keystrokes / (double) characters;
     }
 
     public double getMinimumStringDistanceErrorRate(){
@@ -146,7 +157,7 @@ public class BenchmarkModel implements Serializable{
 
     @Override
     public String toString() {
-        return "BenchmarkModel{" + "\n" +
+        return "BenchmarkModel{" +
                 "correctChars=" + correctChars + "\n" +
                 ", correctWords=" + correctWords + "\n" +
                 ", errors=" + errors + "\n" +
@@ -157,6 +168,7 @@ public class BenchmarkModel implements Serializable{
                 ", backspace=" + backspace + "\n" +
                 ", keystrokes=" + keystrokes + "\n" +
                 ", characters=" + characters + "\n" +
+                ", keystrokesPerChar=" + keystrokesPerChar + "\n" +
                 ", minimumStringDistanceErrorRate=" + minimumStringDistanceErrorRate + "\n" +
                 ", options=" + options + "\n" +
                 ", timestamp=" + timestamp + "\n" +
