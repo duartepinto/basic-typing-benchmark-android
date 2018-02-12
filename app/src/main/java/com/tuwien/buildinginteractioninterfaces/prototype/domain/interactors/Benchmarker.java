@@ -2,12 +2,16 @@ package com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
+import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 
 public class Benchmarker {
     private final Chronometer chronometer;
     private final Callback callback;
     private final BenchmarkModel benchmark;
+    private String errorsString = "";
+    private String correctedString = "";
+
 
     public interface Callback{
         void updateStats(float velocity, int correctWords, int failedWords);
@@ -34,7 +38,7 @@ public class Benchmarker {
         float wordsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getTotalWords() / (chronometer.getTimeElapsed() / 1000 );
         benchmark.setCharsPerSec(charsPerSec);
         benchmark.setWordsPerSec(wordsPerSec);
-        benchmark.setTime(chronometer.getTimeElapsed());
+        benchmark.setTimeInMiliseconds(chronometer.getTimeElapsed());
         callback.updateStats(benchmark.getCharsPerSec(), benchmark.getCorrectWords(), benchmark.getErrors());
     }
 
@@ -43,8 +47,8 @@ public class Benchmarker {
     }
 
     public void incrementCorrectWordsCount(String word){
-        benchmark.incrementCorrectChars(word.length());
-        benchmark.incrementCorrectWords();
+        benchmark.setCorrectChars(benchmark.getCorrectChars() + word.length());
+        benchmark.setCorrectWords(benchmark.getCorrectWords()+1);
     }
 
     public void incrementWordCount(String word){
@@ -54,8 +58,14 @@ public class Benchmarker {
 
     @SuppressWarnings("unused")
     public void incrementErrorCount(String word, String correctWord){
-        benchmark.incrementErrors();
-        //TODO Update minimumStringDistanceError
+        benchmark.setErrors(benchmark.getErrors()+1);
+        updateMinimumStringErrorRate(word, correctWord);
+    }
+
+    void updateMinimumStringErrorRate(String word, String correctWord){
+        errorsString += word;
+        correctedString += correctWord;
+        benchmark.setMinimumStringDistanceErrorRate(Benchmarks.msdErrorRate(errorsString,correctedString));
     }
 
     public void incrementBackspace(){
