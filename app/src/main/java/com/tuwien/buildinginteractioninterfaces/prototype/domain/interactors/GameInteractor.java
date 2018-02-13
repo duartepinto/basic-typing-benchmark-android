@@ -53,6 +53,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
         benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options);
         chronometer.setOnChronometerTickListener(this);
+
     }
 
     void startWords(){
@@ -64,6 +65,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
     void generateNextWord(){
         currentWord = nextWord;
         nextWord = dictionaryRepository.getRandomWord();
+        benchmarker.appendNextWord(currentWord);
         callback.updateWords(currentWord,nextWord);
     }
 
@@ -160,7 +162,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
     @Override
     public void onChronometerTick(Chronometer chronometer) {
-        //See if timeInMiliseconds has run out;
+        //See if timeElapsed has run out;
         if(options.getTypeGame()== OptionsModel.TypeGame.TIME && chronometer.getTimeElapsed() >= options.getFinishMark()*1000){
             finishGame();
         }
