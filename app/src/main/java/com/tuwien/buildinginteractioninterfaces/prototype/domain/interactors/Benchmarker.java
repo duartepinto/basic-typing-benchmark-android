@@ -14,7 +14,7 @@ public class Benchmarker {
 
 
     public interface Callback{
-        void updateStats(float velocity, int correctWords, int failedWords);
+        void updateStats(float wpm, float kspc,float msdErrorRate, int correctWords, int failedWords);
     }
 
     public Benchmarker(Chronometer chronometer,
@@ -34,12 +34,8 @@ public class Benchmarker {
     }
 
     void updateStats(){
-        float charsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getCharacters() / (chronometer.getTimeElapsed() / 1000 );
-        float wordsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getTotalWords() / (chronometer.getTimeElapsed() / 1000 );
-        benchmark.setCharsPerSec(charsPerSec);
-        benchmark.setWordsPerSec(wordsPerSec);
-        benchmark.setTimeInMiliseconds(chronometer.getTimeElapsed());
-        callback.updateStats(benchmark.getCharsPerSec(), benchmark.getCorrectWords(), benchmark.getErrors());
+        benchmark.setTimeElapsed(chronometer.getTimeElapsed());
+        callback.updateStats(benchmark.getWordsPerMinute(), ((float) benchmark.getKeystrokesPerChar()), (float) benchmark.getMinimumStringDistanceErrorRate(), benchmark.getCorrectWords(), benchmark.getErrors());
     }
 
     public BenchmarkModel getBenchmark() {
@@ -49,6 +45,8 @@ public class Benchmarker {
     public void incrementCorrectWordsCount(String word){
         benchmark.setCorrectChars(benchmark.getCorrectChars() + word.length());
         benchmark.setCorrectWords(benchmark.getCorrectWords()+1);
+
+        benchmark.addToInputString(word);
     }
 
     public void incrementWordCount(String word){
@@ -60,6 +58,7 @@ public class Benchmarker {
     public void incrementErrorCount(String word, String correctWord){
         benchmark.setErrors(benchmark.getErrors()+1);
         updateMinimumStringErrorRate(word, correctWord);
+        benchmark.addToInputString(word);
     }
 
     void updateMinimumStringErrorRate(String word, String correctWord){
@@ -74,6 +73,10 @@ public class Benchmarker {
 
     public void incrementKeyStrokes() {
         benchmark.setKeystrokes(benchmark.getKeystrokes()+1);
+    }
+
+    public void appendNextWord(String word){
+        benchmark.addToTranscribedString(word);
     }
 
 }
