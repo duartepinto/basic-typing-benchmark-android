@@ -42,7 +42,8 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
                           DictionaryRepository dictionaryRepository,
                           Chronometer chronometer,
                           EditText input,
-                          OptionsModel options) {
+                          OptionsModel options,
+                          String keyboardApp) {
         super(threadExecutor, mainThread);
 
         this.dictionaryRepository = dictionaryRepository;
@@ -51,7 +52,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
         this.callback = callback;
         this.options = options;
 
-        benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options);
+        benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options, keyboardApp);
         chronometer.setOnChronometerTickListener(this);
 
     }
@@ -59,6 +60,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
     void startWords(){
         currentWord = dictionaryRepository.getRandomWord();
         nextWord = dictionaryRepository.getRandomWord();
+        benchmarker.appendNextWord(currentWord);
         callback.updateWords(currentWord, nextWord);
     }
 
@@ -92,6 +94,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
     @Override
     public void afterTextChanged(Editable s) {
         benchmarker.incrementKeyStrokes();
+        benchmarker.addToInputStream(s.toString());
 
         String str = s.toString();
         str = str.replaceAll("^\\s+", ""); // Trim the left side of the string.

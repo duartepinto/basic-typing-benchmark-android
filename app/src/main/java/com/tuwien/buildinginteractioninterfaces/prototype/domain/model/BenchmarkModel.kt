@@ -4,7 +4,7 @@ import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks
 import java.io.Serializable
 import java.util.*
 
-class BenchmarkModel(var options: OptionsModel): Serializable {
+class BenchmarkModel(var options: OptionsModel, var keyboardApp: String): Serializable {
     var correctChars: Int = 0
         set(value) {
             field = value
@@ -75,13 +75,15 @@ class BenchmarkModel(var options: OptionsModel): Serializable {
         transcribedString.append(word + "\n")
     }
 
-    fun addToInputString(word: String){
+    fun addToInputStream(word: String){
         inputStream.append(word + "\n")
     }
 
     override fun toString(): String {
         return "BenchmarkModel(" +
                 "options=$options,\n" +
+                "timestamp=$timestamp,\n" +
+                "keyboardApp=$keyboardApp,\n" +
                 "correctChars=$correctChars,\n" +
                 "correctWords=$correctWords,\n" +
                 "errors=$errors,\n" +
@@ -94,7 +96,9 @@ class BenchmarkModel(var options: OptionsModel): Serializable {
                 "characters=$characters,\n" +
                 "keystrokesPerChar=$keystrokesPerChar,\n" +
                 "minimumStringDistanceErrorRate=$minimumStringDistanceErrorRate,\n" +
-                "timestamp=$timestamp)"
+                "inputString=$inputStream,\n" +
+                "transcribedString=$transcribedString,\n" +
+                ")"
     }
 
 

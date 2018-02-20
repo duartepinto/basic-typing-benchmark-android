@@ -103,9 +103,8 @@ public class MainMenu extends AppCompatActivity {
                         return;
                 }
 
-                String keyboardApp =  Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
 
-                OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source, keyboardApp);
+                OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source);
                 optionsModel.setFinishMark(finishMark);
 
                 startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
