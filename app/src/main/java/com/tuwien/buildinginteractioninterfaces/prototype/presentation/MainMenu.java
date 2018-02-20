@@ -2,6 +2,7 @@ package com.tuwien.buildinginteractioninterfaces.prototype.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -73,7 +74,7 @@ public class MainMenu extends AppCompatActivity {
 
                         break;
                     default:
-                        finishMark = new Integer(String.valueOf(((EditText) findViewById(R.id.number_input)).getText()));
+                        finishMark = Integer.valueOf(String.valueOf(((EditText) findViewById(R.id.number_input)).getText()));
 
                         if(finishMark <= 0){
                             Toast.makeText(MainMenu.this
@@ -102,7 +103,9 @@ public class MainMenu extends AppCompatActivity {
                         return;
                 }
 
-                OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source);
+                String keyboardApp =  Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+
+                OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source, keyboardApp);
                 optionsModel.setFinishMark(finishMark);
 
                 startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
