@@ -19,11 +19,12 @@ public class Benchmarker {
 
     public Benchmarker(Chronometer chronometer,
                        Callback callback,
-                       OptionsModel options) {
+                       OptionsModel options,
+                       String keyboardApp) {
 
         this.chronometer = chronometer;
         this.callback = callback;
-        this.benchmark = new BenchmarkModel(options);
+        this.benchmark = new BenchmarkModel(options, keyboardApp);
 
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -46,7 +47,6 @@ public class Benchmarker {
         benchmark.setCorrectChars(benchmark.getCorrectChars() + word.length());
         benchmark.setCorrectWords(benchmark.getCorrectWords()+1);
 
-        benchmark.addToInputString(word);
     }
 
     public void incrementWordCount(String word){
@@ -54,11 +54,13 @@ public class Benchmarker {
         benchmark.setCharacters(benchmark.getCharacters()+word.length());
     }
 
-    @SuppressWarnings("unused")
     public void incrementErrorCount(String word, String correctWord){
         benchmark.setErrors(benchmark.getErrors()+1);
         updateMinimumStringErrorRate(word, correctWord);
-        benchmark.addToInputString(word);
+    }
+
+    public void addToInputStream(String word){
+        benchmark.addToInputStream(word);
     }
 
     void updateMinimumStringErrorRate(String word, String correctWord){

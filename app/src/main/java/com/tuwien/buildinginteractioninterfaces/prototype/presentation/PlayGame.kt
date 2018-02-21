@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.provider.Settings
 import android.text.InputType
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -111,13 +112,16 @@ class PlayGame : AppCompatActivity() {
 
         val benchmarkerCallback = Benchmarker.Callback { wpm, kspc, msdErrorRate, correctWords, failedWords -> updateStatsTextViews(wpm, kspc, msdErrorRate,correctWords, failedWords) }
 
+        val keyboardApp = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD)
+
         game = GameInteractor(ThreadExecutor.getInstance(),MainThreadImpl.getInstance(),
                 gameCallback,
                 benchmarkerCallback,
                 dictionaryRepository,
                 chronometer,
                 keyboard_input,
-                options)
+                options,
+                keyboardApp)
         game.run()
     }
 
