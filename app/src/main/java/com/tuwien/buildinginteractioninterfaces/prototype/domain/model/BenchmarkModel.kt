@@ -7,9 +7,9 @@ import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks
 import java.io.Serializable
 import java.util.*
 
-@Entity
-class Benchmark(var options: OptionsModel, var keyboardApp: String): Serializable {
-    @PrimaryKey
+@Entity(tableName = "benchmark")
+class BenchmarkModel(var options: OptionsModel, var keyboardApp: String): Serializable {
+    @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
 
     @ColumnInfo(name = "correct_chars")
@@ -115,7 +115,7 @@ class Benchmark(var options: OptionsModel, var keyboardApp: String): Serializabl
     }
 
     override fun toString(): String {
-        return "Benchmark(" +
+        return "BenchmarkModel(" +
                 "options=$options,\n" +
                 "timestamp=$timestamp,\n" +
                 "keyboardApp=$keyboardApp,\n" +

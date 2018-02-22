@@ -1,6 +1,6 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors;
 
-import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.Benchmark;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
@@ -8,7 +8,7 @@ import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 public class Benchmarker {
     private final Chronometer chronometer;
     private final Callback callback;
-    private final Benchmark benchmark;
+    private final BenchmarkModel benchmark;
     private String errorsString = "";
     private String correctedString = "";
 
@@ -24,7 +24,7 @@ public class Benchmarker {
 
         this.chronometer = chronometer;
         this.callback = callback;
-        this.benchmark = new Benchmark(options, keyboardApp);
+        this.benchmark = new BenchmarkModel(options, keyboardApp);
 
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -39,7 +39,7 @@ public class Benchmarker {
         callback.updateStats(benchmark.getWordsPerMinute(), ((float) benchmark.getKeystrokesPerChar()), (float) benchmark.getMinimumStringDistanceErrorRate(), benchmark.getCorrectWords(), benchmark.getErrors());
     }
 
-    public Benchmark getBenchmark() {
+    public BenchmarkModel getBenchmark() {
         return benchmark;
     }
 

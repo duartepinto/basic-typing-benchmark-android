@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.tuwien.buildinginteractioninterfaces.prototype.R
-import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.Benchmark
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel
 
 class BenchmarkActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,9 +12,9 @@ class BenchmarkActivity: AppCompatActivity() {
 
         setContentView(R.layout.activity_benchmark)
 
-        val benchmark = intent.extras["BENCHMARK"] as Benchmark?
+        val benchmark = intent.extras["BENCHMARK"] as BenchmarkModel?
 
-//        val benchmark = Benchmark((OptionsModel(OptionsModel.TypeGame.NO_END,true, true, OptionsModel.Source.TWELVE_DICTS)))
+//        val benchmark = BenchmarkModel((OptionsModel(OptionsModel.TypeGame.NO_END,true, true, OptionsModel.Source.TWELVE_DICTS)))
 
         val benchmarkText = findViewById<TextView>(R.id.benchmark)
 
