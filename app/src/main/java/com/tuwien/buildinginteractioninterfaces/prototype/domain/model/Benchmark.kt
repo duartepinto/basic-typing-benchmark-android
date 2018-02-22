@@ -1,24 +1,39 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.model
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks
 import java.io.Serializable
 import java.util.*
 
-class BenchmarkModel(var options: OptionsModel, var keyboardApp: String): Serializable {
+@Entity
+class Benchmark(var options: OptionsModel, var keyboardApp: String): Serializable {
+    @PrimaryKey
+    var uid: Int = 0
+
+    @ColumnInfo(name = "correct_chars")
     var correctChars: Int = 0
         set(value) {
             field = value
             updateKeystrokesPerChar()
             updateCharsPerSecond()
         }
+
+    @ColumnInfo(name = "correct_words")
     var correctWords: Int = 0
         set(value) {
             field = value
             updateWordsPerMinute()
             updateWordsPerSec()
         }
+    @ColumnInfo(name = "errors")
     var errors: Int = 0
+
+    @ColumnInfo(name = "total_words")
     var totalWords: Int = 0
+
+    @ColumnInfo(name = "time_elapsed")
     var timeElapsed:Long = 0 // In miliseconds
         set(value) {
             field = value
@@ -28,27 +43,47 @@ class BenchmarkModel(var options: OptionsModel, var keyboardApp: String): Serial
             updateWordsPerSec()
         }
 
+    @ColumnInfo(name = "backspace")
     var backspace: Int = 0
+
+    @ColumnInfo(name = "keystrokes")
     var keystrokes: Int = 0
         set(value) {
             field = value
             updateKeystrokesPerSecond()
             updateKeystrokesPerChar()
         }
+    @ColumnInfo(name = "characters")
     var characters: Int = 0
+
+    @ColumnInfo(name = "timestamp")
     var timestamp: Date = Calendar.getInstance().getTime()
 
+    @ColumnInfo(name = "input_stream")
     var inputStream: StringBuffer = StringBuffer()
+
+    @ColumnInfo(name = "transcribed_string")
     var transcribedString: StringBuffer = StringBuffer()
 
     //Entry rates
+    @ColumnInfo(name = "words_per_minute")
     var wordsPerMinute: Float = 0.0f
+
+    @ColumnInfo(name = "keystrokes_per_second")
     var keystrokesPerSecond: Float = 0.0f
+
     //Error rates
+    @ColumnInfo(name = "keystrokes_per_char")
     var keystrokesPerChar: Double = 0.0
+
+    @ColumnInfo(name = "minimum_string_distance_error_rate")
     var minimumStringDistanceErrorRate: Double = 0.0
+
     //Custom entry rates
+    @ColumnInfo(name = "chars_per_sec")
     var charsPerSec: Float = 0.0f
+
+    @ColumnInfo(name = "words_per_sec")
     var wordsPerSec: Float = 0.0f
 
     fun updateKeystrokesPerChar(){
@@ -80,7 +115,7 @@ class BenchmarkModel(var options: OptionsModel, var keyboardApp: String): Serial
     }
 
     override fun toString(): String {
-        return "BenchmarkModel(" +
+        return "Benchmark(" +
                 "options=$options,\n" +
                 "timestamp=$timestamp,\n" +
                 "keyboardApp=$keyboardApp,\n" +
