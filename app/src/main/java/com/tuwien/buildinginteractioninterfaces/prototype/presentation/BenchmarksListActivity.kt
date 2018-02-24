@@ -1,13 +1,14 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.presentation
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.tuwien.buildinginteractioninterfaces.prototype.R
+import com.tuwien.buildinginteractioninterfaces.prototype.data.room.RoomDatabase
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel
-import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel
 
 class BenchmarksListActivity: AppCompatActivity() {
     lateinit var mRecyclerView: RecyclerView
@@ -33,11 +34,15 @@ class BenchmarksListActivity: AppCompatActivity() {
     }
 
     private fun startUpdate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        AsyncTask.execute(object: Runnable {
+            override fun run() {
+                val list = RoomDatabase.instance.getDatabase(applicationContext).benchmarkDao().all
+                updateBenchmarks(list)
+            }
+        })
     }
 
     fun updateBenchmarks(benchmarks :List<BenchmarkModel>){
-        // specify an adapter (see also next example)
         mAdapter = BenchmarkAdapter(benchmarks.toTypedArray())
         mRecyclerView.adapter = mAdapter
     }
