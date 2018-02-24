@@ -1,13 +1,14 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local;
 
-import android.arch.persistence.room.Dao;
 
-import com.tuwien.buildinginteractioninterfaces.prototype.data.room.BenchmarkDao;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel;
 
-/*
- * This class is unnecessary, but it is here just to maintain for consistency. The important part is at BenchmarkDao
- */
-@Dao
-public abstract class BenchmarkRepository implements BenchmarkDao {
+import java.util.List;
 
+public interface BenchmarkRepository {
+    List<BenchmarkModel> getAll();
+    List<BenchmarkModel> loadAllByIds(int[] benchmarkIds);
+    BenchmarkModel findByUID(int benchmarkId);
+    void insertAll(BenchmarkModel... benchmarks);
+    void delete(BenchmarkModel bencmarks);
 }

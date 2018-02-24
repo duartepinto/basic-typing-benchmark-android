@@ -7,11 +7,12 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.BenchmarkRepository;
 
 import java.util.List;
 
 @Dao
-public interface BenchmarkDao {
+public interface BenchmarkDao extends BenchmarkRepository{
     @Query("SELECT * FROM benchmark")
     List<BenchmarkModel> getAll();
 

@@ -10,5 +10,5 @@ import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.loca
 @Database(entities = {BenchmarkModel.class}, version = 1)
 @android.arch.persistence.room.TypeConverters({CustomConverters.class, OptionsConverters.class, StringBufferConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract BenchmarkRepository benchmarkDao();
+    public abstract BenchmarkDao benchmarkDao();
 }
