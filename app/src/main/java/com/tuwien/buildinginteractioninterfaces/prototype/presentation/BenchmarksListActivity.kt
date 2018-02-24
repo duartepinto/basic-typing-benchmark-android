@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.tuwien.buildinginteractioninterfaces.prototype.R
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel
 
 class BenchmarksListActivity: AppCompatActivity() {
     lateinit var mRecyclerView: RecyclerView
@@ -25,6 +26,16 @@ class BenchmarksListActivity: AppCompatActivity() {
         mLayoutManager = LinearLayoutManager(this)
         mRecyclerView.setLayoutManager(mLayoutManager)
 
+        val benchmarks = ArrayList<BenchmarkModel>()
+        val benchmark1 = BenchmarkModel()
+        benchmark1.options = OptionsModel(OptionsModel.TypeGame.NO_END,true,true,OptionsModel.Source.TWELVE_DICTS)
+        benchmark1.keyboardApp = "test"
+        benchmarks.add(benchmark1)
+
+        val benchmark2 = BenchmarkModel()
+        benchmark2.options = OptionsModel(OptionsModel.TypeGame.NO_END,true,true,OptionsModel.Source.TWELVE_DICTS)
+        benchmark2.keyboardApp = "test"
+        benchmarks.add(benchmark2)
     }
 
     fun updateBenchmarks(benchmarks :List<BenchmarkModel>){

@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.tuwien.buildinginteractioninterfaces.prototype.R
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel
 
-class BenchmarkAdapter(@Suppress("UNUSED_PARAMETER") mDataset: Array<BenchmarkModel>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BenchmarkAdapter(var benchmarks: Array<BenchmarkModel>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -20,18 +20,20 @@ class BenchmarkAdapter(@Suppress("UNUSED_PARAMETER") mDataset: Array<BenchmarkMo
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val v = LayoutInflater.from(parent!!.context).inflate(R.layout.benchmark_adapter, parent, false)
 
-
-
         val vh = ViewHolder(v)
         return vh
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return benchmarks.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val id = holder.itemView.findViewById<TextView>(R.id.benchmark_id)
+        val date = holder.itemView.findViewById<TextView>(R.id.benchmark_date)
+
+        id.text = benchmarks[position].uid.toString()
+        date.text = benchmarks[position].timestamp.toString()
     }
 
 }

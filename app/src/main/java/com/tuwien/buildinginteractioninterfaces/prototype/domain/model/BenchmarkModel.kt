@@ -1,14 +1,23 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.model
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
+import com.tuwien.buildinginteractioninterfaces.prototype.data.room.CustomConverters
+import com.tuwien.buildinginteractioninterfaces.prototype.data.room.OptionsConverters
+import com.tuwien.buildinginteractioninterfaces.prototype.data.room.StringBufferConverters
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks
 import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "benchmark")
-class BenchmarkModel(var options: OptionsModel, var keyboardApp: String): Serializable {
+class BenchmarkModel() : Serializable {
+
+    @TypeConverters(OptionsConverters::class)
+    @ColumnInfo(name = "options")
+    lateinit var options: OptionsModel
+
+    @ColumnInfo(name = "keyboard-app")
+    lateinit var keyboardApp: String
+
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
 
@@ -56,12 +65,15 @@ class BenchmarkModel(var options: OptionsModel, var keyboardApp: String): Serial
     @ColumnInfo(name = "characters")
     var characters: Int = 0
 
+    @TypeConverters(CustomConverters::class)
     @ColumnInfo(name = "timestamp")
     var timestamp: Date = Calendar.getInstance().getTime()
 
+    @TypeConverters(StringBufferConverters::class)
     @ColumnInfo(name = "input_stream")
     var inputStream: StringBuffer = StringBuffer()
 
+    @TypeConverters(StringBufferConverters::class)
     @ColumnInfo(name = "transcribed_string")
     var transcribedString: StringBuffer = StringBuffer()
 
