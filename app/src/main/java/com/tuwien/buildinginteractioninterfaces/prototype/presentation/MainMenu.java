@@ -2,9 +2,11 @@ package com.tuwien.buildinginteractioninterfaces.prototype.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,7 +27,6 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_menu);
 
         ((RadioGroup) findViewById(R.id.game_mode_group)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -156,5 +157,27 @@ public class MainMenu extends AppCompatActivity {
         TextView textView = findViewById(R.id.label_main_menu_number_input);
         textView.setText(text);
         findViewById(R.id.number_input_layout).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.benchmark_list:
+                startActivity(new Intent(MainMenu.this, BenchmarksListActivity.class));
+                break;
+            case R.id.about:
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 }

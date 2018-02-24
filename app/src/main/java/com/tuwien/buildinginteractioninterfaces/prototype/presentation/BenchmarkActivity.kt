@@ -11,13 +11,18 @@ class BenchmarkActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_benchmark)
-
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
         val benchmark = intent.extras["BENCHMARK"] as BenchmarkModel?
-
-//        val benchmark = BenchmarkModel((OptionsModel(OptionsModel.TypeGame.NO_END,true, true, OptionsModel.Source.TWELVE_DICTS)))
 
         val benchmarkText = findViewById<TextView>(R.id.benchmark)
 
+
         benchmarkText.text=benchmark.toString()
+    }
+
+    override fun onSupportNavigateUp(): Boolean{
+        onBackPressed()
+        return true
     }
 }

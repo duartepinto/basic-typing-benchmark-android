@@ -12,7 +12,7 @@ import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.Benchmark
 
 class BenchmarksListActivity: AppCompatActivity() {
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
+    lateinit var mAdapter: RecyclerView.Adapter<BenchmarkAdapter.ViewHolder>
     lateinit var mLayoutManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +29,8 @@ class BenchmarksListActivity: AppCompatActivity() {
         mRecyclerView.setLayoutManager(mLayoutManager)
         //Add line between each item
         mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+
 
         startUpdate()
     }

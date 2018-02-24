@@ -35,4 +35,6 @@
     <string name="keystrokes_per_second_ksps">Keystrokes per second (KSPS)</string>
     <string name="msd_error_rate">MSD Error rate</string>
     <string name="choose_source">Choose source:</string>
+    <string name="benchmarks">Benchmarks</string>
+    <string name="about">About</string>
 </resources>
