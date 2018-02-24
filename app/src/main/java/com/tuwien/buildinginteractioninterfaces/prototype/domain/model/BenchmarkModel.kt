@@ -99,23 +99,23 @@ class BenchmarkModel() : Serializable {
     var wordsPerSec: Float = 0.0f
 
     fun updateKeystrokesPerChar(){
-        keystrokesPerChar = Benchmarks.keystrokesPerChar(keystrokes,correctChars)
+        keystrokesPerChar = if(keystrokes == 0 || correctChars == 0) 0.0 else Benchmarks.keystrokesPerChar(keystrokes,correctChars)
     }
 
     fun updateWordsPerMinute(){
-        wordsPerMinute = correctWords.toFloat()/ timeElapsed * 60 * 1000
+        wordsPerMinute = if (timeElapsed == 0L || correctWords == 0) 0.0f else correctWords.toFloat()/ timeElapsed * 60 * 1000
     }
 
     fun updateKeystrokesPerSecond(){
-        keystrokesPerSecond = (keystrokes.toFloat() - 1) / timeElapsed * 1000
+        keystrokesPerSecond = if (timeElapsed == 0L || keystrokes == 0) 0.0f else (keystrokes.toFloat() - 1) / timeElapsed * 1000
     }
 
     fun updateCharsPerSecond(){
-        charsPerSec = if(timeElapsed == 0L) 0.0f else correctChars.toFloat() / timeElapsed * 1000
+        charsPerSec = if(timeElapsed == 0L || correctChars == 0) 0.0f else correctChars.toFloat() / timeElapsed * 1000
     }
 
     fun updateWordsPerSec(){
-        wordsPerSec = if(timeElapsed == 0L) 0.0f else correctWords.toFloat() / timeElapsed * 1000
+        wordsPerSec = if(timeElapsed == 0L || correctChars == 0) 0.0f else correctWords.toFloat() / timeElapsed * 1000
     }
 
     fun addToTranscribedString(word: String){
@@ -141,6 +141,9 @@ class BenchmarkModel() : Serializable {
                 "backspace=$backspace,\n" +
                 "keystrokes=$keystrokes,\n" +
                 "characters=$characters,\n" +
+                "wordsPerMinute=$wordsPerMinute,\n" +
+                "wordsPerSec=$wordsPerSec,\n" +
+                "keystrokesPerSecond=$keystrokesPerSecond,\n" +
                 "keystrokesPerChar=$keystrokesPerChar,\n" +
                 "minimumStringDistanceErrorRate=$minimumStringDistanceErrorRate,\n" +
                 "inputString=$inputStream,\n" +
