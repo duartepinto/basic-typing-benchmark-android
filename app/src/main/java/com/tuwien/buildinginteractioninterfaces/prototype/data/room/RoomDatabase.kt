@@ -12,7 +12,7 @@ class RoomDatabase private constructor(){
     }
     fun getDatabase(context: Context): AppDatabase {
         if(db == null){
-            db = Room.databaseBuilder(context, AppDatabase::class.java, "database-name").build()
+            db = Room.databaseBuilder(context, AppDatabase::class.java, "benchmarks").build()
         }
 
         return db as AppDatabase
