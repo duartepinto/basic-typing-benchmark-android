@@ -110,16 +110,6 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
             }
         });
-
-
-        Button testButton = findViewById(R.id.button_create_game);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainMenu.this, BenchmarksListActivity.class));
-            }
-        });
-
     }
 
 

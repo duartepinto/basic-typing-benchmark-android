@@ -2,6 +2,7 @@ package com.tuwien.buildinginteractioninterfaces.prototype.presentation
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.tuwien.buildinginteractioninterfaces.prototype.R
@@ -25,17 +26,14 @@ class BenchmarksListActivity: AppCompatActivity() {
         // use a linear layout manager
         mLayoutManager = LinearLayoutManager(this)
         mRecyclerView.setLayoutManager(mLayoutManager)
+        //Add line between each item
+        mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        val benchmarks = ArrayList<BenchmarkModel>()
-        val benchmark1 = BenchmarkModel()
-        benchmark1.options = OptionsModel(OptionsModel.TypeGame.NO_END,true,true,OptionsModel.Source.TWELVE_DICTS)
-        benchmark1.keyboardApp = "test"
-        benchmarks.add(benchmark1)
+        startUpdate()
+    }
 
-        val benchmark2 = BenchmarkModel()
-        benchmark2.options = OptionsModel(OptionsModel.TypeGame.NO_END,true,true,OptionsModel.Source.TWELVE_DICTS)
-        benchmark2.keyboardApp = "test"
-        benchmarks.add(benchmark2)
+    private fun startUpdate() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun updateBenchmarks(benchmarks :List<BenchmarkModel>){

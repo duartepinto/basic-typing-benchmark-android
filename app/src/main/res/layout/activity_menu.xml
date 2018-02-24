@@ -125,9 +125,4 @@
             android:text="@string/next"
             tools:ignore="RtlHardcoded" />
     </GridLayout>
-
-    <Button
-        android:id="@+id/test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </LinearLayout>
