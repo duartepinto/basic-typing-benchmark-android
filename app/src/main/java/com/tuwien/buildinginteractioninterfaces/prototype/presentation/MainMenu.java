@@ -173,6 +173,7 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(new Intent(MainMenu.this, BenchmarksListActivity.class));
                 break;
             case R.id.about:
+                startActivity(new Intent(MainMenu.this, AboutActivity.class));
                 break;
             default:
                 return false;

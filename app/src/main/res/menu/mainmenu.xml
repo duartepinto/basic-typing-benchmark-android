@@ -4,9 +4,7 @@
     tools:context=".presentation.MainMenu">
 
     <item android:id="@+id/benchmark_list"
-        android:title="@string/benchmarks"
-        />
+        android:title="@string/benchmarks"/>
     <item android:id="@+id/about"
-        android:title="@string/about"
-        android:visible="false"/>
+        android:title="@string/about"/>
 </menu>
