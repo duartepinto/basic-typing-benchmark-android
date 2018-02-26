@@ -7,4 +7,5 @@
         android:title="@string/benchmarks"/>
     <item android:id="@+id/about"
         android:title="@string/about"/>
+        android:title="@string/benchmarks"/>
 </menu>
