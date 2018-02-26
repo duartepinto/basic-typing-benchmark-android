@@ -24,7 +24,9 @@ public class Benchmarker {
 
         this.chronometer = chronometer;
         this.callback = callback;
-        this.benchmark = new BenchmarkModel(options, keyboardApp);
+        this.benchmark = new BenchmarkModel();
+        benchmark.options = options;
+        benchmark.keyboardApp = keyboardApp;
 
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override

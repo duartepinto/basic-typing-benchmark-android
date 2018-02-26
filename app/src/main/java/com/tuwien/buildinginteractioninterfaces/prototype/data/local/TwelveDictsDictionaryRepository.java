@@ -17,7 +17,7 @@ import kotlin.NotImplementedError;
  * Read more in http://wordlist.aspell.net/12dicts/
  */
 
-public class TwelveDictsDictionaryRepository extends DictionaryRepository {
+public class TwelveDictsDictionaryRepository implements DictionaryRepository {
     private final Context context;
     private final int dictionaryRawFile = R.raw.two_of_twelve; // The name of the file had to be changed to two_of_twelve.txt because of compiler restrictions
     private final String[] dictionary;
@@ -28,6 +28,7 @@ public class TwelveDictsDictionaryRepository extends DictionaryRepository {
         dictionary = readFileFromRawDirectory(dictionaryRawFile).split(System.getProperty("line.separator"));
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private String readFileFromRawDirectory(int resourceId) {
 
         InputStream iStream = context.getResources().openRawResource(resourceId);
@@ -42,7 +43,7 @@ public class TwelveDictsDictionaryRepository extends DictionaryRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return byteStream.toString();
+        return byteStream != null ? byteStream.toString() : "";
     }
 
     private String getWord(int line){

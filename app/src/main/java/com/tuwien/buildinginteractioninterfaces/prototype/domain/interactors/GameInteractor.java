@@ -1,13 +1,16 @@
 package com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors;
 
+import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.Executor;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.MainThread;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.BenchmarkRepository;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.DictionaryRepository;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 
@@ -16,6 +19,7 @@ import java.util.regex.Pattern;
 
 public class GameInteractor extends AbstractInteractor implements TextWatcher, Chronometer.OnChronometerTickListener{
 
+    private final BenchmarkRepository benchmarkRepository;
     private boolean finishedGame = false;
     private int strSize = 0;
     private int previousCompleteWords = 0;
@@ -43,7 +47,8 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
                           Chronometer chronometer,
                           EditText input,
                           OptionsModel options,
-                          String keyboardApp) {
+                          String keyboardApp,
+                          BenchmarkRepository benchmarkRepository) {
         super(threadExecutor, mainThread);
 
         this.dictionaryRepository = dictionaryRepository;
@@ -51,6 +56,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
         this.input = input;
         this.callback = callback;
         this.options = options;
+        this.benchmarkRepository = benchmarkRepository;
 
         benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options, keyboardApp);
         chronometer.setOnChronometerTickListener(this);
@@ -160,6 +166,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
             return;
 
         finishedGame = true;
+        saveBenchmark();
         callback.finishGame();
     }
 
@@ -171,4 +178,17 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
         }
     }
 
+    public synchronized void pauseGame(){
+        saveBenchmark();
+    }
+
+    protected void saveBenchmark(){
+        Log.d("Saving benchmark", benchmarker.getBenchmark().toString());
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                benchmarkRepository.insertAll(benchmarker.getBenchmark());
+            }
+        });
+    }
 }

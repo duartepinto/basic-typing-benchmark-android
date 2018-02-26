@@ -13,6 +13,8 @@ import android.widget.EditText
 import android.widget.Toast
 import com.tuwien.buildinginteractioninterfaces.prototype.R
 import com.tuwien.buildinginteractioninterfaces.prototype.data.local.TwelveDictsDictionaryRepository
+import com.tuwien.buildinginteractioninterfaces.prototype.data.room.AppDatabase
+import com.tuwien.buildinginteractioninterfaces.prototype.data.room.RoomDatabase
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.impl.ThreadExecutor
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.Benchmarker
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors.GameInteractor
@@ -114,6 +116,8 @@ class PlayGame : AppCompatActivity() {
 
         val keyboardApp = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD)
 
+        val benchmarkRepository = RoomDatabase.instance.getDatabase(applicationContext).benchmarkDao()
+
         game = GameInteractor(ThreadExecutor.getInstance(),MainThreadImpl.getInstance(),
                 gameCallback,
                 benchmarkerCallback,
@@ -121,7 +125,8 @@ class PlayGame : AppCompatActivity() {
                 chronometer,
                 keyboard_input,
                 options,
-                keyboardApp)
+                keyboardApp,
+                benchmarkRepository)
         game.run()
     }
 
@@ -136,6 +141,7 @@ class PlayGame : AppCompatActivity() {
         pause_button.visibility =  View.GONE
         pause_menu.visibility = View.VISIBLE
         keyboard_input.visibility = View.INVISIBLE
+        game.pauseGame()
     }
 
     fun continueGame(){

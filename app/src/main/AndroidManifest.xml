@@ -14,7 +14,12 @@
             android:name=".presentation.PlayGame"
             android:parentActivityName=".presentation.MainMenu"/>
 
-        <activity android:name=".presentation.MainMenu"/>
+        <activity android:name=".presentation.MainMenu"
+            />
+
+        <activity
+            android:name=".presentation.BenchmarksListActivity"
+            android:parentActivityName=".presentation.MainMenu"/>
 
         <activity
             android:name=".presentation.SplashActivity"
