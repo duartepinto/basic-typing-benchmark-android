@@ -5,6 +5,7 @@ import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsMo
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 
+@SuppressWarnings("WeakerAccess")
 public class Benchmarker {
     private final Chronometer chronometer;
     private final Callback callback;
@@ -14,7 +15,7 @@ public class Benchmarker {
 
 
     public interface Callback{
-        void updateStats(float wpm, float kspc,float msdErrorRate, int correctWords, int failedWords);
+        void updateStats(float wpm, float ksps,float kspc,float msdErrorRate, int correctWords, int failedWords);
     }
 
     public Benchmarker(Chronometer chronometer,
@@ -38,7 +39,7 @@ public class Benchmarker {
 
     void updateStats(){
         benchmark.setTimeElapsed(chronometer.getTimeElapsed());
-        callback.updateStats(benchmark.getWordsPerMinute(), ((float) benchmark.getKeystrokesPerChar()), (float) benchmark.getMinimumStringDistanceErrorRate(), benchmark.getCorrectWords(), benchmark.getErrors());
+        callback.updateStats(benchmark.getWordsPerMinute(), benchmark.getKeystrokesPerSecond(), (float) benchmark.getKeystrokesPerChar(), (float) benchmark.getMinimumStringDistanceErrorRate(), benchmark.getCorrectWords(), benchmark.getErrors());
     }
 
     public BenchmarkModel getBenchmark() {
@@ -65,7 +66,7 @@ public class Benchmarker {
         benchmark.addToInputStream(word);
     }
 
-    void updateMinimumStringErrorRate(String word, String correctWord){
+    private void updateMinimumStringErrorRate(String word, String correctWord){
         errorsString += word;
         correctedString += correctWord;
         benchmark.setMinimumStringDistanceErrorRate(Benchmarks.msdErrorRate(errorsString,correctedString));

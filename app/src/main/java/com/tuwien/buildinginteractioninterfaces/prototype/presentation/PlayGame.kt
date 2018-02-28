@@ -91,7 +91,7 @@ class PlayGame : AppCompatActivity() {
         keyboard_input.visibility = View.VISIBLE
         continue_button.isEnabled = true
 
-        updateStatsTextViews(0f,0f,0f,0,0)
+        updateStatsTextViews(0f,0f,0f,0f,0,0)
         focusOnInputAndShowKeyboard()
 
         //To prevent from bugging with game type TIME
@@ -112,7 +112,7 @@ class PlayGame : AppCompatActivity() {
             }
         }
 
-        val benchmarkerCallback = Benchmarker.Callback { wpm, kspc, msdErrorRate, correctWords, failedWords -> updateStatsTextViews(wpm, kspc, msdErrorRate,correctWords, failedWords) }
+        val benchmarkerCallback = Benchmarker.Callback { wpm, ksps, kspc, msdErrorRate, correctWords, failedWords -> updateStatsTextViews(wpm, ksps, kspc, msdErrorRate,correctWords, failedWords) }
 
         val keyboardApp = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD)
 
@@ -156,8 +156,9 @@ class PlayGame : AppCompatActivity() {
         next_word.text = nextWord
     }
 
-    fun updateStatsTextViews(wpm: Float, kspc: Float, msdErrorRate:Float, correctWords: Int, failedWords: Int){
+    fun updateStatsTextViews(wpm: Float, ksps: Float,kspc: Float, msdErrorRate:Float, correctWords: Int, failedWords: Int){
         wpm_stat.text = wpm.toString()
+        ksps_stat.text = ksps.toString()
         kspc_stat.text = kspc.toString()
         msd_error_rate_stat.text = msdErrorRate.toString()
         correct_words.text = correctWords.toString()

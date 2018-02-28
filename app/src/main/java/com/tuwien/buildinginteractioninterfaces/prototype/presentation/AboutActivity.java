@@ -25,7 +25,7 @@ public class AboutActivity extends AppCompatActivity{
                 .addItem(versionElement)
                 .addGroup(getString(R.string.contact_developer))
                 .addEmail("duartemr.pinto@gmail.com", getString(R.string.about_email_label))
-                .addGitHub("https://github.com/444Duarte/basic-typing-benchmark-android", getString(R.string.about_github_label))
+                .addGitHub("444Duarte/basic-typing-benchmark-android", getString(R.string.about_github_label))
                 .create();
         setContentView(aboutPage);
     }
