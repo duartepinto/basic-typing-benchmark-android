@@ -17,6 +17,7 @@ import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("WeakerAccess")
 public class GameInteractor extends AbstractInteractor implements TextWatcher, Chronometer.OnChronometerTickListener{
 
     private final BenchmarkRepository benchmarkRepository;
@@ -128,7 +129,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
                         benchmarker.incrementWordCount(splited[0]);
                         benchmarker.incrementErrorCount(splited[0],currentWord);
 
-                        if(benchmarker.getBenchmark().getOptions().getSkipOnFail()){
+                        if(isSkipOnFail()){
                             s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the wrong word, the right space next to it, and the left spaces from the EditText
                             generateNextWord();
                         }
@@ -145,6 +146,10 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
         if(shouldGameFinish())
             finishGame();
+    }
+
+    private boolean isSkipOnFail(){
+        return benchmarker.getBenchmark().getOptions().getSkipOnFail();
     }
 
     private boolean shouldGameFinish() {
