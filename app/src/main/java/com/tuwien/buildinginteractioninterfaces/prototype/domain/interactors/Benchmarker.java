@@ -69,6 +69,25 @@ public class Benchmarker {
         benchmark.addToInputString(word);
 
         updateMinimumStringErrorRate();
+        updateErrorRates();
+    }
+
+    private void updateErrorRates() {
+        benchmark.setCorrectedErrorRate(Benchmarks.correctedErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
+        benchmark.setUncorrectedErrorRate(Benchmarks.uncorrectedErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
+        benchmark.setTotalErrorRate(Benchmarks.totalErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
     }
 
     public void addToInputStream(String word){

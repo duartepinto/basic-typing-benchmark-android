@@ -26,7 +26,31 @@ public class Benchmarks {
             return b;
     }
 
-    public static int msd(String word1, String word2) {
+    public static float correctedErrorRate(String p, String t, int backspaces){
+        int inf = msd(p,t);
+        int c = max(p.length(),t.length()) - inf;
+        @SuppressWarnings("UnnecessaryLocalVariable") int _if = backspaces;
+
+        return ((float) _if) / (c+inf+_if);
+    }
+
+    public static float uncorrectedErrorRate(String p, String t, int backspaces){
+        int inf = msd(p,t);
+        int c = max(p.length(),t.length()) - inf;
+        @SuppressWarnings("UnnecessaryLocalVariable") int _if = backspaces;
+
+        return ((float) inf) / (c+inf+_if);
+    }
+
+    public static float totalErrorRate(String p, String t, int backspaces){
+        int inf = msd(p,t);
+        int c = max(p.length(),t.length()) - inf;
+        @SuppressWarnings("UnnecessaryLocalVariable") int _if = backspaces;
+
+        return ((float) inf + _if) / (c+inf+_if);
+    }
+
+    private static int msd(String word1, String word2) {
         int len1 = word1.length();
         int len2 = word2.length();
 

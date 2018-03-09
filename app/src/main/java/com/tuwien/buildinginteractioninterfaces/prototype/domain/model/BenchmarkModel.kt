@@ -98,14 +98,14 @@ class BenchmarkModel() : Serializable {
     @ColumnInfo(name = "minimum_string_distance_error_rate")
     var minimumStringDistanceErrorRate: Double = 0.0
 
-//    @ColumnInfo(name = "corrected_error_rate")
-//    var correctedErrorRate: Float = 0.0f
-//
-//    @ColumnInfo(name = "uncorrected_error_rate")
-//    var uncorrectedErrorRate: Float = 0.0f
-//
-//    @ColumnInfo(name = "total_error_rate")
-//    var totalErrorRate: Float = 0.0f
+    @ColumnInfo(name = "corrected_error_rate")
+    var correctedErrorRate: Float = 0.0f
+
+    @ColumnInfo(name = "uncorrected_error_rate")
+    var uncorrectedErrorRate: Float = 0.0f
+
+    @ColumnInfo(name = "total_error_rate")
+    var totalErrorRate: Float = 0.0f
 
     //Custom entry rates
     @ColumnInfo(name = "chars_per_sec")
@@ -166,6 +166,9 @@ class BenchmarkModel() : Serializable {
                 "keystrokesPerSecond=$keystrokesPerSecond,\n" +
                 "keystrokesPerChar=$keystrokesPerChar,\n" +
                 "minimumStringDistanceErrorRate=$minimumStringDistanceErrorRate,\n" +
+                "correctedErrorRate=$correctedErrorRate,\n" +
+                "uncorrectedErrorRate=$uncorrectedErrorRate,\n" +
+                "totalErrorRate=$totalErrorRate,\n" +
                 "inputStream=$inputStream,\n" +
                 "inputString=$inputString,\n" +
                 "transcribedString=$transcribedString,\n" +
