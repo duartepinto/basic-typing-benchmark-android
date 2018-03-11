@@ -50,6 +50,7 @@ public class Benchmarker {
         benchmark.setCorrectChars(benchmark.getCorrectChars() + word.length());
         benchmark.setCorrectWords(benchmark.getCorrectWords()+1);
 
+        addSubmittedInput(word);
     }
 
     public void incrementWordCount(String word){
@@ -59,17 +60,42 @@ public class Benchmarker {
 
     public void incrementErrorCount(String word, String correctWord){
         benchmark.setErrors(benchmark.getErrors()+1);
-        updateMinimumStringErrorRate(word, correctWord);
+
+        benchmark.addToTranscribedString(correctWord);
+        addSubmittedInput(word);
+    }
+
+    public void addSubmittedInput(String word){
+        benchmark.addToInputString(word);
+
+        updateMinimumStringErrorRate();
+        updateErrorRates();
+    }
+
+    private void updateErrorRates() {
+        benchmark.setCorrectedErrorRate(Benchmarks.correctedErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
+        benchmark.setUncorrectedErrorRate(Benchmarks.uncorrectedErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
+        benchmark.setTotalErrorRate(Benchmarks.totalErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
     }
 
     public void addToInputStream(String word){
         benchmark.addToInputStream(word);
     }
 
-    private void updateMinimumStringErrorRate(String word, String correctWord){
-        errorsString += word;
-        correctedString += correctWord;
-        benchmark.setMinimumStringDistanceErrorRate(Benchmarks.msdErrorRate(errorsString,correctedString));
+    private void updateMinimumStringErrorRate(){
+        benchmark.setMinimumStringDistanceErrorRate(Benchmarks.msdErrorRate(benchmark.getInputString().toString(),benchmark.getTranscribedString().toString()));
     }
 
     public void incrementBackspace(){

@@ -77,6 +77,13 @@ class BenchmarkModel() : Serializable {
     @ColumnInfo(name = "transcribed_string")
     var transcribedString: StringBuffer = StringBuffer()
 
+    // The difference between the inputStream and the inputString is that
+    // the inputString contains the submitted answer and the inputStream
+    // registers every change of state of the input TextView
+    @TypeConverters(StringBufferConverters::class)
+    @ColumnInfo(name = "input_string")
+    var inputString: StringBuffer = StringBuffer()
+
     //Entry rates
     @ColumnInfo(name = "words_per_minute")
     var wordsPerMinute: Float = 0.0f
@@ -90,6 +97,15 @@ class BenchmarkModel() : Serializable {
 
     @ColumnInfo(name = "minimum_string_distance_error_rate")
     var minimumStringDistanceErrorRate: Double = 0.0
+
+    @ColumnInfo(name = "corrected_error_rate")
+    var correctedErrorRate: Float = 0.0f
+
+    @ColumnInfo(name = "uncorrected_error_rate")
+    var uncorrectedErrorRate: Float = 0.0f
+
+    @ColumnInfo(name = "total_error_rate")
+    var totalErrorRate: Float = 0.0f
 
     //Custom entry rates
     @ColumnInfo(name = "chars_per_sec")
@@ -126,6 +142,10 @@ class BenchmarkModel() : Serializable {
         inputStream.append(word + "\n")
     }
 
+    fun addToInputString(word: String){
+        inputString.append(word + "\n")
+    }
+
     override fun toString(): String {
         return "BenchmarkModel(" +
                 "options=$options,\n" +
@@ -146,7 +166,11 @@ class BenchmarkModel() : Serializable {
                 "keystrokesPerSecond=$keystrokesPerSecond,\n" +
                 "keystrokesPerChar=$keystrokesPerChar,\n" +
                 "minimumStringDistanceErrorRate=$minimumStringDistanceErrorRate,\n" +
-                "inputString=$inputStream,\n" +
+                "correctedErrorRate=$correctedErrorRate,\n" +
+                "uncorrectedErrorRate=$uncorrectedErrorRate,\n" +
+                "totalErrorRate=$totalErrorRate,\n" +
+                "inputStream=$inputStream,\n" +
+                "inputString=$inputString,\n" +
                 "transcribedString=$transcribedString,\n" +
                 ")"
     }
