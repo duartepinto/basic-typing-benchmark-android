@@ -10,7 +10,6 @@ import com.tuwien.buildinginteractioninterfaces.prototype.R
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel
 
 class BenchmarkAdapter(var benchmarks: Array<BenchmarkModel>): RecyclerView.Adapter<BenchmarkAdapter.ViewHolder>() {
-
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -29,8 +28,8 @@ class BenchmarkAdapter(var benchmarks: Array<BenchmarkModel>): RecyclerView.Adap
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent!!.context).inflate(R.layout.benchmark_adapter, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.benchmark_adapter, parent, false)
 
         val vh = ViewHolder(v)
         return vh

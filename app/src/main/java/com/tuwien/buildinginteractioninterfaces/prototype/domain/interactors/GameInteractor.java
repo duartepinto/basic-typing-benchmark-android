@@ -120,8 +120,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
                     benchmarker.incrementWordCount(splited[0]);
                     benchmarker.incrementCorrectWordsCount(currentWord);
 
-                    s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the correct word, the right space next to it, and the left spaces from the EditText
-                    generateNextWord();
+                    skipToNextWord(s, splited, trimmedLeftSpaces); // Remove the correct word
 
                 }else{
                     // Only counts as a failed word if the user is not correcting a mistake (pressing backspace for example)
@@ -130,15 +129,16 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
                         benchmarker.incrementErrorCount(splited[0],currentWord);
 
                         if(isSkipOnFail()){
-                            s.replace(0, splited[0].length() + 1 + trimmedLeftSpaces, "", 0,0);// Remove the wrong word, the right space next to it, and the left spaces from the EditText
-                            generateNextWord();
+                            skipToNextWord(s, splited, trimmedLeftSpaces); // Remove the wrong word
                         }
-                    }else{
-                        benchmarker.incrementBackspace();
                     }
                 }
                 benchmarker.updateStats();
             }
+        }
+
+        if(strSize > s.length() ){
+            benchmarker.incrementBackspace();
         }
 
         previousCompleteWords = completedWords;
@@ -146,6 +146,16 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
         if(shouldGameFinish())
             finishGame();
+    }
+
+    /*
+     * Deletes the first word, the right space next to it, and the left spaces from the EditText
+     */
+    private void skipToNextWord(Editable s, String[] splited, int trimmedLeftSpaces){
+        int cuttingLength = splited[0].length() + 1 + trimmedLeftSpaces;
+        strSize = s.length() - cuttingLength;
+        s.replace(0, cuttingLength, "", 0,0);
+        generateNextWord();
     }
 
     private boolean isSkipOnFail(){

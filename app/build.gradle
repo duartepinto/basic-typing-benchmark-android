@@ -52,7 +52,7 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:1.0.0"
 
     // Guava support for Room
-    implementation "android.arch.persistence.room:guava:1.1.0-alpha3"
+//    implementation "android.arch.persistence.room:guava:1.1.0-alpha3"
 
     //RecyclerView
     implementation 'com.android.support:recyclerview-v7:27.1.0'
