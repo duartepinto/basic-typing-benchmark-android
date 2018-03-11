@@ -153,7 +153,10 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
      */
     private void skipToNextWord(Editable s, String[] splited, int trimmedLeftSpaces){
         int cuttingLength = splited[0].length() + 1 + trimmedLeftSpaces;
+
+        // strSize has to be updated before s.replace otherwise there might be conflicts when the s.replace() triggers the afterTextChanged() function
         strSize = s.length() - cuttingLength;
+
         s.replace(0, cuttingLength, "", 0,0);
         generateNextWord();
     }
