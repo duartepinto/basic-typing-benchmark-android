@@ -45,7 +45,7 @@ class BenchmarksListActivity: AppCompatActivity() {
     }
 
     fun updateBenchmarks(benchmarks :List<BenchmarkModel>){
-        mAdapter = BenchmarkAdapter(benchmarks.toTypedArray())
+        mAdapter = BenchmarkAdapter(benchmarks.asReversed().toTypedArray())
         mRecyclerView.adapter = mAdapter
     }
 }
