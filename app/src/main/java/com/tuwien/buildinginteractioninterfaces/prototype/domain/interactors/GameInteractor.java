@@ -64,7 +64,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
     }
 
-    void startWords(){
+    public void startWords(){
         currentWord = dictionaryRepository.getRandomWord();
         nextWord = dictionaryRepository.getRandomWord();
         benchmarker.appendNextWord(currentWord);
@@ -100,7 +100,8 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
     @Override
     public void afterTextChanged(Editable s) {
-        benchmarker.incrementKeyStrokes();
+        if(strSize != s.length())
+            benchmarker.incrementKeyStrokes();
         benchmarker.addToInputStream(s.toString());
 
         String str = s.toString();

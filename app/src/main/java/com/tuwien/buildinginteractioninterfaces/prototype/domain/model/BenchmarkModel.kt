@@ -123,7 +123,7 @@ class BenchmarkModel() : Serializable {
     }
 
     fun updateKeystrokesPerSecond(){
-        keystrokesPerSecond = if (timeElapsed == 0L || keystrokes == 0) 0.0f else (keystrokes.toFloat() - 1) / timeElapsed * 1000
+        keystrokesPerSecond = if (timeElapsed == 0L || keystrokes == 0) 0.0f else (keystrokes.toFloat()) / timeElapsed * 1000
     }
 
     fun updateCharsPerSecond(){
@@ -162,7 +162,6 @@ class BenchmarkModel() : Serializable {
                 "keystrokes=$keystrokes,\n" +
                 "characters=$characters,\n" +
                 "wordsPerMinute=$wordsPerMinute,\n" +
-                "wordsPerSec=$wordsPerSec,\n" +
                 "keystrokesPerSecond=$keystrokesPerSecond,\n" +
                 "keystrokesPerChar=$keystrokesPerChar,\n" +
                 "minimumStringDistanceErrorRate=$minimumStringDistanceErrorRate,\n" +
