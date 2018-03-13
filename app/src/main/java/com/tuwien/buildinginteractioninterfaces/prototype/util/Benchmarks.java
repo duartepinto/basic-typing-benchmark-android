@@ -12,10 +12,14 @@ public class Benchmarks {
     }
 
     public static double msdErrorRate(String p, String t){
+        return msdErrorRate(msd(p,t), p.length(), t.length());
+    }
+
+    public static double msdErrorRate(int msd, int pLength, int tLength){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return msd(p,t)/(double)Integer.max(p.length(), t.length());
+            return msd/(double)Integer.max(pLength, tLength);
         }else{
-            return msd(p,t)/(double)max(p.length(), t.length());
+            return msd/(double)max(pLength, tLength);
         }
     }
 
@@ -50,7 +54,7 @@ public class Benchmarks {
         return ((float) inf + _if) / (c+inf+_if);
     }
 
-    private static int msd(String word1, String word2) {
+    public static int msd(String word1, String word2) {
         int len1 = word1.length();
         int len2 = word2.length();
 
