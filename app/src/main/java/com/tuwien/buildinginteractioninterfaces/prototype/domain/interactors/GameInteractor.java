@@ -7,10 +7,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.tuwien.buildinginteractioninterfaces.prototype.data.local.AndroidSystemClock;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.Executor;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.MainThread;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.BenchmarkRepository;
+import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.Clock;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.local.DictionaryRepository;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 
@@ -39,6 +41,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
     private String currentWord;
     private String nextWord;
+    private Clock clock = new AndroidSystemClock();
 
     public GameInteractor(Executor threadExecutor,
                           MainThread mainThread,
@@ -85,7 +88,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
         input.addTextChangedListener(this);
         startWords();
         input.setText("");
-        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.setBase(clock.elapsedRealtime());
         chronometer.start();
     }
     @Override
@@ -100,7 +103,8 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
     @Override
     public void afterTextChanged(Editable s) {
-        benchmarker.incrementKeyStrokes();
+        if(strSize != s.length())
+            benchmarker.incrementKeyStrokes();
         benchmarker.addToInputStream(s.toString());
 
         String str = s.toString();
@@ -208,5 +212,9 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
                 benchmarkRepository.insertAll(benchmarker.getBenchmark());
             }
         });
+    }
+
+    public void setClock(Clock clock) {
+        this.clock = clock;
     }
 }
