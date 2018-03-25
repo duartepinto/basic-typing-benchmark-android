@@ -34,6 +34,33 @@ __Metrics__
 * Number of times backspace keys was entered
 * Number of keystrokes
 * Number of characters
+* Input stream: Keeps track of all the changes made to input box. Separates each change with a paragraph. Example (when typing the word "_and_"):
+
+    ```
+        <- Blank                 
+    a
+    an
+    ans <- The 's' is a mistake and is going to be deleted
+    an
+    and <- Correct input!
+    ```
+* Input string: Contains all the input that was counted as submited by the user. Includes errors. 
+    ```
+    ans <- Error! 
+    and <- Correct input!
+    ```
+* Transcibed String: Constains the correct input for each input submitted by the user plus the next word to be analyzed. With skip on fail deactivated it will repeat the correct input if the user did not enter the input correctly. After the user submited input it will automatically add the next word to the string, even if the user has not submited anything.
+    * Without skip on fail
+    ```
+    and <- Because the user made a mistake this is going to be repeated.  
+    and 
+    banana <- Next word to be analyzed.
+    ```
+    * With skip on fail
+    ```
+    and 
+    banana <- Next word to be analyzed.
+    ```
 
 __Entry Rates__
 * Words per minute (WPM)
@@ -42,6 +69,9 @@ __Entry Rates__
 __Error Rates__
 * Keystrokes per Char (KSPC)
 * Minimum String Distance Error Rate (MSD Error Rate). _Only being applied to words that are failed_
+* Corrected error rate
+* Uncorrected error rate
+* Total error rate
 
 __Custom Entry Rates__
 * Chars per second
