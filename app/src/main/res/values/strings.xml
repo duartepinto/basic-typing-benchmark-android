@@ -1,9 +1,11 @@
 <resources>
+    <string name="versionCode">3.0</string>
+    <string name="versionName">3.0</string>
     <string name="app_name">Basic Keyboard Benchmarking Game</string>
     <string name="place_holder_text">Place holder text</string>
     <string name="failed_words">Failed words</string>
     <string name="correct_words">Correct words</string>
-    <string name="velocity_chars_sec">Velocity (chars/sec)</string>
+    <string name="wpm">Words per minute (WPM)</string>
     <string name="time">Time</string>
     <string name="start_game">Start Game</string>
     <string name="pause">Pause</string>
@@ -31,4 +33,14 @@
     <string name="error_invalid_finish_mark_2">\'.Insert number bigger than 0</string>
     <string name="error_invalid_finish_mark_1">Invalid number inserted in field \'</string>
     <string name="game_over">Game reach the end</string>
+    <string name="kspc">Keystrokes per char (KSPC)</string>
+    <string name="keystrokes_per_second_ksps">Keystrokes per second (KSPS)</string>
+    <string name="msd_error_rate">MSD Error rate</string>
+    <string name="choose_source">Choose source:</string>
+    <string name="benchmarks">Benchmarks</string>
+    <string name="about">About</string>
+    <string name="contact_developer">Contact the developer</string>
+    <string name="about_email_label">Email me</string>
+    <string name="about_github_label">Follow this project on Github</string>
+    <string name="about_description">Basic Keyboard Benchmarking Game is a simple typing bencharmk game application for android that can be used to measure the keyboard\'s or the user\'s performance when typing. This project was developed for the Institute of Computer Aided Automation of the Technische Universität Wien (TUWien).</string>
 </resources>

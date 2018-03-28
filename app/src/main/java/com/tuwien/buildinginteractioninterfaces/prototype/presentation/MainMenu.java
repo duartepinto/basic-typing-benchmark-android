@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,7 +27,6 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_menu);
 
         ((RadioGroup) findViewById(R.id.game_mode_group)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -73,7 +75,7 @@ public class MainMenu extends AppCompatActivity {
 
                         break;
                     default:
-                        finishMark = new Integer(String.valueOf(((EditText) findViewById(R.id.number_input)).getText()));
+                        finishMark = Integer.valueOf(String.valueOf(((EditText) findViewById(R.id.number_input)).getText()));
 
                         if(finishMark <= 0){
                             Toast.makeText(MainMenu.this
@@ -102,15 +104,14 @@ public class MainMenu extends AppCompatActivity {
                         return;
                 }
 
+
                 OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source);
                 optionsModel.setFinishMark(finishMark);
 
                 startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
             }
         });
-
     }
-
 
     public void onRadioButtonClicked(int id) {
         View view = findViewById(id);
@@ -120,30 +121,30 @@ public class MainMenu extends AppCompatActivity {
         // Check which radio button was clicked
         switch(view.getId()) {
         case R.id.main_menu_time:
-             if (checked)
-                 displayNumberSelection(getString(R.string.label_type_time));
+             if (checked) {
+                 displayNumberSelection(getString(R.string.label_type_time),60);
+
+             }
              break;
         case R.id.main_menu_num_words:
-            if (checked)
-                displayNumberSelection(getString(R.string.label_type_num_words));
+            if (checked) {
+                displayNumberSelection(getString(R.string.label_type_num_words),10);
+            }
             break;
         case R.id.main_menu_errors:
-            if (checked)
-                displayNumberSelection(getString(R.string.label_type_num_errors));
-                break;
+            if (checked) {
+                displayNumberSelection(getString(R.string.label_type_num_errors),3);
+            }
+            break;
         case R.id.main_menu_correct_words:
-            if (checked)
-                displayNumberSelection(getString(R.string.label_type_num_correct_words));
-                break;
-        case R.id.main_menu_text:
-            if (checked)
-
-                break;
+            if (checked) {
+                displayNumberSelection(getString(R.string.label_type_num_correct_words),10);
+            }
+            break;
         case R.id.main_menu_no_end:
             if (checked)
                 findViewById(R.id.number_input_layout).setVisibility(View.GONE);
-
-                break;
+            break;
 
         default:
 
@@ -151,9 +152,36 @@ public class MainMenu extends AppCompatActivity {
        }
     }
 
-    private void displayNumberSelection(String text){
+    private void displayNumberSelection(String text, int defaultNumber){
         TextView textView = findViewById(R.id.label_main_menu_number_input);
         textView.setText(text);
+
+        EditText input =  findViewById(R.id.number_input);
+        input.setText(Integer.toString(defaultNumber));
+
         findViewById(R.id.number_input_layout).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.benchmark_list:
+                startActivity(new Intent(MainMenu.this, BenchmarksListActivity.class));
+                break;
+            case R.id.about:
+                startActivity(new Intent(MainMenu.this, AboutActivity.class));
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 }

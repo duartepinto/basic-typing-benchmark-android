@@ -5,6 +5,8 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:versionCode="@string/versionCode"
+        android:versionName="@string/versionCode"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -14,7 +16,12 @@
             android:name=".presentation.PlayGame"
             android:parentActivityName=".presentation.MainMenu"/>
 
-        <activity android:name=".presentation.MainMenu"/>
+        <activity android:name=".presentation.MainMenu"
+            />
+
+        <activity
+            android:name=".presentation.BenchmarksListActivity"
+            android:parentActivityName=".presentation.MainMenu"/>
 
         <activity
             android:name=".presentation.SplashActivity"
@@ -28,6 +35,8 @@
 
         </activity>
         <activity android:name=".presentation.BenchmarkActivity" />
+        <activity android:name=".presentation.AboutActivity"
+            android:parentActivityName=".presentation.MainMenu"/>
     </application>
 
 </manifest>

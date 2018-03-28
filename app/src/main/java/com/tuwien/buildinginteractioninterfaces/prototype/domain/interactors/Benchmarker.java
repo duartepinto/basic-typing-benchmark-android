@@ -2,24 +2,32 @@ package com.tuwien.buildinginteractioninterfaces.prototype.domain.interactors;
 
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.BenchmarkModel;
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.model.OptionsModel;
+import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks;
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer;
 
+@SuppressWarnings("WeakerAccess")
 public class Benchmarker {
     private final Chronometer chronometer;
     private final Callback callback;
     private final BenchmarkModel benchmark;
+    private String errorsString = "";
+    private String correctedString = "";
+
 
     public interface Callback{
-        void updateStats(float velocity, int correctWords, int failedWords);
+        void updateStats(float wpm, float ksps,float kspc,float msdErrorRate, int correctWords, int failedWords);
     }
 
     public Benchmarker(Chronometer chronometer,
                        Callback callback,
-                       OptionsModel options) {
+                       OptionsModel options,
+                       String keyboardApp) {
 
         this.chronometer = chronometer;
         this.callback = callback;
-        this.benchmark = new BenchmarkModel(options);
+        this.benchmark = new BenchmarkModel();
+        benchmark.options = options;
+        benchmark.keyboardApp = keyboardApp;
 
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -30,12 +38,8 @@ public class Benchmarker {
     }
 
     void updateStats(){
-        float charsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getCharacters() / (chronometer.getTimeElapsed() / 1000 );
-        float wordsPerSec = chronometer.getTimeElapsed() == 0 ? 0 : (float) benchmark.getTotalWords() / (chronometer.getTimeElapsed() / 1000 );
-        benchmark.setCharsPerSec(charsPerSec);
-        benchmark.setWordsPerSec(wordsPerSec);
-        benchmark.setTime(chronometer.getTimeElapsed());
-        callback.updateStats(benchmark.getCharsPerSec(), benchmark.getCorrectWords(), benchmark.getErrors());
+        benchmark.setTimeElapsed(chronometer.getTimeElapsed());
+        callback.updateStats(benchmark.getWordsPerMinute(), benchmark.getKeystrokesPerSecond(), (float) benchmark.getKeystrokesPerChar(), (float) benchmark.getMinimumStringDistanceErrorRate(), benchmark.getCorrectWords(), benchmark.getErrors());
     }
 
     public BenchmarkModel getBenchmark() {
@@ -43,8 +47,10 @@ public class Benchmarker {
     }
 
     public void incrementCorrectWordsCount(String word){
-        benchmark.incrementCorrectChars(word.length());
-        benchmark.incrementCorrectWords();
+        benchmark.setCorrectChars(benchmark.getCorrectChars() + word.length());
+        benchmark.setCorrectWords(benchmark.getCorrectWords()+1);
+
+        addSubmittedInput(word);
     }
 
     public void incrementWordCount(String word){
@@ -52,10 +58,44 @@ public class Benchmarker {
         benchmark.setCharacters(benchmark.getCharacters()+word.length());
     }
 
-    @SuppressWarnings("unused")
     public void incrementErrorCount(String word, String correctWord){
-        benchmark.incrementErrors();
-        //TODO Update minimumStringDistanceError
+        benchmark.setErrors(benchmark.getErrors()+1);
+
+        benchmark.addToTranscribedString(correctWord);
+        addSubmittedInput(word);
+    }
+
+    public void addSubmittedInput(String word){
+        benchmark.addToInputString(word);
+
+        updateMinimumStringErrorRate();
+        updateErrorRates();
+    }
+
+    private void updateErrorRates() {
+        benchmark.setCorrectedErrorRate(Benchmarks.correctedErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
+        benchmark.setUncorrectedErrorRate(Benchmarks.uncorrectedErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
+        benchmark.setTotalErrorRate(Benchmarks.totalErrorRate(
+                benchmark.getInputString().toString(),
+                benchmark.getTranscribedString().toString(),
+                benchmark.getBackspace()
+        ));
+    }
+
+    public void addToInputStream(String word){
+        benchmark.addToInputStream(word);
+    }
+
+    private void updateMinimumStringErrorRate(){
+        benchmark.setMinimumStringDistanceErrorRate(Benchmarks.msdErrorRate(benchmark.getInputString().toString(),benchmark.getTranscribedString().toString()));
     }
 
     public void incrementBackspace(){
@@ -64,6 +104,10 @@ public class Benchmarker {
 
     public void incrementKeyStrokes() {
         benchmark.setKeystrokes(benchmark.getKeystrokes()+1);
+    }
+
+    public void appendNextWord(String word){
+        benchmark.addToTranscribedString(word);
     }
 
 }
