@@ -1,6 +1,6 @@
 <resources>
-    <string name="versionCode">3.0b</string>
-    <string name="versionName">3.0-beta</string>
+    <string name="versionCode">3.0</string>
+    <string name="versionName">3.0</string>
     <string name="app_name">Basic Keyboard Benchmarking Game</string>
     <string name="place_holder_text">Place holder text</string>
     <string name="failed_words">Failed words</string>

@@ -113,7 +113,6 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
-
     public void onRadioButtonClicked(int id) {
         View view = findViewById(id);
 
@@ -122,30 +121,30 @@ public class MainMenu extends AppCompatActivity {
         // Check which radio button was clicked
         switch(view.getId()) {
         case R.id.main_menu_time:
-             if (checked)
-                 displayNumberSelection(getString(R.string.label_type_time));
+             if (checked) {
+                 displayNumberSelection(getString(R.string.label_type_time),60);
+
+             }
              break;
         case R.id.main_menu_num_words:
-            if (checked)
-                displayNumberSelection(getString(R.string.label_type_num_words));
+            if (checked) {
+                displayNumberSelection(getString(R.string.label_type_num_words),10);
+            }
             break;
         case R.id.main_menu_errors:
-            if (checked)
-                displayNumberSelection(getString(R.string.label_type_num_errors));
-                break;
+            if (checked) {
+                displayNumberSelection(getString(R.string.label_type_num_errors),3);
+            }
+            break;
         case R.id.main_menu_correct_words:
-            if (checked)
-                displayNumberSelection(getString(R.string.label_type_num_correct_words));
-                break;
-        case R.id.main_menu_text:
-            if (checked)
-
-                break;
+            if (checked) {
+                displayNumberSelection(getString(R.string.label_type_num_correct_words),10);
+            }
+            break;
         case R.id.main_menu_no_end:
             if (checked)
                 findViewById(R.id.number_input_layout).setVisibility(View.GONE);
-
-                break;
+            break;
 
         default:
 
@@ -153,9 +152,13 @@ public class MainMenu extends AppCompatActivity {
        }
     }
 
-    private void displayNumberSelection(String text){
+    private void displayNumberSelection(String text, int defaultNumber){
         TextView textView = findViewById(R.id.label_main_menu_number_input);
         textView.setText(text);
+
+        EditText input =  findViewById(R.id.number_input);
+        input.setText(Integer.toString(defaultNumber));
+
         findViewById(R.id.number_input_layout).setVisibility(View.VISIBLE);
     }
 

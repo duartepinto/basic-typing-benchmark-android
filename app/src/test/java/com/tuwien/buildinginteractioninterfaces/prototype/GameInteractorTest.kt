@@ -1,8 +1,5 @@
 package com.tuwien.buildinginteractioninterfaces.prototype
 
-import android.os.SystemClock
-import android.text.Editable
-import android.util.Log
 import android.widget.EditText
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.Executor
 import com.tuwien.buildinginteractioninterfaces.prototype.domain.executor.MainThread
@@ -15,7 +12,6 @@ import com.tuwien.buildinginteractioninterfaces.prototype.domain.repository.loca
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Benchmarks
 import com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThat
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
@@ -39,7 +35,7 @@ class GameInteractorTest{
             return str.toString()
         }
 
-        fun getWordListAsString(n: Int): String{
+        /*fun getWordListAsString(n: Int): String{
             val str = StringBuilder()
 
             for (i in 0..n){
@@ -47,7 +43,7 @@ class GameInteractorTest{
             }
 
             return str.toString()
-        }
+        }*/
     }
 
     fun createGameInteractor(testData: TestData): GameInteractor{
@@ -85,7 +81,7 @@ class GameInteractorTest{
 
     }
 
-    fun runTest(testData: TestData,gameInteractor: GameInteractor){
+    private fun runTest(testData: TestData, gameInteractor: GameInteractor){
         var editable = MockEditable(testData.input[0])
 
         val mockClock = mock(Clock::class.java)
@@ -117,7 +113,7 @@ class GameInteractorTest{
         testData.input.add("")
         testData.input.add("u")
         testData.input.add("un")
-        testData. input.add("uni")
+        testData.input.add("uni")
         testData.input.add("unit ")
         testData.input.add("")
         testData.input.add("t")
