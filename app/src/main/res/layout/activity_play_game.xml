@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tuwien.buildinginteractioninterfaces.prototype.presentation.PlayGame">
+    tools:context="com.tuwien.buildinginteractioninterfaces.typingbenchmark.presentation.PlayGame">
 
     <android.widget.GridLayout
         android:gravity="end"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer
+                <com.tuwien.buildinginteractioninterfaces.typingbenchmark.util.Chronometer
                     android:id="@+id/chronometer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
