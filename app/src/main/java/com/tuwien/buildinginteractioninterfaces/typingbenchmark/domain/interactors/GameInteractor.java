@@ -103,8 +103,7 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
 
     @Override
     public void afterTextChanged(Editable s) {
-        if(strSize != s.length())
-            benchmarker.incrementKeyStrokes();
+        incrementKeyStrokes(s);
         benchmarker.addToInputStream(s.toString());
 
         String str = s.toString();
@@ -115,8 +114,8 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
         Matcher matcher = pattern.matcher(str);
         boolean found = matcher.find();
 
-
         int completedWords = str.length() - str.replace(" ", "").length(); // A word is completed if it has at least a blank space on it's right
+
         if(found){
             String[] splited = str.split("\\s+");
             if(completedWords > 0){
@@ -141,15 +140,24 @@ public class GameInteractor extends AbstractInteractor implements TextWatcher, C
             }
         }
 
-        if(strSize > s.length() ){
-            benchmarker.incrementBackspace();
-        }
+        incrementBackspace(s);
 
         previousCompleteWords = completedWords;
         strSize = s.length();
 
         if(shouldGameFinish())
             finishGame();
+    }
+
+    private void incrementBackspace(Editable s) {
+        if(strSize > s.length() ){
+            benchmarker.incrementBackspace();
+        }
+    }
+
+    private void incrementKeyStrokes(Editable s) {
+        if(strSize != s.length())
+            benchmarker.incrementKeyStrokes();
     }
 
     /*
