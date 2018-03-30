@@ -13,15 +13,12 @@ import android.widget.EditText
 import android.widget.Toast
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.R
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.TwelveDictsDictionaryRepository
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.AppDatabase
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.RoomDatabase
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.executor.impl.ThreadExecutor
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.interactors.Benchmarker
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.interactors.GameInteractor
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.interactors.GameInteractor.Callback
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor.Callback
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.threading.MainThreadImpl
 import kotlinx.android.synthetic.main.activity_play_game.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -118,22 +115,22 @@ class PlayGame : AppCompatActivity() {
 
         val benchmarkRepository = RoomDatabase.instance.getDatabase(applicationContext).benchmarkDao()
 
-        game = GameInteractor(ThreadExecutor.getInstance(),MainThreadImpl.getInstance(),
-                gameCallback,
-                benchmarkerCallback,
+        game = GameInteractor(gameCallback, benchmarkerCallback,
                 dictionaryRepository,
+                benchmarkRepository,
                 chronometer,
-                keyboard_input,
                 options,
-                keyboardApp,
-                benchmarkRepository)
-        game.run()
+                keyboardApp)
+
+        keyboard_input.addTextChangedListener(game)
+        keyboard_input.setText("")
     }
 
     fun finishGame(){
         pauseGame()
         continue_button.isEnabled = false
         Toast.makeText(this, getString(R.string.game_over), Toast.LENGTH_SHORT).show()
+        keyboard_input.removeTextChangedListener(game)
     }
 
     fun pauseGame(){

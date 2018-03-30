@@ -1,11 +1,10 @@
-package com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room;
+package com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room;
 
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.BenchmarkModel;
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.BenchmarkRepository;
 
 @Database(entities = {BenchmarkModel.class}, version = 3)
 @android.arch.persistence.room.TypeConverters({CustomConverters.class, OptionsConverters.class, StringBufferConverters.class})

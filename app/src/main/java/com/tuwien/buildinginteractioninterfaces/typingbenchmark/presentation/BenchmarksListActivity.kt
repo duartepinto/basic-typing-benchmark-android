@@ -7,7 +7,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.R
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.RoomDatabase
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.BenchmarkModel
 
 class BenchmarksListActivity: AppCompatActivity() {

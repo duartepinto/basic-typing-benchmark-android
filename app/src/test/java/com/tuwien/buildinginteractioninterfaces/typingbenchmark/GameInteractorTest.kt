@@ -3,8 +3,8 @@ package com.tuwien.buildinginteractioninterfaces.typingbenchmark
 import android.widget.EditText
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.executor.Executor
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.executor.MainThread
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.interactors.Benchmarker
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.interactors.GameInteractor
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.BenchmarkRepository
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.Clock
@@ -46,7 +46,7 @@ class GameInteractorTest{
         }*/
     }
 
-    fun createGameInteractor(testData: TestData): GameInteractor{
+    fun createGameInteractor(testData: TestData): GameInteractor {
         val mockDictionaryRepository = mock(DictionaryRepository::class.java)
         var randomWordIt = 0
 
@@ -58,36 +58,27 @@ class GameInteractorTest{
 
         val mockChronometer = mock(Chronometer::class.java)
 
-        val mockExecutor = mock(Executor::class.java)
-        val mockMainThread = mock(MainThread::class.java)
         val mockCallback = mock(GameInteractor.Callback::class.java)
         val mockBenchmarkerCallback = mock(Benchmarker.Callback::class.java)
-        val mockEditText = mock(EditText::class.java)
         val mockBenchmarkRepository = mock(BenchmarkRepository::class.java)
 
-        val options = OptionsModel(OptionsModel.TypeGame.NO_END, skipOnFail = false,source = OptionsModel.Source.TWELVE_DICTS,autoCorrect = true )
-        val keyboardApp = "com.test"
+        val mockOptions = OptionsModel(OptionsModel.TypeGame.NO_END, skipOnFail = false,source = OptionsModel.Source.TWELVE_DICTS,autoCorrect = true )
+        val mockKeyboardApp = "com.test"
 
-        return GameInteractor(mockExecutor,
-                mockMainThread,
-                mockCallback,
-                mockBenchmarkerCallback,
-                mockDictionaryRepository,
+        val mockClock = mock(Clock::class.java)
+        `when`(mockClock.elapsedRealtime()).thenReturn(System.currentTimeMillis())
+
+        return GameInteractor(mockCallback, mockBenchmarkerCallback,
+                mockDictionaryRepository, mockBenchmarkRepository,
                 mockChronometer,
-                mockEditText,
-                options,
-                keyboardApp,
-                mockBenchmarkRepository)
-
+                mockOptions,
+                mockKeyboardApp, mockClock)
     }
 
     private fun runTest(testData: TestData, gameInteractor: GameInteractor){
         var editable = MockEditable(testData.input[0])
 
-        val mockClock = mock(Clock::class.java)
-        `when`(mockClock.elapsedRealtime()).thenReturn(System.currentTimeMillis())
-        gameInteractor.setClock(mockClock)
-        gameInteractor.run()
+
 
         for (item in testData.input){
             if(item.equals("") && testData.input.indexOf(item) > 0){

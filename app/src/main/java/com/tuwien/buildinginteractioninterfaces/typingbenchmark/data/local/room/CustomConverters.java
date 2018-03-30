@@ -1,13 +1,8 @@
-package com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room;
+package com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room;
 
 import android.arch.persistence.room.TypeConverter;
-import android.arch.persistence.room.TypeConverters;
-
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel;
 
 import java.util.Date;
-
-import static com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel.*;
 
 
 public class CustomConverters {

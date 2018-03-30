@@ -1,4 +1,4 @@
-package com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room;
+package com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room;
 
 import android.arch.persistence.room.TypeConverter;
 

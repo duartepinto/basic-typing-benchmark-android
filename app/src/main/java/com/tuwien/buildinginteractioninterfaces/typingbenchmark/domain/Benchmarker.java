@@ -1,4 +1,4 @@
-package com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.interactors;
+package com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain;
 
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.BenchmarkModel;
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel;
@@ -10,8 +10,6 @@ public class Benchmarker {
     private final Chronometer chronometer;
     private final Callback callback;
     private final BenchmarkModel benchmark;
-    private String errorsString = "";
-    private String correctedString = "";
 
 
     public interface Callback{
