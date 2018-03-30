@@ -147,7 +147,7 @@ class BenchmarkModel() : Serializable {
     }
 
     override fun toString(): String {
-        return "BenchmarkModel(" +
+        return "BenchmarkModel(\n" +
                 "options=$options,\n" +
                 "timestamp=$timestamp,\n" +
                 "keyboardApp=$keyboardApp,\n" +
@@ -170,7 +170,7 @@ class BenchmarkModel() : Serializable {
                 "totalErrorRate=$totalErrorRate,\n" +
                 "inputStream=$inputStream,\n" +
                 "inputString=$inputString,\n" +
-                "transcribedString=$transcribedString,\n" +
+                "transcribedString=$transcribedString\n" +
                 ")"
     }
 
