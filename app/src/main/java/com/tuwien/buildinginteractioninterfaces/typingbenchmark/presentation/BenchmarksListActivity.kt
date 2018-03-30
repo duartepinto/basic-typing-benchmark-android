@@ -18,6 +18,7 @@ class BenchmarksListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_benchmarks)
+        supportActionBar!!.title = "Benchmark History"
         mRecyclerView = findViewById(R.id.benchmarks_recycler_view)
 
         // use this setting to improve performance if you know that changes
@@ -45,7 +46,13 @@ class BenchmarksListActivity: AppCompatActivity() {
     }
 
     fun updateBenchmarks(benchmarks :List<BenchmarkModel>){
-        mAdapter = BenchmarkAdapter(benchmarks.asReversed().toTypedArray())
-        mRecyclerView.adapter = mAdapter
+
+        runOnUiThread(object: Runnable {
+            override fun run() {
+                mAdapter = BenchmarkAdapter(benchmarks.asReversed().toTypedArray())
+                mRecyclerView.adapter = mAdapter
+            }
+
+        })
     }
 }
