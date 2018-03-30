@@ -1,9 +1,9 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model
 
 import android.arch.persistence.room.*
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.CustomConverters
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.OptionsConverters
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.StringBufferConverters
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.CustomConverters
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.OptionsConverters
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.StringBufferConverters
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.util.Benchmarks
 import java.io.Serializable
 import java.util.*

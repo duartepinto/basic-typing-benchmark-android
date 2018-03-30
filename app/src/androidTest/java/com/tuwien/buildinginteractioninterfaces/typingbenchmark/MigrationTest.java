@@ -6,8 +6,8 @@ import android.arch.persistence.room.testing.MigrationTestHelper;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.AppDatabase;
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.room.RoomDatabase;
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.AppDatabase;
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase;
 
 import org.junit.Rule;
 import org.junit.Test;
