@@ -11,7 +11,7 @@ import java.util.Random;
 
 import kotlin.NotImplementedError;
 
-abstract public class AbstractDotTxtRepository  implements DictionaryRepository {
+abstract class AbstractDotTxtRepository  implements DictionaryRepository {
     protected final Context context;
     protected final String[] dictionary;
     private Random random = new Random(System.currentTimeMillis());

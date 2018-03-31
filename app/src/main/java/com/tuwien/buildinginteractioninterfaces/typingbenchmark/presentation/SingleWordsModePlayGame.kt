@@ -1,11 +1,14 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark.presentation
 
 import android.provider.Settings
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.R
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameMode
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsGameMode
+import kotlinx.android.synthetic.main.activity_play_game.*
 import kotlinx.android.synthetic.main.benchmarks_ingame_stats.*
+import kotlinx.android.synthetic.main.play_input_menu.*
 
 class SingleWordsModePlayGame : AbstractPlayGame() {
     override fun createGameMode(): GameMode {
@@ -17,7 +20,7 @@ class SingleWordsModePlayGame : AbstractPlayGame() {
             override fun updateWords(currentInput: String?, nextInput: String?) {
                 if (currentInput != null) {
                     if (nextInput != null) {
-                        updateWordsTextViews(currentInput,nextInput)
+                        updateInputTextViews(currentInput,nextInput)
                     }
                 }
             }
@@ -29,7 +32,7 @@ class SingleWordsModePlayGame : AbstractPlayGame() {
 
         val benchmarkRepository = RoomDatabase.instance.getDatabase(applicationContext).benchmarkDao()
 
-        game = SingleWordsGameMode(gameCallback, benchmarkerCallback,
+        val game = SingleWordsGameMode(gameCallback, benchmarkerCallback,
                 dictionaryRepository,
                 benchmarkRepository,
                 chronometer,
@@ -37,5 +40,14 @@ class SingleWordsModePlayGame : AbstractPlayGame() {
                 keyboardApp)
 
         return game
+    }
+
+    override fun setContentView() {
+        setContentView(R.layout.activity_play_game)
+    }
+
+    fun updateInputTextViews(currentInput: String, nextInput: String){
+        updateInputTextViews(currentInput)
+        next_word.text = nextInput
     }
 }

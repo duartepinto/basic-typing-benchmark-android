@@ -16,7 +16,6 @@ import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.Twelv
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameMode
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository
-import kotlinx.android.synthetic.main.activity_play_game.*
 import kotlinx.android.synthetic.main.benchmarks_ingame_stats.*
 import kotlinx.android.synthetic.main.play_input_menu.*
 
@@ -29,7 +28,7 @@ abstract class AbstractPlayGame : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_play_game)
+        setContentView()
 
         options = intent.extras["OPTIONS"] as OptionsModel
 
@@ -49,6 +48,8 @@ abstract class AbstractPlayGame : AppCompatActivity() {
         }
 
     }
+
+    abstract fun setContentView()
 
     fun setOptions(){
         // By default it already comes with auto-correct
@@ -114,9 +115,8 @@ abstract class AbstractPlayGame : AppCompatActivity() {
         keyboard_input.visibility = View.VISIBLE
     }
 
-    fun updateWordsTextViews(currentWord: String, nextWord: String){
-        current_word.text = currentWord
-        next_word.text = nextWord
+    fun updateInputTextViews(currentInput: String){
+        current_input.text = currentInput
     }
 
     fun updateStatsTextViews(wpm: Float, ksps: Float,kspc: Float, msdErrorRate:Float, correctWords: Int, failedWords: Int){

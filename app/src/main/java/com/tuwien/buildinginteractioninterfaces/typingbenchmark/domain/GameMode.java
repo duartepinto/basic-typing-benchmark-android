@@ -103,19 +103,6 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
             benchmarker.incrementKeyStrokes();
     }
 
-    /*
-     * Deletes the first word, the right space next to it, and the left spaces from the EditText
-     */
-    void skipToNextWord(Editable s, String[] splited, int trimmedLeftSpaces){
-        int cuttingLength = splited[0].length() + 1 + trimmedLeftSpaces;
-
-        // strSize has to be updated before s.replace otherwise there might be conflicts when the s.replace() triggers the afterTextChanged() function
-        strSize = s.length() - cuttingLength;
-
-        s.replace(0, cuttingLength, "", 0,0);
-        generateNextWord();
-    }
-
     boolean isSkipOnFail(){
         return benchmarker.getBenchmark().getOptions().getSkipOnFail();
     }

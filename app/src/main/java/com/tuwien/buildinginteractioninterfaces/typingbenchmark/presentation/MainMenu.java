@@ -93,12 +93,16 @@ public class MainMenu extends AppCompatActivity {
                 int sourceId = sourceRadioGroup.getCheckedRadioButtonId();
                 OptionsModel.Source source;
 
+                Class<?> playGameClass;
+
                 switch (sourceId){
                     case R.id.main_menu_12dicts:
                         source = OptionsModel.Source.TWELVE_DICTS;
+                        playGameClass = SingleWordsModePlayGame.class;
                         break;
                     case R.id.main_menu_text:
                         source = OptionsModel.Source.TEXT;
+                        playGameClass = SentencesModePlayGame.class;
                         break;
                     default:
                         Toast.makeText(MainMenu.this, R.string.no_source_error, Toast.LENGTH_SHORT).show();
@@ -109,7 +113,7 @@ public class MainMenu extends AppCompatActivity {
                 OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source);
                 optionsModel.setFinishMark(finishMark);
 
-                startActivity(new Intent(MainMenu.this, SingleWordsModePlayGame.class).putExtra("OPTIONS", optionsModel));
+                startActivity(new Intent(MainMenu.this, playGameClass).putExtra("OPTIONS", optionsModel));
             }
         });
     }

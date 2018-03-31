@@ -43,7 +43,7 @@ public class SingleWordsGameMode extends GameMode {
                     benchmarker.incrementWordCount(splited[0]);
                     benchmarker.incrementCorrectWordsCount(currentInput);
 
-                    skipToNextWord(s, splited, trimmedLeftSpaces); // Remove the correct word
+                    skipToNextInput(s, splited, trimmedLeftSpaces); // Remove the correct word
 
                 }else{
                     // Only counts as a failed word if the user is not correcting a mistake (pressing backspace for example)
@@ -52,7 +52,7 @@ public class SingleWordsGameMode extends GameMode {
                         benchmarker.incrementErrorCount(splited[0],currentInput);
 
                         if(isSkipOnFail()){
-                            skipToNextWord(s, splited, trimmedLeftSpaces); // Remove the wrong word
+                            skipToNextInput(s, splited, trimmedLeftSpaces); // Remove the wrong word
                         }
                     }
                 }
@@ -69,4 +69,16 @@ public class SingleWordsGameMode extends GameMode {
             finishGame();
     }
 
+    /*
+     * Deletes the first word, the right space next to it, and the left spaces from the EditText
+     */
+    private void skipToNextInput(Editable s, String[] splited, int trimmedLeftSpaces){
+        int cuttingLength = splited[0].length() + 1 + trimmedLeftSpaces;
+
+        // strSize has to be updated before s.replace otherwise there might be conflicts when the s.replace() triggers the afterTextChanged() function
+        strSize = s.length() - cuttingLength;
+
+        s.replace(0, cuttingLength, "", 0,0);
+        generateNextWord();
+    }
 }

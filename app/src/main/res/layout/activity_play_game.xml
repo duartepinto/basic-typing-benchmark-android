@@ -32,7 +32,10 @@
 
         </LinearLayout>
 
-        <include layout="@layout/benchmarks_ingame_stats"/>
+        <include layout="@layout/benchmarks_ingame_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
     </android.widget.GridLayout>
 
