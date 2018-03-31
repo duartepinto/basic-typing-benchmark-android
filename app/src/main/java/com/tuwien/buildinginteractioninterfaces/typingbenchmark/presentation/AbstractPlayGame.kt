@@ -5,7 +5,6 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.provider.Settings
 import android.text.InputType
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -14,19 +13,18 @@ import android.widget.Toast
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.R
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.TextRepository
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.TwelveDictsDictionaryRepository
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsMode
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsMode.Callback
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameMode
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository
 import kotlinx.android.synthetic.main.activity_play_game.*
+import kotlinx.android.synthetic.main.benchmarks_ingame_stats.*
+import kotlinx.android.synthetic.main.play_input_menu.*
 
 @Suppress("MemberVisibilityCanBePrivate")
-class PlayGame : AppCompatActivity() {
+abstract class AbstractPlayGame : AppCompatActivity() {
 
     lateinit var dictionaryRepository: DictionaryRepository
-    lateinit var game: SingleWordsMode
+    lateinit var game: GameMode
     lateinit var options: OptionsModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +57,7 @@ class PlayGame : AppCompatActivity() {
         }
 
         dictionaryRepository = when(options.source){
-            OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(this)
+            OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(applicationContext)
             OptionsModel.Source.TEXT -> TextRepository(this)
         }
 
@@ -86,36 +84,13 @@ class PlayGame : AppCompatActivity() {
         chronometer.base = SystemClock.elapsedRealtime()
         chronometer.start()
 
-        val gameCallback = object: Callback {
-            override fun finishGame() {
-                this@PlayGame.finishGame()
-            }
-
-            override fun updateWords(currentWord: String?, nextWord: String?) {
-                if (currentWord != null) {
-                    if (nextWord != null) {
-                        updateWordsTextViews(currentWord,nextWord)
-                    }
-                }
-            }
-        }
-
-        val benchmarkerCallback = Benchmarker.Callback { wpm, ksps, kspc, msdErrorRate, correctWords, failedWords -> updateStatsTextViews(wpm, ksps, kspc, msdErrorRate,correctWords, failedWords) }
-
-        val keyboardApp = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD)
-
-        val benchmarkRepository = RoomDatabase.instance.getDatabase(applicationContext).benchmarkDao()
-
-        game = SingleWordsMode(gameCallback, benchmarkerCallback,
-                dictionaryRepository,
-                benchmarkRepository,
-                chronometer,
-                options,
-                keyboardApp)
+        game = createGameMode()
 
         keyboard_input.addTextChangedListener(game)
         keyboard_input.setText("")
     }
+
+    abstract fun createGameMode(): GameMode
 
     fun finishGame(){
         pauseGame()

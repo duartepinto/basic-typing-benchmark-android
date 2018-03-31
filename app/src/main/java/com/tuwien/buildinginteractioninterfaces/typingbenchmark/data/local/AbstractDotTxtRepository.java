@@ -17,8 +17,8 @@ abstract public class AbstractDotTxtRepository  implements DictionaryRepository 
     private Random random = new Random(System.currentTimeMillis());
 
     AbstractDotTxtRepository(Context context) {
-        dictionary = readFileFromRawDirectory(getDictionaryRawFile()).split(System.getProperty("line.separator"));
         this.context = context;
+        dictionary = readFileFromRawDirectory(getDictionaryRawFile()).split(System.getProperty("line.separator"));
     }
 
     abstract int getDictionaryRawFile();

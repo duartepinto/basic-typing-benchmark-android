@@ -109,7 +109,7 @@ public class MainMenu extends AppCompatActivity {
                 OptionsModel optionsModel = new OptionsModel(typeGame,autoCorrect, skipOnFail, source);
                 optionsModel.setFinishMark(finishMark);
 
-                startActivity(new Intent(MainMenu.this, PlayGame.class).putExtra("OPTIONS", optionsModel));
+                startActivity(new Intent(MainMenu.this, SingleWordsModePlayGame.class).putExtra("OPTIONS", optionsModel));
             }
         });
     }

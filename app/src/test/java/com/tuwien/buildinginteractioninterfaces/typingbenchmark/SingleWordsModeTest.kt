@@ -1,7 +1,8 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark
 
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsMode
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameMode
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsGameMode
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.BenchmarkRepository
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.Clock
@@ -43,7 +44,7 @@ class SingleWordsModeTest{
         }*/
     }
 
-    fun createGameInteractor(testData: TestData): SingleWordsMode {
+    fun createGameInteractor(testData: TestData): GameMode {
         val mockDictionaryRepository = mock(DictionaryRepository::class.java)
         var randomWordIt = 0
 
@@ -55,7 +56,7 @@ class SingleWordsModeTest{
 
         val mockChronometer = mock(Chronometer::class.java)
 
-        val mockCallback = mock(SingleWordsMode.Callback::class.java)
+        val mockCallback = mock(GameMode.Callback::class.java)
         val mockBenchmarkerCallback = mock(Benchmarker.Callback::class.java)
         val mockBenchmarkRepository = mock(BenchmarkRepository::class.java)
 
@@ -65,14 +66,14 @@ class SingleWordsModeTest{
         val mockClock = mock(Clock::class.java)
         `when`(mockClock.elapsedRealtime()).thenReturn(System.currentTimeMillis())
 
-        return SingleWordsMode(mockCallback, mockBenchmarkerCallback,
+        return SingleWordsGameMode(mockCallback, mockBenchmarkerCallback,
                 mockDictionaryRepository, mockBenchmarkRepository,
                 mockChronometer,
                 mockOptions,
                 mockKeyboardApp, mockClock)
     }
 
-    private fun runTest(testData: TestData, singleWordsMode: SingleWordsMode){
+    private fun runTest(testData: TestData, singleWordsMode: GameMode){
         var editable = MockEditable(testData.input[0])
 
 
