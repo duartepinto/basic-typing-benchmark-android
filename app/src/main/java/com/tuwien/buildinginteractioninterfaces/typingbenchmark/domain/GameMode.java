@@ -12,6 +12,9 @@ import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repositor
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository;
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.util.Chronometer;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @SuppressWarnings("WeakerAccess")
 public abstract class GameMode implements TextWatcher, Chronometer.OnChronometerTickListener{
 
@@ -22,6 +25,21 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
     Benchmarker benchmarker;
     Callback callback;
     OptionsModel options;
+
+    protected int getCompletedWords(String str) {
+        Pattern pattern = Pattern.compile("\\s+"); // A word is completed if after the word there is any whitespace character (equal to [\r\n\t\f\v ])
+        Matcher matcher = pattern.matcher(str);
+        int completedWords = 0;
+        while(matcher.find())
+            completedWords++;
+        return completedWords;
+    }
+
+    protected String getTrimmedOnLeftString(Editable s) {
+        String str = s.toString();
+        str = str.replaceAll("^\\s+", ""); // Trim the left side of the string.
+        return str;
+    }
 
     public interface Callback{
         void updateWords(String currentInput, String nextInput);
@@ -52,7 +70,7 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
         benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options, keyboardApp);
         chronometer.setOnChronometerTickListener(this);
 
-        startWords();
+        startInputs();
         chronometer.setBase(this.clock.elapsedRealtime());
         chronometer.start();
     }
@@ -68,17 +86,17 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
         this(callback, benchmarkerCallback, dictionaryRepository, benchmarkRepository,chronometer,options, keyboardApp, new AndroidSystemClock());
     }
 
-    void startWords(){
+    void startInputs(){
         currentInput = dictionaryRepository.getRandomString();
         nextInput = dictionaryRepository.getRandomString();
-        benchmarker.appendNextWord(currentInput);
+        benchmarker.addToTranscribedString(currentInput);
         callback.updateWords(currentInput, nextInput);
     }
 
-    void generateNextWord(){
+    void generateNextInput(){
         currentInput = nextInput;
         nextInput = dictionaryRepository.getRandomString();
-        benchmarker.appendNextWord(currentInput);
+        benchmarker.addToTranscribedString(currentInput);
         callback.updateWords(currentInput, nextInput);
     }
 

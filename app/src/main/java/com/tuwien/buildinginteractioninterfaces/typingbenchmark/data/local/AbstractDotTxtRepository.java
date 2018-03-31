@@ -57,7 +57,7 @@ abstract class AbstractDotTxtRepository  implements DictionaryRepository {
             Random random = new Random(System.currentTimeMillis());
             line = random.nextInt((max - min) + 1) + min;
         }*/
-        line = random.nextInt(max - min + 1) + min;
+        line = random.nextInt(max - min) + min;
 
         return getLine(line);
     }

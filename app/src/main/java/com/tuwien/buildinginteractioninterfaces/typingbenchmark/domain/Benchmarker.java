@@ -48,7 +48,6 @@ public class Benchmarker {
         benchmark.setCorrectChars(benchmark.getCorrectChars() + word.length());
         benchmark.setCorrectWords(benchmark.getCorrectWords()+1);
 
-        addSubmittedInput(word);
     }
 
     public void incrementWordCount(String word){
@@ -56,11 +55,12 @@ public class Benchmarker {
         benchmark.setCharacters(benchmark.getCharacters()+word.length());
     }
 
-    public void incrementErrorCount(String word, String correctWord){
+    public void incrementErrorCount(){
         benchmark.setErrors(benchmark.getErrors()+1);
+    }
 
-        benchmark.addToTranscribedString(correctWord);
-        addSubmittedInput(word);
+    public void addToTranscribedString(String correctInput){
+        benchmark.addToTranscribedString(correctInput);
     }
 
     public void addSubmittedInput(String word){
@@ -102,10 +102,6 @@ public class Benchmarker {
 
     public void incrementKeyStrokes() {
         benchmark.setKeystrokes(benchmark.getKeystrokes()+1);
-    }
-
-    public void appendNextWord(String word){
-        benchmark.addToTranscribedString(word);
     }
 
 }

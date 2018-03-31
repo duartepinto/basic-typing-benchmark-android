@@ -26,38 +26,33 @@ public class SingleWordsGameMode extends GameMode {
         incrementKeyStrokes(s);
         benchmarker.addToInputStream(s.toString());
 
-        String str = s.toString();
-        str = str.replaceAll("^\\s+", ""); // Trim the left side of the string.
+        String str = getTrimmedOnLeftString(s);
         int trimmedLeftSpaces = s.toString().length() - str.length();
+        int completedWords = getCompletedWords(str);
 
-        Pattern pattern = Pattern.compile("\\s");
-        Matcher matcher = pattern.matcher(str);
-        boolean found = matcher.find();
-
-        int completedWords = str.length() - str.replace(" ", "").length(); // A word is completed if it has at least a blank space on it's right
-
-        if(found){
+        if(completedWords > 0){
             String[] splited = str.split("\\s+");
-            if(completedWords > 0){
-                if(splited[0].equals(currentInput.trim())){ // For some reason currentWord comes with and extra space so it needs to be trimmed
+            if(splited[0].equals(currentInput.trim())){ // For some reason currentWord comes with and extra space so it needs to be trimmed
+                benchmarker.incrementWordCount(splited[0]);
+                benchmarker.incrementCorrectWordsCount(splited[0]);
+                benchmarker.addSubmittedInput(splited[0]);
+
+                skipToNextInput(s, splited, trimmedLeftSpaces); // Remove the correct word
+
+            }else{
+                // Only counts as a failed word if the user is not correcting a mistake (pressing backspace for example)
+                if(strSize < s.length() && previousCompleteWords < completedWords){
                     benchmarker.incrementWordCount(splited[0]);
-                    benchmarker.incrementCorrectWordsCount(currentInput);
+                    benchmarker.incrementErrorCount();
+                    benchmarker.addSubmittedInput(splited[0]);
+                    benchmarker.addToTranscribedString(currentInput);
 
-                    skipToNextInput(s, splited, trimmedLeftSpaces); // Remove the correct word
-
-                }else{
-                    // Only counts as a failed word if the user is not correcting a mistake (pressing backspace for example)
-                    if(strSize < s.length() && previousCompleteWords < completedWords){
-                        benchmarker.incrementWordCount(splited[0]);
-                        benchmarker.incrementErrorCount(splited[0],currentInput);
-
-                        if(isSkipOnFail()){
-                            skipToNextInput(s, splited, trimmedLeftSpaces); // Remove the wrong word
-                        }
+                    if(isSkipOnFail()){
+                        skipToNextInput(s, splited, trimmedLeftSpaces); // Remove the wrong word
                     }
                 }
-                benchmarker.updateStats();
             }
+            benchmarker.updateStats();
         }
 
         incrementBackspace(s);
@@ -79,6 +74,6 @@ public class SingleWordsGameMode extends GameMode {
         strSize = s.length() - cuttingLength;
 
         s.replace(0, cuttingLength, "", 0,0);
-        generateNextWord();
+        generateNextInput();
     }
 }
