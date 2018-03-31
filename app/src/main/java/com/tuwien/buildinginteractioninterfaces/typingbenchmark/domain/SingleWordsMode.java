@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("WeakerAccess")
-public class GameInteractor implements TextWatcher, Chronometer.OnChronometerTickListener{
+public class SingleWordsMode implements TextWatcher, Chronometer.OnChronometerTickListener{
 
     private final BenchmarkRepository benchmarkRepository;
     private boolean finishedGame = false;
@@ -38,13 +38,13 @@ public class GameInteractor implements TextWatcher, Chronometer.OnChronometerTic
     private String nextWord;
     private Clock clock = new AndroidSystemClock();
 
-    public GameInteractor(Callback callback,
-                          Benchmarker.Callback benchmarkerCallback,
-                          DictionaryRepository dictionaryRepository,
-                          BenchmarkRepository benchmarkRepository,
-                          Chronometer chronometer,
-                          OptionsModel options,
-                          String keyboardApp, Clock clock) {
+    public SingleWordsMode(Callback callback,
+                           Benchmarker.Callback benchmarkerCallback,
+                           DictionaryRepository dictionaryRepository,
+                           BenchmarkRepository benchmarkRepository,
+                           Chronometer chronometer,
+                           OptionsModel options,
+                           String keyboardApp, Clock clock) {
         this.dictionaryRepository = dictionaryRepository;
         this.chronometer = chronometer;
         this.callback = callback;
@@ -61,26 +61,26 @@ public class GameInteractor implements TextWatcher, Chronometer.OnChronometerTic
     }
 
 
-    public GameInteractor(Callback callback,
-                          Benchmarker.Callback benchmarkerCallback,
-                          DictionaryRepository dictionaryRepository,
-                          BenchmarkRepository benchmarkRepository,
-                          Chronometer chronometer,
-                          OptionsModel options,
-                          String keyboardApp){
+    public SingleWordsMode(Callback callback,
+                           Benchmarker.Callback benchmarkerCallback,
+                           DictionaryRepository dictionaryRepository,
+                           BenchmarkRepository benchmarkRepository,
+                           Chronometer chronometer,
+                           OptionsModel options,
+                           String keyboardApp){
         this(callback, benchmarkerCallback, dictionaryRepository, benchmarkRepository,chronometer,options, keyboardApp, new AndroidSystemClock());
     }
 
     void startWords(){
-        currentWord = dictionaryRepository.getRandomWord();
-        nextWord = dictionaryRepository.getRandomWord();
+        currentWord = dictionaryRepository.getRandomString();
+        nextWord = dictionaryRepository.getRandomString();
         benchmarker.appendNextWord(currentWord);
         callback.updateWords(currentWord, nextWord);
     }
 
     void generateNextWord(){
         currentWord = nextWord;
-        nextWord = dictionaryRepository.getRandomWord();
+        nextWord = dictionaryRepository.getRandomString();
         benchmarker.appendNextWord(currentWord);
         callback.updateWords(currentWord,nextWord);
     }

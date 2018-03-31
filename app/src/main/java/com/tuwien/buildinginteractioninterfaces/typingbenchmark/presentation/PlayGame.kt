@@ -12,11 +12,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.R
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.TextRepository
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.TwelveDictsDictionaryRepository
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor.Callback
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsMode
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsMode.Callback
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository
 import kotlinx.android.synthetic.main.activity_play_game.*
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_play_game.*
 class PlayGame : AppCompatActivity() {
 
     lateinit var dictionaryRepository: DictionaryRepository
-    lateinit var game: GameInteractor
+    lateinit var game: SingleWordsMode
     lateinit var options: OptionsModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,19 +58,9 @@ class PlayGame : AppCompatActivity() {
             findViewById<EditText>(R.id.keyboard_input).inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         }
 
-        /*when(options.typeGame){
-            OptionsModel.TypeGame.TIME -> {}
-            OptionsModel.TypeGame.NUM_WORDS -> {}
-            OptionsModel.TypeGame.NUM_ERRORS -> {}
-            OptionsModel.TypeGame.NUM_CORRECT_WORDS -> {}
-            OptionsModel.TypeGame.NO_END -> {}
-        }*/
-
         dictionaryRepository = when(options.source){
             OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(this)
-            else -> {
-                TwelveDictsDictionaryRepository(this)
-            }
+            OptionsModel.Source.TEXT -> TextRepository(this)
         }
 
 
@@ -115,7 +106,7 @@ class PlayGame : AppCompatActivity() {
 
         val benchmarkRepository = RoomDatabase.instance.getDatabase(applicationContext).benchmarkDao()
 
-        game = GameInteractor(gameCallback, benchmarkerCallback,
+        game = SingleWordsMode(gameCallback, benchmarkerCallback,
                 dictionaryRepository,
                 benchmarkRepository,
                 chronometer,
