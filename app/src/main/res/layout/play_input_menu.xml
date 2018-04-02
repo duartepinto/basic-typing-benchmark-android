@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginTop="20dp"
+    tools:showIn="@layout/activity_play_game">
+
+    <TextView
+        android:id="@+id/current_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/place_holder_text" />
+
+    <EditText
+        android:id="@+id/keyboard_input"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionSend"
+        android:inputType="text"
+        tools:ignore="LabelFor" />
+
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_game" />
+
+    <Button
+        android:id="@+id/pause_button"
+        android:visibility="gone"
+        android:text="@string/pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/pause_menu"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/continue_button"
+            android:text="@string/continue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/restart_button"
+            android:text="@string/restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/benchmark_button"
+            android:text="@string/view_benchmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</LinearLayout>

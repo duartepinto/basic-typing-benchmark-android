@@ -1,10 +1,8 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark
 
-import android.widget.EditText
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.executor.Executor
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.executor.MainThread
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameMode
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SingleWordsGameMode
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.BenchmarkRepository
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.Clock
@@ -17,7 +15,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import java.util.*
 
-class GameInteractorTest{
+class SingleWordsModeTest{
 
     class TestData{
         val input = ArrayList<String>()
@@ -46,11 +44,11 @@ class GameInteractorTest{
         }*/
     }
 
-    fun createGameInteractor(testData: TestData): GameInteractor {
+    fun createGameInteractor(testData: TestData): GameMode {
         val mockDictionaryRepository = mock(DictionaryRepository::class.java)
         var randomWordIt = 0
 
-        `when`(mockDictionaryRepository.randomWord).thenAnswer {
+        `when`(mockDictionaryRepository.randomString).thenAnswer {
             val newWord = testData.wordList.get(randomWordIt)
             randomWordIt++
             newWord
@@ -58,7 +56,7 @@ class GameInteractorTest{
 
         val mockChronometer = mock(Chronometer::class.java)
 
-        val mockCallback = mock(GameInteractor.Callback::class.java)
+        val mockCallback = mock(GameMode.Callback::class.java)
         val mockBenchmarkerCallback = mock(Benchmarker.Callback::class.java)
         val mockBenchmarkRepository = mock(BenchmarkRepository::class.java)
 
@@ -68,14 +66,14 @@ class GameInteractorTest{
         val mockClock = mock(Clock::class.java)
         `when`(mockClock.elapsedRealtime()).thenReturn(System.currentTimeMillis())
 
-        return GameInteractor(mockCallback, mockBenchmarkerCallback,
+        return SingleWordsGameMode(mockCallback, mockBenchmarkerCallback,
                 mockDictionaryRepository, mockBenchmarkRepository,
                 mockChronometer,
                 mockOptions,
                 mockKeyboardApp, mockClock)
     }
 
-    private fun runTest(testData: TestData, gameInteractor: GameInteractor){
+    private fun runTest(testData: TestData, singleWordsMode: GameMode){
         var editable = MockEditable(testData.input[0])
 
 
@@ -86,7 +84,7 @@ class GameInteractorTest{
             }else{
                 editable = MockEditable(item)
             }
-            gameInteractor.afterTextChanged(editable)
+            singleWordsMode.afterTextChanged(editable)
         }
     }
 

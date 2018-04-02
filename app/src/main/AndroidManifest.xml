@@ -12,7 +12,11 @@
         android:fullBackupContent="true">
 
         <activity
-            android:name=".presentation.PlayGame"
+            android:name=".presentation.SingleWordsModePlayGame"
+            android:parentActivityName=".presentation.MainMenu"/>
+
+        <activity
+            android:name=".presentation.SentencesModePlayGame"
             android:parentActivityName=".presentation.MainMenu"/>
 
         <activity android:name=".presentation.MainMenu"

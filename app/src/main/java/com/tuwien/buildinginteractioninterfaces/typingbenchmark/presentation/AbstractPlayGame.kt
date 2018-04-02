@@ -5,32 +5,30 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.provider.Settings
 import android.text.InputType
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.R
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.TextRepository
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.TwelveDictsDictionaryRepository
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor
-import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameInteractor.Callback
+import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameMode
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository
-import kotlinx.android.synthetic.main.activity_play_game.*
+import kotlinx.android.synthetic.main.benchmarks_ingame_stats.*
+import kotlinx.android.synthetic.main.play_input_menu.*
 
 @Suppress("MemberVisibilityCanBePrivate")
-class PlayGame : AppCompatActivity() {
+abstract class AbstractPlayGame : AppCompatActivity() {
 
     lateinit var dictionaryRepository: DictionaryRepository
-    lateinit var game: GameInteractor
+    lateinit var game: GameMode
     lateinit var options: OptionsModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_play_game)
+        setContentView()
 
         options = intent.extras["OPTIONS"] as OptionsModel
 
@@ -51,25 +49,17 @@ class PlayGame : AppCompatActivity() {
 
     }
 
+    abstract fun setContentView()
+
     fun setOptions(){
         // By default it already comes with auto-correct
         if(!options.autoCorrect){
             findViewById<EditText>(R.id.keyboard_input).inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         }
 
-        /*when(options.typeGame){
-            OptionsModel.TypeGame.TIME -> {}
-            OptionsModel.TypeGame.NUM_WORDS -> {}
-            OptionsModel.TypeGame.NUM_ERRORS -> {}
-            OptionsModel.TypeGame.NUM_CORRECT_WORDS -> {}
-            OptionsModel.TypeGame.NO_END -> {}
-        }*/
-
         dictionaryRepository = when(options.source){
-            OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(this)
-            else -> {
-                TwelveDictsDictionaryRepository(this)
-            }
+            OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(applicationContext)
+            OptionsModel.Source.TEXT -> TextRepository(this)
         }
 
 
@@ -95,36 +85,13 @@ class PlayGame : AppCompatActivity() {
         chronometer.base = SystemClock.elapsedRealtime()
         chronometer.start()
 
-        val gameCallback = object: Callback {
-            override fun finishGame() {
-                this@PlayGame.finishGame()
-            }
-
-            override fun updateWords(currentWord: String?, nextWord: String?) {
-                if (currentWord != null) {
-                    if (nextWord != null) {
-                        updateWordsTextViews(currentWord,nextWord)
-                    }
-                }
-            }
-        }
-
-        val benchmarkerCallback = Benchmarker.Callback { wpm, ksps, kspc, msdErrorRate, correctWords, failedWords -> updateStatsTextViews(wpm, ksps, kspc, msdErrorRate,correctWords, failedWords) }
-
-        val keyboardApp = Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD)
-
-        val benchmarkRepository = RoomDatabase.instance.getDatabase(applicationContext).benchmarkDao()
-
-        game = GameInteractor(gameCallback, benchmarkerCallback,
-                dictionaryRepository,
-                benchmarkRepository,
-                chronometer,
-                options,
-                keyboardApp)
+        game = createGameMode()
 
         keyboard_input.addTextChangedListener(game)
         keyboard_input.setText("")
     }
+
+    abstract fun createGameMode(): GameMode
 
     fun finishGame(){
         pauseGame()
@@ -148,9 +115,8 @@ class PlayGame : AppCompatActivity() {
         keyboard_input.visibility = View.VISIBLE
     }
 
-    fun updateWordsTextViews(currentWord: String, nextWord: String){
-        current_word.text = currentWord
-        next_word.text = nextWord
+    fun updateInputTextViews(currentInput: String){
+        current_input.text = currentInput
     }
 
     fun updateStatsTextViews(wpm: Float, ksps: Float,kspc: Float, msdErrorRate:Float, correctWords: Int, failedWords: Int){
