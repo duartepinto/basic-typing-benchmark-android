@@ -28,10 +28,12 @@ public class SentencesGameMode extends GameMode {
 
     @Override
     public void afterTextChanged(Editable s) {
-        incrementKeyStrokes(s);
-        benchmarker.addToInputStream(s.toString());
+        String str = s.toString().replace("\n", " ");
 
-        String str = getCleanString(s);
+        incrementKeyStrokes(str);
+        benchmarker.addToInputStream(str);
+
+        str = getCleanString(s);
 
         int completedWords = getCompletedWords(str);
 

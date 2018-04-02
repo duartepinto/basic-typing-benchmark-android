@@ -117,8 +117,8 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
         }
     }
 
-    void incrementKeyStrokes(Editable s) {
-        if(strSize != s.length())
+    void incrementKeyStrokes(String str) {
+        if(strSize != str.length())
             benchmarker.incrementKeyStrokes();
     }
 
