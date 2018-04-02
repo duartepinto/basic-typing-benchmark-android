@@ -8,9 +8,6 @@ import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repositor
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository;
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.util.Chronometer;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class SingleWordsGameMode extends GameMode {
 
     public SingleWordsGameMode(Callback callback, Benchmarker.Callback benchmarkerCallback, DictionaryRepository dictionaryRepository, BenchmarkRepository benchmarkRepository, Chronometer chronometer, OptionsModel options, String keyboardApp, Clock clock) {
@@ -26,7 +23,7 @@ public class SingleWordsGameMode extends GameMode {
         incrementKeyStrokes(s);
         benchmarker.addToInputStream(s.toString());
 
-        String str = getTrimmedOnLeftString(s);
+        String str = getCleanString(s);
         int trimmedLeftSpaces = s.toString().length() - str.length();
         int completedWords = getCompletedWords(str);
 
