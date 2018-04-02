@@ -596,5 +596,80 @@ class SingleWordsModeTest{
         assertEquals(transcribedString, benchmark.transcribedString.toString())
 
     }
+
+    @Test
+    fun textUppercase() {
+        val testData = TestData()
+        testData.wordList.add("unit")
+        testData.wordList.add("testing")
+        testData.wordList.add("is")
+        testData.wordList.add("the")
+        testData.wordList.add("best")
+        testData.wordList.add("untestedWord")
+        testData. wordList.add("untestedWord2")
+
+        testData.input.add("")
+        testData.input.add("U")
+        testData.input.add("UN")
+        testData. input.add("UNI")
+        testData.input.add("UNIT ")
+        testData.input.add("")
+        testData.input.add("T")
+        testData.input.add("Te")
+        testData.input.add("Tes")
+        testData.input.add("Test")
+        testData.input.add("Testi")
+        testData.input.add("Testin ") // +1 error
+        testData.input.add("TestinG ")
+        testData.input.add("")
+        testData.input.add("i ")
+        testData.input.add("iS ")
+        testData.input.add("")
+        testData.input.add(" ") // +1 error
+        testData.input.add("")
+        testData.input.add("t")
+        testData.input.add("tH")
+        testData.input.add("tHe ")
+        testData.input.add("")
+        testData.input.add("b")
+        testData.input.add("be")
+        testData.input.add("beS")
+        testData.input.add("beST ")
+
+        val gameInteractor = createGameInteractor(testData)
+
+        runTest(testData,gameInteractor)
+
+        val initTimestamp = System.currentTimeMillis()
+        val timeElapsed= 30000L
+
+        val benchmark = gameInteractor.benchmarker.benchmark
+
+        benchmark.timestamp = Date(initTimestamp)
+        benchmark.timeElapsed = timeElapsed
+
+        System.out.println(benchmark)
+
+        val errors=2
+        val backspace=1
+        val totalWords=7
+
+        val inputString = "unit\ntestin\ntesting\ni\nis\nthe\nbest\n"
+        var transcribedString = "unit\ntesting\ntesting\nis\nis\nthe\nbest\n"
+
+        val msd = Benchmarks.msd(inputString,transcribedString)
+        val msdErrorRate = Benchmarks.msdErrorRate(msd,inputString.length, transcribedString.length)
+
+        transcribedString += "untestedWord\n"
+
+        assertEquals(errors,benchmark.errors)
+        assertEquals(totalWords,benchmark.totalWords)
+        assertEquals(backspace,benchmark.backspace)
+        assertEquals(msdErrorRate, benchmark.minimumStringDistanceErrorRate, 0.0)
+        assertEquals(inputString, benchmark.inputString.toString())
+        assertEquals(transcribedString, benchmark.transcribedString.toString())
+
+    }
+
 }
 
