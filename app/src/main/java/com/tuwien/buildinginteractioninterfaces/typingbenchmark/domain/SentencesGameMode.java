@@ -31,7 +31,7 @@ public class SentencesGameMode extends GameMode {
         incrementKeyStrokes(s);
         benchmarker.addToInputStream(s.toString());
 
-        String str = getTrimmedOnLeftString(s);
+        String str = getCleanString(s);
 
         int completedWords = getCompletedWords(str);
 

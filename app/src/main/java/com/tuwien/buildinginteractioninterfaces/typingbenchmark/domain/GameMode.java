@@ -35,9 +35,10 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
         return completedWords;
     }
 
-    protected String getTrimmedOnLeftString(Editable s) {
+    protected String getCleanString(Editable s) {
         String str = s.toString();
         str = str.replaceAll("^\\s+", ""); // Trim the left side of the string.
+        str = str.toLowerCase();
         return str;
     }
 

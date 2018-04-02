@@ -18,8 +18,8 @@
         android:id="@+id/keyboard_input"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:imeOptions="actionSend"
-        android:inputType="text"
+        android:inputType="textMultiLine"
+
         tools:ignore="LabelFor" />
 
     <Button
