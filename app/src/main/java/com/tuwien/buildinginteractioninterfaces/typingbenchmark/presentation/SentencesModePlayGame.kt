@@ -1,5 +1,6 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark.presentation
 
+import android.os.Build
 import android.provider.Settings
 import android.text.Html
 import android.widget.TextView
@@ -21,7 +22,17 @@ class SentencesModePlayGame : AbstractPlayGame() {
         val gameCallback = object: SentencesGameMode.Callback {
             override fun inputStateUpdate(currentInputStateful :String?) {
                 if(currentInputStateful != null) {
-                    current_input.setText(Html.fromHtml(currentInputStateful),TextView.BufferType.SPANNABLE)
+                    var input :String
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        val green = String.format("#%06X", (0xFFFFFF and getColor(R.color.feedback_correct)))
+                        val red = String.format("#%06X", (0xFFFFFF and getColor(R.color.feedback_incorrect)))
+
+                        input = currentInputStateful.replace("<font color='green'>", "<font color='"+green+"'>")
+                        input = input.replace("<font color='red'>", "<font color='"+red+"'>")
+                    }else{
+                        input = currentInputStateful
+                    }
+                    current_input.setText(Html.fromHtml(input),TextView.BufferType.SPANNABLE)
                 }
             }
 
