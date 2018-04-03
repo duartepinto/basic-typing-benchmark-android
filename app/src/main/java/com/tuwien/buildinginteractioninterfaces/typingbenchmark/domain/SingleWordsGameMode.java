@@ -20,10 +20,11 @@ public class SingleWordsGameMode extends GameMode {
 
     @Override
     public void afterTextChanged(Editable s) {
-        incrementKeyStrokes(s);
-        benchmarker.addToInputStream(s.toString());
+        String str = s.toString().replace("\n", " ");
+        incrementKeyStrokes(str);
+        benchmarker.addToInputStream(str);
 
-        String str = getCleanString(s);
+        str = getCleanString(s);
         int trimmedLeftSpaces = s.toString().length() - str.length();
         int completedWords = getCompletedWords(str);
 
@@ -52,7 +53,7 @@ public class SingleWordsGameMode extends GameMode {
             benchmarker.updateStats();
         }
 
-        incrementBackspace(s);
+        lookForBackspaces(s);
 
         previousCompleteWords = completedWords;
         strSize = s.length();
