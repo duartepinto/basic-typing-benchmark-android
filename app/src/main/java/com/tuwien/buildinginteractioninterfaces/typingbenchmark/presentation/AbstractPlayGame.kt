@@ -101,7 +101,6 @@ abstract class AbstractPlayGame : AppCompatActivity() {
     }
 
     fun pauseGame(){
-        chronometer.stop()
         pause_button.visibility =  View.GONE
         pause_menu.visibility = View.VISIBLE
         keyboard_input.visibility = View.INVISIBLE
@@ -109,10 +108,10 @@ abstract class AbstractPlayGame : AppCompatActivity() {
     }
 
     fun continueGame(){
-        chronometer.start()
         pause_menu.visibility = View.GONE
         pause_button.visibility =  View.VISIBLE
         keyboard_input.visibility = View.VISIBLE
+        game.continueGame()
     }
 
     fun updateInputTextViews(currentInput: String){

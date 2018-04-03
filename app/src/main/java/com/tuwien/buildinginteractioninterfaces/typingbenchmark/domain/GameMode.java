@@ -25,6 +25,7 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
     Benchmarker benchmarker;
     Callback callback;
     OptionsModel options;
+    private long lastPause;
 
     protected int getCompletedWords(String str) {
         Pattern pattern = Pattern.compile("\\s+"); // A word is completed if after the word there is any whitespace character (equal to [\r\n\t\f\v ])
@@ -157,7 +158,14 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
     }
 
     public synchronized void pauseGame(){
+        lastPause = clock.elapsedRealtime();
+        chronometer.stop();
         saveBenchmark();
+    }
+
+    public synchronized void continueGame(){
+        chronometer.setBase(chronometer.getBase() + clock.elapsedRealtime() - lastPause);
+        chronometer.start();
     }
 
     protected void saveBenchmark(){
