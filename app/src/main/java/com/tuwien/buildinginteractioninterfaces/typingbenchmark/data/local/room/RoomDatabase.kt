@@ -26,12 +26,20 @@ class RoomDatabase private constructor(){
                         + " ADD COLUMN total_error_rate REAL NOT NULL DEFAULT 0 ")
             }
         }
+
+        val MIGRATION_3_4: Migration = object: Migration(3,4) {
+            override fun migrate (database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE benchmark "
+                        + " ADD COLUMN corrected_error_rate REAL NOT NULL DEFAULT 0 ")
+            }
+        }
     }
     fun getDatabase(context: Context): AppDatabase {
         if(db == null){
             db = Room.databaseBuilder(context, AppDatabase::class.java, "benchmarks")
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3).fallbackToDestructiveMigration().build()
         }
+
 
         return db as AppDatabase
     }

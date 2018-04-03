@@ -43,7 +43,7 @@ abstract class AbstractPlayGame : AppCompatActivity() {
         keyboard_input.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if(!hasFocus) {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
             }
         }
 
@@ -94,17 +94,21 @@ abstract class AbstractPlayGame : AppCompatActivity() {
     abstract fun createGameMode(): GameMode
 
     fun finishGame(){
-        pauseGame()
+        displayPauseMenu()
         continue_button.isEnabled = false
         Toast.makeText(this, getString(R.string.game_over), Toast.LENGTH_SHORT).show()
         keyboard_input.removeTextChangedListener(game)
     }
 
     fun pauseGame(){
-        pause_button.visibility =  View.GONE
+        displayPauseMenu()
+        game.pauseGame()
+    }
+
+    private fun displayPauseMenu() {
+        pause_button.visibility = View.GONE
         pause_menu.visibility = View.VISIBLE
         keyboard_input.visibility = View.INVISIBLE
-        game.pauseGame()
     }
 
     fun continueGame(){

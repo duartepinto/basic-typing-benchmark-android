@@ -19,7 +19,7 @@ class BenchmarkModel() : Serializable {
     lateinit var keyboardApp: String
 
     @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
+    var uid: Int? = null
 
     @ColumnInfo(name = "correct_chars")
     var correctChars: Int = 0

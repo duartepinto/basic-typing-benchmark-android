@@ -4,6 +4,7 @@ package com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.BenchmarkModel;
@@ -22,7 +23,7 @@ public interface BenchmarkDao extends BenchmarkRepository{
     @Query("SELECT * FROM benchmark WHERE uid LIKE :benchmarkId")
     BenchmarkModel findByUID(int benchmarkId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(BenchmarkModel... benchmarks);
 
     @Delete
