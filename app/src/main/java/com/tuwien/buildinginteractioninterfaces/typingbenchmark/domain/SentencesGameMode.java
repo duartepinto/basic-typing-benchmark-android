@@ -56,16 +56,17 @@ public class SentencesGameMode extends GameMode {
             boolean isCorrect = true;
             SentencesInputState newInputState = new SentencesInputState(inputState);
 
-            for(int i =0; i < completedWords; i++){
+            for(int i =0; i < completedWords && i < currentInputArray.length; i++){
 
                 if(splited[i].equals(currentInputArray[i])){
                     newInputState.flagAsCorrect(i);
                 }else{
                     // Only counts as a failed word if the user is not correcting a mistake (pressing backspace for example)
                     if(strSize < s.length() && previousCompleteWords < completedWords){
-                        isCorrect = false;
                         newInputState.flagAsIncorrect(i);
                     }
+                    // Still have to flag it as incorrect, to signal that there is still an error.
+                    isCorrect = false;
                 }
             }
 
