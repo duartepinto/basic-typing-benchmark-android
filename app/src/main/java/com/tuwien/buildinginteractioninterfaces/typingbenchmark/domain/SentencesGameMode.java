@@ -7,8 +7,16 @@ import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repositor
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository;
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.util.Chronometer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SentencesGameMode extends GameMode {
-    private String[] currentInputArray;
+    private String[] currentInputArray; // Array with the transcribed string (The phrase that is being evaluated) splited by words
+    private SentencesInputState inputState;
+
+    public interface Callback extends GameMode.Callback{
+        void inputStateUpdate(String stateInputStateful);
+    }
 
     public SentencesGameMode(Callback callback, Benchmarker.Callback benchmarkerCallback, DictionaryRepository dictionaryRepository, BenchmarkRepository benchmarkRepository, Chronometer chronometer, OptionsModel options, String keyboardApp) {
         super(callback, benchmarkerCallback, dictionaryRepository, benchmarkRepository, chronometer, options, keyboardApp);
@@ -18,12 +26,14 @@ public class SentencesGameMode extends GameMode {
     void startInputs() {
         super.startInputs();
         currentInputArray = currentInput.split("\\s+");
+        inputState = new SentencesInputState(currentInputArray);
     }
 
     @Override
     void generateNextInput() {
         super.generateNextInput();
         currentInputArray = currentInput.split("\\s+");
+        inputState = new SentencesInputState(currentInputArray);
     }
 
     @Override
@@ -32,48 +42,62 @@ public class SentencesGameMode extends GameMode {
 
         incrementKeyStrokes(str);
         benchmarker.addToInputStream(str);
+        boolean backspaced = lookForBackspaces(s);
 
         str = getCleanString(s);
 
         int completedWords = getCompletedWords(str);
 
-        if(currentInputArray!= null
-                && completedWords == currentInputArray.length){
-            String[] splited = str.split("\\s+");
-            boolean isCorrect = true;
 
-            for(int i = 0; i < currentInputArray.length; i++){
-                if(splited[i].equals(currentInputArray[i])){ // For some reason currentWord comes with and extra space so it needs to be trimmed
-                    benchmarker.incrementWordCount(splited[0]);
-                    benchmarker.incrementCorrectWordsCount(currentInput);
+        if(currentInputArray!= null
+                && completedWords > 0){
+            String[] splited = str.split("\\s+");
+
+            boolean isCorrect = true;
+            SentencesInputState newInputState = new SentencesInputState(inputState);
+
+            for(int i =0; i < completedWords; i++){
+
+                if(splited[i].equals(currentInputArray[i])){
+                    newInputState.flagAsCorrect(i);
                 }else{
                     // Only counts as a failed word if the user is not correcting a mistake (pressing backspace for example)
                     if(strSize < s.length() && previousCompleteWords < completedWords){
-                        benchmarker.incrementWordCount(splited[0]);
-                        benchmarker.incrementErrorCount();
                         isCorrect = false;
+                        newInputState.flagAsIncorrect(i);
                     }
                 }
             }
 
-            benchmarker.addSubmittedInput(s.toString());
+            SentencesInputState.lookForStateDifferences(benchmarker, splited, inputState, newInputState);
+            inputState = newInputState;
+            updateInputStateful();
 
-            if(isCorrect || isSkipOnFail()){
-                skipToNextInput(s); // Remove the wrong word
-            }else{
-                benchmarker.addToTranscribedString(currentInput);
+
+            if(completedWords == currentInputArray.length){
+                benchmarker.addSubmittedInput(s.toString());
+
+                if(isCorrect || isSkipOnFail()){
+                    skipToNextInput(s);
+                }else{
+                    benchmarker.addToTranscribedString(currentInput);
+                }
             }
 
             benchmarker.updateStats();
+
         }
 
-        incrementBackspace(s);
 
         previousCompleteWords = completedWords;
         strSize = s.length();
 
         if(shouldGameFinish())
             finishGame();
+    }
+
+    private void updateInputStateful() {
+        getCallback().inputStateUpdate(SentencesInputState.getColoredString(currentInputArray,inputState));
     }
 
     /*
@@ -85,5 +109,9 @@ public class SentencesGameMode extends GameMode {
 
         s.replace(0, s.length(), "", 0,0);
         this.generateNextInput();
+    }
+
+    private Callback getCallback(){
+        return (Callback) callback;
     }
 }

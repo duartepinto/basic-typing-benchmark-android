@@ -111,10 +111,13 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
 
     }
 
-    void incrementBackspace(Editable s) {
+    boolean lookForBackspaces(Editable s) {
         if(strSize > s.length() ){
             benchmarker.incrementBackspace();
+            return true;
         }
+
+        return false;
     }
 
     void incrementKeyStrokes(String str) {

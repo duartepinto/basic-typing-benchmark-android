@@ -53,7 +53,7 @@ public class SingleWordsGameMode extends GameMode {
             benchmarker.updateStats();
         }
 
-        incrementBackspace(s);
+        lookForBackspaces(s);
 
         previousCompleteWords = completedWords;
         strSize = s.length();

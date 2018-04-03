@@ -1,12 +1,15 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark.presentation
 
 import android.provider.Settings
+import android.text.Html
+import android.widget.TextView
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.R
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.RoomDatabase
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.Benchmarker
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.GameMode
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.SentencesGameMode
 import kotlinx.android.synthetic.main.benchmarks_ingame_stats.*
+import kotlinx.android.synthetic.main.play_input_menu.*
 
 class SentencesModePlayGame : AbstractPlayGame() {
     override fun setContentView() {
@@ -14,7 +17,14 @@ class SentencesModePlayGame : AbstractPlayGame() {
     }
 
     override fun createGameMode(): GameMode {
-        val gameCallback = object: GameMode.Callback {
+        @Suppress("DEPRECATION")
+        val gameCallback = object: SentencesGameMode.Callback {
+            override fun inputStateUpdate(currentInputStateful :String?) {
+                if(currentInputStateful != null) {
+                    current_input.setText(Html.fromHtml(currentInputStateful),TextView.BufferType.SPANNABLE)
+                }
+            }
+
             override fun finishGame() {
                 this@SentencesModePlayGame.finishGame()
             }
