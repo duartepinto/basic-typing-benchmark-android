@@ -7,9 +7,6 @@ import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repositor
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.repository.local.DictionaryRepository;
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.util.Chronometer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SentencesGameMode extends GameMode {
     private String[] currentInputArray; // Array with the transcribed string (The phrase that is being evaluated) splited by words
     private SentencesInputState inputState;

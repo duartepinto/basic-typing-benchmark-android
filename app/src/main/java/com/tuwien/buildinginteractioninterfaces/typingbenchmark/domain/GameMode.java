@@ -69,7 +69,7 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
         this.benchmarkRepository = benchmarkRepository;
         this.clock = clock;
 
-        benchmarker = new Benchmarker(chronometer, benchmarkerCallback, options, keyboardApp);
+        benchmarker = new Benchmarker(benchmarkerCallback, options, keyboardApp);
         chronometer.setOnChronometerTickListener(this);
 
         startInputs();
@@ -145,13 +145,15 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
             return;
 
         finishedGame = true;
-        saveBenchmark();
+//        saveBenchmark();
+        pauseGame();
         callback.finishGame();
     }
 
     @Override
     public void onChronometerTick(Chronometer chronometer) {
         //See if timeElapsed has run out;
+        benchmarker.updateTimeElapsedMilliseconds(chronometer.getTimeElapsed());
         if(options.getTypeGame()== OptionsModel.TypeGame.TIME && chronometer.getTimeElapsed() >= options.getFinishMark()*1000){
             finishGame();
         }

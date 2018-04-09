@@ -7,7 +7,6 @@ import com.tuwien.buildinginteractioninterfaces.typingbenchmark.util.Chronometer
 
 @SuppressWarnings("WeakerAccess")
 public class Benchmarker {
-    private final Chronometer chronometer;
     private final Callback callback;
     private final BenchmarkModel benchmark;
 
@@ -16,28 +15,22 @@ public class Benchmarker {
         void updateStats(float wpm, float ksps,float kspc,float msdErrorRate, int correctWords, int failedWords);
     }
 
-    public Benchmarker(Chronometer chronometer,
-                       Callback callback,
+    public Benchmarker(Callback callback,
                        OptionsModel options,
                        String keyboardApp) {
 
-        this.chronometer = chronometer;
         this.callback = callback;
         this.benchmark = new BenchmarkModel();
         benchmark.options = options;
         benchmark.keyboardApp = keyboardApp;
-
-        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                updateStats();
-            }
-        });
     }
 
     void updateStats(){
-        benchmark.setTimeElapsed(chronometer.getTimeElapsed());
         callback.updateStats(benchmark.getWordsPerMinute(), benchmark.getKeystrokesPerSecond(), (float) benchmark.getKeystrokesPerChar(), (float) benchmark.getMinimumStringDistanceErrorRate(), benchmark.getCorrectWords(), benchmark.getErrors());
+    }
+    void updateTimeElapsedMilliseconds(Long timeElapsedMilliseconds){
+        benchmark.setTimeElapsed(timeElapsedMilliseconds);
+        updateStats();
     }
 
     public BenchmarkModel getBenchmark() {
