@@ -9,26 +9,27 @@
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/label_next_word"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/next_word"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/next_word"
-                android:gravity="start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:text="@string/place_holder_text"
-                />
+                android:gravity="start"
+                android:text="@string/place_holder_text" />
 
         </LinearLayout>
 

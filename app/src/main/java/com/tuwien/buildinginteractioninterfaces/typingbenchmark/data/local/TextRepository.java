@@ -10,6 +10,6 @@ public class TextRepository extends AbstractDotTxtRepository {
 
     @Override
     int getDictionaryRawFile() {
-        return R.raw.sentences;
+        return R.raw.chi_phrases;
     }
 }

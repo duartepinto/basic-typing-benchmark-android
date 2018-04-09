@@ -24,7 +24,7 @@ class BenchmarkActivity: AppCompatActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
         benchmark = intent.extras["BENCHMARK"] as BenchmarkModel
-        supportActionBar!!.title = benchmark.uid.toString()
+        supportActionBar!!.title = "Benchmark"
 
         val benchmarkText = findViewById<TextView>(R.id.benchmark)
 

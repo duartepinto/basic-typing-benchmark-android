@@ -59,7 +59,7 @@ abstract class AbstractPlayGame : AppCompatActivity() {
 
         dictionaryRepository = when(options.source){
             OptionsModel.Source.TWELVE_DICTS -> TwelveDictsDictionaryRepository(applicationContext)
-            OptionsModel.Source.TEXT -> TextRepository(this)
+            OptionsModel.Source.CHI_PHRASES -> TextRepository(this)
         }
 
 

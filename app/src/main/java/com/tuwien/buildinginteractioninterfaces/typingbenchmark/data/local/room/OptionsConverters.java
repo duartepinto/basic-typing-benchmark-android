@@ -15,6 +15,11 @@ public class OptionsConverters {
     }
 
     private static Source toSource(String source){
+        // IMPORTANT! During development the source 'CHI_PHRASES' used to be 'TEXT'. This IF is to keep an old database from crashing
+        if (source.equals("TEXT")){
+            return Source.CHI_PHRASES;
+        }
+
         return Source.valueOf(source);
     }
 

@@ -101,7 +101,7 @@ public class MainMenu extends AppCompatActivity {
                         playGameClass = SingleWordsModePlayGame.class;
                         break;
                     case R.id.main_menu_text:
-                        source = OptionsModel.Source.TEXT;
+                        source = OptionsModel.Source.CHI_PHRASES;
                         playGameClass = SentencesModePlayGame.class;
                         break;
                     default:

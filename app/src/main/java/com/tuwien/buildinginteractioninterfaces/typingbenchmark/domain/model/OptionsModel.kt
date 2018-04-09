@@ -19,8 +19,9 @@ class OptionsModel(
     }
 
 
+    // THERE CAN BE NO Source WITH THE NAME 'TEXT'. OLD DATABASES MIGHT CRASH
     enum class Source{
-        TEXT, TWELVE_DICTS
+        CHI_PHRASES, TWELVE_DICTS
     }
 
     override fun toString(): String {
