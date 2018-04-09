@@ -10,8 +10,8 @@ android {
         applicationId "com.tuwien.buildinginteractioninterfaces.typingbenchmark"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 4
-        versionName "4.0.0-beta"
+        versionCode 5
+        versionName "4.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -34,7 +34,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
@@ -55,12 +55,12 @@ dependencies {
 //    implementation "android.arch.persistence.room:guava:1.1.0-alpha3"
 
     //RecyclerView
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     //Mockito
     testImplementation "org.mockito:mockito-core:2.15.0"
 
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:design:27.1.1'
 
     implementation 'com.github.medyo:android-about-page:1.2.2'
 }
