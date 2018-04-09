@@ -76,7 +76,7 @@
             android:text="@string/label_main_menu_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"/>
+            android:enabled="true"/>
     </RadioGroup>
 
     <CheckBox

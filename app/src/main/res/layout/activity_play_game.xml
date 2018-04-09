@@ -3,211 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tuwien.buildinginteractioninterfaces.prototype.presentation.PlayGame">
+    tools:context="com.tuwien.buildinginteractioninterfaces.typingbenchmark.presentation.AbstractPlayGame">
 
     <android.widget.GridLayout
-        android:gravity="end"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/label_next_word"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/next_word"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/next_word"
-                android:gravity="start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:text="@string/place_holder_text"
-                />
+                android:gravity="start"
+                android:text="@string/place_holder_text" />
 
         </LinearLayout>
 
-        <LinearLayout
+        <include layout="@layout/benchmarks_ingame_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/label_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/time" />
-                <TextView
-                    android:id="@+id/label_velocity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/wpm" />
-                <TextView
-                    android:id="@+id/label_keystrokes_per_second"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/keystrokes_per_second_ksps" />
-                <TextView
-                    android:id="@+id/label_keystrokes_per_char"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/kspc" />
-                <TextView
-                    android:id="@+id/label_msd_error_rate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/msd_error_rate" />
-                <TextView
-                    android:id="@+id/label_correct_words"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/correct_words"
-                    />
-
-                <TextView
-                    android:id="@+id/label_failed_words"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/failed_words"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="100sp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.tuwien.buildinginteractioninterfaces.prototype.util.Chronometer
-                    android:id="@+id/chronometer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:format="%s"
-                    android:textColor="@android:color/black" />
-                <TextView
-                    android:id="@+id/wpm_stat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20sp"
-                    android:text="0"
-                    android:textColor="@android:color/holo_green_dark"
-                    tools:ignore="HardcodedText" />
-                <TextView
-                    android:id="@+id/ksps_stat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20sp"
-                    android:text="0"
-                    android:textColor="@android:color/holo_green_dark"
-                    tools:ignore="HardcodedText" />
-                <TextView
-                    android:id="@+id/kspc_stat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20sp"
-                    android:text="0"
-                    android:textColor="@android:color/holo_red_dark"
-                    tools:ignore="HardcodedText" />
-                <TextView
-                    android:id="@+id/msd_error_rate_stat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20sp"
-                    android:text="0"
-                    android:textColor="@android:color/holo_red_dark"
-                    tools:ignore="HardcodedText" />
-                <TextView
-                    android:id="@+id/correct_words"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20sp"
-                    android:text="0"
-                    android:textColor="@android:color/holo_green_dark"
-                    tools:ignore="HardcodedText" />
-                <TextView
-                    android:id="@+id/failed_words"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20sp"
-                    android:text="0"
-                    android:textColor="@android:color/holo_red_dark"
-                    tools:ignore="HardcodedText" />
-
-            </LinearLayout>
-        </LinearLayout>
+            />
 
     </android.widget.GridLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/current_word"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/place_holder_text" />
-
-        <EditText
-            android:id="@+id/keyboard_input"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionSend"
-            android:inputType="text"
-            tools:ignore="LabelFor" />
-
-        <Button
-            android:id="@+id/start_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_game" />
-        <Button
-            android:id="@+id/pause_button"
-            android:visibility="gone"
-            android:text="@string/pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:id="@+id/pause_menu"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/continue_button"
-                android:text="@string/continue_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/restart_button"
-                android:text="@string/restart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="ButtonStyle" />
-            <Button
-                android:id="@+id/benchmark_button"
-                android:text="@string/view_benchmark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="ButtonStyle" />
-        </LinearLayout>
-
-    </LinearLayout>
+    <include layout="@layout/play_input_menu" />
 
 
 </android.widget.TableLayout>

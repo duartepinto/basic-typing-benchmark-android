@@ -20,13 +20,13 @@
     <string name="label_main_menu_num_words">Number of words</string>
     <string name="label_main_menu_num_errors">Number of errors</string>
     <string name="label_main_menu_num_correct_words">Number of correct words</string>
-    <string name="label_main_menu_text">Text Sample</string>
+    <string name="label_main_menu_text">Chi phrases (Compilation of parts of sentences)</string>
     <string name="auto_correct">Auto-correct</string>
     <string name="next">Next</string>
     <string name="choose_a_game_mode">Choose a game mode:</string>
     <string name="label_main_menu_no_end">No end</string>
     <string name="skip_on_fail">Skip on fail</string>
-    <string name="twelvedicts_word_list">12dicts English words list</string>
+    <string name="twelvedicts_word_list">12dicts English words list (Single Words)</string>
     <string name="no_source_error">No source for text</string>
     <string name="view_benchmark">View Benchmark</string>
     <string name="next_word">Next word:</string>
@@ -43,4 +43,6 @@
     <string name="about_email_label">Email me</string>
     <string name="about_github_label">Follow this project on Github</string>
     <string name="about_description">Basic Keyboard Benchmarking Game is a simple typing bencharmk game application for android that can be used to measure the keyboard\'s or the user\'s performance when typing. This project was developed for the Institute of Computer Aided Automation of the Technische Universität Wien (TUWien).</string>
+    <string name="copy_to_clipboard">Copy to clipboard</string>
+    <string name="benchmark_to_clipboard">Benchmark copied to clipboard</string>
 </resources>

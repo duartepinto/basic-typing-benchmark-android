@@ -3,6 +3,7 @@
 
 ![Menu Activity](docs/screenshot2.png "Menu Activity")
 ![Game Activity](docs/screenshot1.png "App Activity")
+![Game with Chi phrases](docs/screensho3.png "Game with Chi phrases")
 
 __Basic Keyboard Benchmarking Game__ is a simple typing bencharmk game application for android that can be used to measure the keyboard's or the user's performance when typing.
 
@@ -15,7 +16,7 @@ __Basic Keyboard Benchmarking Game__ is a simple typing bencharmk game applicati
 
 ## Word sources
 * 12 dicts English words list - one word + preview next word
-* Lengthy Text Sample __(not yet implemented)__
+* Chi phrases (Compilation of clauses/sentences) - a clause + continuous feedback while writing (which words are correct or incorrect)
 
 ## Other options
 * Auto-correct on/off
