@@ -15,7 +15,7 @@ __Basic Keyboard Benchmarking Game__ is a simple typing bencharmk game applicati
 
 ## Word sources
 * 12 dicts English words list - one word + preview next word
-* Lengthy Text Sample __(not yet implemented)__
+* Chi phrases (Compilation of clauses/sentences) - a clause + continuous feedback while writing (which words are correct or incorrect)
 
 ## Other options
 * Auto-correct on/off
