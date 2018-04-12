@@ -1,6 +1,10 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model
 
 import android.arch.persistence.room.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.CustomConverters
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.OptionsConverters
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.room.StringBufferConverters
@@ -146,7 +150,7 @@ class BenchmarkModel() : Serializable {
         inputString.append(word + "\n")
     }
 
-    override fun toString(): String {
+    /*override fun toString(): String {
         return "BenchmarkModel(\n" +
                 "options=$options,\n" +
                 "timestamp=$timestamp,\n" +
@@ -172,6 +176,15 @@ class BenchmarkModel() : Serializable {
                 "inputString=$inputString,\n" +
                 "transcribedString=$transcribedString\n" +
                 ")"
+    }*/
+
+    override fun toString(): String {
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        return gson.toJson(this)
+    }
+
+    fun toJson(): JsonElement {
+        return Gson().toJsonTree(this)
     }
 
 

@@ -45,4 +45,5 @@
     <string name="about_description">Basic Keyboard Benchmarking Game is a simple typing bencharmk game application for android that can be used to measure the keyboard\'s or the user\'s performance when typing. This project was developed for the Institute of Computer Aided Automation of the Technische Universität Wien (TUWien).</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="benchmark_to_clipboard">Benchmark copied to clipboard</string>
+    <string name="all_benchmarks_to_clipboard">All benchmarks copied to clipboard</string>
 </resources>
