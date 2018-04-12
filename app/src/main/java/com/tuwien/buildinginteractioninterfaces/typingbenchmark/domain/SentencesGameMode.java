@@ -82,6 +82,10 @@ public class SentencesGameMode extends GameMode {
                 }
             }
 
+            if(!isCorrect && !isSkipOnFail()){
+                removeLastBlankspace(s);
+            }
+
             benchmarker.updateStats();
 
         }

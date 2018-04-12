@@ -47,6 +47,8 @@ public class SingleWordsGameMode extends GameMode {
 
                     if(isSkipOnFail()){
                         skipToNextInput(s, splited, trimmedLeftSpaces); // Remove the wrong word
+                    }else{
+                        removeLastBlankspace(s);
                     }
                 }
             }

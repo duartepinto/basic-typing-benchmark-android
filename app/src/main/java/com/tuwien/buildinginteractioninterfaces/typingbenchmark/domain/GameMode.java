@@ -43,6 +43,10 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
         return str;
     }
 
+    protected void removeLastBlankspace(Editable s) {
+        s.replace(s.length()-1,s.length(),"");
+    }
+
     public interface Callback{
         void updateWords(String currentInput, String nextInput);
         void finishGame();
