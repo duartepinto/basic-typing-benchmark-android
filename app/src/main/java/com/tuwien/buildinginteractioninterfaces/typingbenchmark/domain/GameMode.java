@@ -1,9 +1,14 @@
 package com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.data.local.AndroidSystemClock;
 import com.tuwien.buildinginteractioninterfaces.typingbenchmark.domain.model.OptionsModel;
@@ -182,5 +187,25 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
                 benchmarkRepository.insertAll(benchmarker.getBenchmark());
             }
         });
+    }
+
+    public void setInputSource(EditText input){
+        input.addTextChangedListener(this);
+        input.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    EditText editText = (EditText) v;
+                    editText.setText(editText.getText() + " ");
+                    return true;
+
+                }
+
+                return false;
+
+            }
+        });
+
     }
 }

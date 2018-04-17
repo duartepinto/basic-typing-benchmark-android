@@ -87,7 +87,8 @@ abstract class AbstractPlayGame : AppCompatActivity() {
 
         game = createGameMode()
 
-        keyboard_input.addTextChangedListener(game)
+        game.setInputSource(keyboard_input)
+
         keyboard_input.setText("")
     }
 
