@@ -197,7 +197,7 @@ public abstract class GameMode implements TextWatcher, Chronometer.OnChronometer
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     EditText editText = (EditText) v;
-                    editText.setText(editText.getText() + " ");
+                    editText.getEditableText().append(" ");
                     return true;
 
                 }
